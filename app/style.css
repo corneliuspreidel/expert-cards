@@ -25,10 +25,16 @@ body {
   overscroll-behavior: none;
   -webkit-tap-highlight-color: transparent;
   touch-action: manipulation;
+  /* solid page color — no document-tall gradients (those caused a hard seam while scrolling) */
+  background: var(--bg);
+}
+/* soft wash stays on the viewport only, so it never “breaks” mid-page */
+body::before {
+  content: '';
+  position: fixed; inset: 0; z-index: -1; pointer-events: none;
   background:
-    radial-gradient(1200px 500px at 10% -10%, color-mix(in srgb, var(--hl) 14%, transparent), transparent 60%),
-    radial-gradient(900px 420px at 100% 0%, color-mix(in srgb, var(--play-2) 10%, transparent), transparent 55%),
-    var(--bg);
+    radial-gradient(70% 45% at 12% 0%, color-mix(in srgb, var(--hl) 11%, transparent), transparent 72%),
+    radial-gradient(55% 40% at 100% 0%, color-mix(in srgb, var(--play-2) 8%, transparent), transparent 70%);
 }
 #app { min-height: 100svh; display: flex; flex-direction: column; }
 h1 { font-size: 1.45rem; line-height: 1.25; margin: 0 0 .6rem; }
