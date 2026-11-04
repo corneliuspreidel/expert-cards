@@ -137,3 +137,6 @@ dialog.modal .btn { margin-top: 1rem; width: 100%; }
   .screen { padding-top: 2rem; }
   h1 { font-size: 1.7rem; }
 }
+
+.memo { display: grid; gap: .4rem; width: 100%; }
+.memo audio { width: 100%; min-height: 48px; }

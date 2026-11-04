@@ -52,6 +52,7 @@ const de = {
   micRec: 'Sprachnotiz aufnehmen',
   micRecording: 'Aufnahme läuft … zum Beenden tippen',
   memoSaved: (s) => `Sprachnotiz gespeichert (${s} s). Sie liegt in der Sicherungsdatei.`,
+  memoPlay: 'Sprachnotiz anhören',
   memoDelete: 'Sprachnotiz löschen',
   keyboardHint: 'Tipp: Auf dem Handy können Sie auch das Mikrofon Ihrer Tastatur benutzen.',
   keyboardHintIos: 'Am einfachsten auf dem iPhone: Tippen Sie ins Feld und dann auf das Mikrofon-Symbol unten rechts auf der Tastatur. Das funktioniert in jedem Browser.',

@@ -45,12 +45,16 @@ export function attachMic({ textarea, lang, cardId, audio }) {
     const { btn, set } = makeButton(T.micRec);
     const memo = h('div', { class: 'memo' });
     let mr = null, chunks = [], t0 = 0, stream = null;
+    let url = null;
     const showMemo = () => {
+      if (url) { URL.revokeObjectURL(url); url = null; }
       memo.replaceChildren();
       const r = audio.get(cardId);
       if (!r) return;
+      url = URL.createObjectURL(r.blob);
       memo.append(
         h('p', {}, T.memoSaved(Math.round(r.ms / 1000))),
+        h('audio', { controls: true, src: url, preload: 'metadata', 'aria-label': T.memoPlay }),
         h('button', { type: 'button', class: 'btn small', onclick: () => { audio.del(cardId); showMemo(); } }, T.memoDelete));
     };
     btn.addEventListener('click', async () => {
@@ -76,7 +80,7 @@ export function attachMic({ textarea, lang, cardId, audio }) {
       status.textContent = T.micRecording;
       set(true, T.micStop);
     });
-    stop = () => { if (mr) try { mr.stop(); } catch { /* ignore */ } };
+    stop = () => { if (url) URL.revokeObjectURL(url); if (mr) try { mr.stop(); } catch { /* ignore */ } };
     el.append(btn, status, memo, keyboardHint());
     showMemo();
   }
