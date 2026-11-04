@@ -20,7 +20,7 @@ One study = one `decks/<deck-id>/deck.json`. Listed in `decks/index.json`. The e
 | `confidence_options` | list | `{id, label}`; shown after a clear verdict |
 | `closing` | `{free_text_label, title?}` | last card, free text |
 | `submission` | `{mode: email\|webhook, to, subject, backup_file, url?}` | `to: "PLEASE_SET"` is accepted by the validator only with `--allow-placeholder` |
-| `settings` | `{auto_advance?: bool}` | optional; default `true` |
+| `settings` | `{auto_advance?: bool, app_feedback?: bool}` | optional; both default `true`. `app_feedback` shows the collapsed "Feedback zu dieser App" box on the overview; it is stored as answer `_feedback` |
 
 ## Cards
 

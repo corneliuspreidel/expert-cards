@@ -5,6 +5,7 @@ import { T, setLang } from './i18n.js';
 import { makeStore } from './storage.js';
 import { cards } from './cards/index.js';
 import { adapters } from './submit/index.js';
+import { textField } from './cards/common.js';
 
 const app = document.getElementById('app');
 let deck, deckBase, steps, state, store;
@@ -158,13 +159,12 @@ function later() {
 }
 
 function nav(st) {
-  const first = state.pos <= 1 && !editing;
   const answeredNow = st.kind !== 'card' || cardAnswered(st);
   const label = editing ? T.toReview : (st.kind === 'card' ? (answeredNow ? T.next : T.skip) : st.kind === 'review' ? T.submit : T.next);
   const nextBtn = h('button', { type: 'button', class: `btn ${answeredNow || st.kind !== 'card' ? 'primary' : ''}`, onclick: () => (st.kind === 'review' ? go(stepIndex('submit')) : next()) }, label);
   return h('nav', { class: 'bottomnav', 'aria-label': 'Navigation' },
-    editing ? h('span') : h('button', { type: 'button', class: 'btn', onclick: prev, disabled: first && false }, T.back),
-    nextBtn);
+    editing ? h('span') : h('button', { type: 'button', class: 'btn', onclick: prev }, T.back),
+    st.kind === 'submit' ? null : nextBtn);
 }
 
 function updateNav() {
@@ -289,7 +289,26 @@ function renderReview(main) {
     h('p', { class: 'lead' }, T.reviewIntro),
     h('p', { class: open ? 'warn' : 'ok', role: 'status' }, T.openCount(open)),
     ...sections,
-    extra.length ? h('section', {}, h('h2', {}, T.moreAboutYou), ...extra) : null);
+    extra.length ? h('section', {}, h('h2', {}, T.moreAboutYou), ...extra) : null,
+    feedbackBox());
+}
+
+// Optional, collapsed feedback about the app itself (not about the study content).
+function feedbackBox() {
+  if (deck.settings && deck.settings.app_feedback === false) return null;
+  const ctx = makeCtx({ kind: 'card', card: { id: '_feedback', type: 'free_text' }, section: null });
+  const chips = h('div', { class: 'chipset', role: 'radiogroup', 'aria-label': T.fbRating });
+  const btns = T.fbOptions.map(([id, label]) => h('button', { type: 'button', class: 'chipbtn', role: 'radio', onclick: () => { ctx.set({ v: ctx.answer.v === id ? null : id }); paint(); } }, label));
+  const paint = () => btns.forEach((b, i) => { const on = ctx.answer.v === T.fbOptions[i][0]; b.setAttribute('aria-checked', String(on)); b.classList.toggle('sel', on); });
+  chips.append(...btns);
+  paint();
+  const d = h('details', { class: 'feedback' },
+    h('summary', {}, T.fbTitle),
+    h('p', { class: 'hint' }, T.fbIntro),
+    chips,
+    textField(ctx, { key: 'note', label: T.fbLabel, rows: 3 }));
+  if (ctx.answer.v || ctx.answer.note) d.open = true;
+  return d;
 }
 
 /* ---------- submission ---------- */
@@ -329,6 +348,10 @@ function reportText() {
     if (a.reason) parts.push(`Begründung: ${a.reason}`);
     if (store.audio.has(st.card.id)) parts.push('(Sprachnotiz in Sicherungsdatei)');
     lines.push(`${st.card.id}: ${parts.join(' | ')}`);
+  }
+  const fb = answerOf('_feedback');
+  if (fb.v || fb.note) {
+    lines.push('', '## Feedback zur App', [fb.v, fb.note].filter(Boolean).join(' | '));
   }
   // compact JSON block (no audio) for import_answers.py
   const compact = {

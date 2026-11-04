@@ -159,3 +159,6 @@ dialog.modal .btn { margin-top: 1rem; width: 100%; }
   .verdict-btn { justify-content: center; text-align: center; padding: .4rem .3rem; font-size: 1rem; min-height: 56px; }
   .verdict-btn .opt-key { display: none; }
 }
+
+.feedback { margin: 1.6rem 0 0; border-top: 1px solid var(--line); padding-top: .6rem; }
+.feedback summary { cursor: pointer; font-weight: 600; min-height: 48px; display: flex; align-items: center; }
