@@ -1,0 +1,734 @@
+<title>Fallprüfung Brandschutz BayBO</title>
+<meta name="claude:viewport-fit-sides" content="cover">
+<style>
+/* Layout: one reading column on a white HM-style ground; a sticky progress bar; square cards; schematic drawing beside each case. */
+:root{
+  --bg:#ffffff; --surface:#f3f3f3; --ink:#000000; --ink-2:#161616; --muted:#6e6e6e; --line:#e6e6e6; --line-2:#c6c6c6;
+  --link:#3e46d9; --hl:#3e46d9; --hl-soft:#e9eafb; --done:#006d6d; --done-soft:#e1f5ee; --mark:#ffff55;
+  --font:Arial, Helvetica, sans-serif;
+}
+@media (prefers-color-scheme: dark){:root:not([data-theme="light"]){
+  --bg:#161616; --surface:#232323; --ink:#ffffff; --ink-2:#f4f4f4; --muted:#c6c6c6; --line:#3a3a3a; --line-2:#555555;
+  --link:#00b4e6; --hl:#00b4e6; --hl-soft:#0f3340; --done:#4ad386; --done-soft:#123526; --mark:#4d4d00; color-scheme:dark}}
+:root[data-theme="dark"]{
+  --bg:#161616; --surface:#232323; --ink:#ffffff; --ink-2:#f4f4f4; --muted:#c6c6c6; --line:#3a3a3a; --line-2:#555555;
+  --link:#00b4e6; --hl:#00b4e6; --hl-soft:#0f3340; --done:#4ad386; --done-soft:#123526; --mark:#4d4d00; color-scheme:dark}
+*{box-sizing:border-box}
+body{background:var(--bg);color:var(--ink-2);font-family:var(--font);font-size:17px;line-height:1.45;margin:0}
+body::before{content:"";position:fixed;inset:0 0 auto;height:env(safe-area-inset-top,0px);z-index:10;background:var(--bg)}
+.wrap{max-width:980px;margin:0 auto;padding-left:max(16px,env(safe-area-inset-left,0px));padding-right:max(16px,env(safe-area-inset-right,0px))}
+h1,h2,h3{font-weight:400;letter-spacing:-0.01em;text-wrap:balance;color:var(--ink);margin:0}
+h1{font-size:clamp(30px,5vw,44px);line-height:1.08}
+h2{font-size:clamp(24px,3.4vw,32px);line-height:1.1}
+h3{font-size:20px;line-height:1.25;font-weight:600}
+p{margin:0;max-width:68ch}
+a{color:var(--link)}
+.sender{font-size:14px;color:var(--muted);line-height:1.25;padding-block:28px 0}
+header.top{padding-block:12px 28px;display:grid;gap:18px;border-bottom:1px solid var(--line)}
+.lead{font-size:19px;max-width:62ch}
+.facts{display:grid;grid-template-columns:repeat(auto-fit,minmax(200px,1fr));gap:1px;background:var(--line);border:1px solid var(--line)}
+.facts div{background:var(--bg);padding:12px 14px;display:grid;gap:2px}
+.facts b{font-weight:600;color:var(--ink)}
+.facts span{font-size:14px;color:var(--muted)}
+
+/* progress */
+.bar{position:sticky;top:env(safe-area-inset-top,0px);z-index:5;background:var(--bg);border-bottom:1px solid var(--line)}
+.bar .wrap{display:flex;flex-wrap:wrap;align-items:center;gap:8px 18px;padding-block:10px}
+.bar nav{display:flex;flex-wrap:wrap;gap:6px}
+.bar nav a{font-size:14px;text-decoration:none;color:var(--ink-2);border:1px solid var(--line-2);padding:5px 10px;white-space:nowrap}
+.bar nav a:hover,.bar nav a:focus-visible{border-color:var(--link);color:var(--link)}
+.bar nav a b{font-variant-numeric:tabular-nums;font-weight:600}
+.meter{flex:1 1 160px;min-width:140px;height:6px;background:var(--line)}
+.meter i{display:block;height:100%;background:var(--done);width:0;transition:width .3s}
+.save{font-size:13px;color:var(--muted)}
+
+section.part{padding-block:44px 8px;display:grid;gap:18px}
+.part-head{display:grid;gap:10px}
+.eyebrow{font-size:13px;letter-spacing:.06em;text-transform:uppercase;color:var(--muted)}
+details.law{border:1px solid var(--line);background:var(--surface)}
+details.law summary{list-style:none;cursor:pointer;padding:10px 14px;font-size:15px;color:var(--link)}
+details.law summary::-webkit-details-marker{display:none}
+details.law summary::before{content:"→ "}
+details.law[open] summary::before{content:"↓ "}
+details.law pre{white-space:pre-wrap;font-family:var(--font);font-size:15px;margin:0;padding:0 14px 14px;color:var(--ink-2);max-width:80ch}
+
+.card{border:1px solid var(--line-2);background:var(--bg);display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1.15fr);gap:0;scroll-margin-top:70px}
+.card.answered{border-color:var(--done)}
+.card .fig{background:var(--surface);padding:12px;display:grid;gap:6px;align-content:start;border-right:1px solid var(--line)}
+.card .fig svg{width:100%;height:auto;display:block}
+.card .fig .cap{font-size:13px;color:var(--muted)}
+.card .body{padding:16px 18px;display:grid;gap:12px;align-content:start;min-width:0}
+.card .no{display:flex;justify-content:space-between;gap:8px;align-items:baseline}
+.card .no span{font-size:13px;color:var(--muted);font-variant-numeric:tabular-nums}
+.tag{font-size:12px;font-weight:600;color:var(--done);border:1px solid currentColor;padding:1px 6px;white-space:nowrap}
+.chips{display:flex;flex-wrap:wrap;gap:6px}
+.chip{font-size:13px;border:1px solid var(--line-2);padding:2px 8px;color:var(--ink-2)}
+.change{display:grid;gap:4px}
+.change .lbl{font-size:13px;color:var(--muted)}
+.change ul{margin:0;padding-left:20px;display:grid;gap:3px}
+.change mark{background:var(--mark);color:inherit;padding:0 2px}
+.q{font-weight:600;color:var(--ink)}
+.ann{font-size:14px;background:var(--surface);padding:8px 10px;border:1px solid var(--line)}
+.chip.rel{color:var(--link);border-color:var(--link);text-decoration:none}
+.chip.rel:hover{text-decoration:underline}
+.why{font-size:14px;color:var(--muted);border-left:3px solid var(--line-2);padding-left:10px}
+
+.opts{display:flex;flex-wrap:wrap;gap:8px}
+.opts.stack{flex-direction:column;align-items:stretch}
+.opt{position:relative}
+.opt input{position:absolute;opacity:0;width:1px;height:1px}
+.opt label{display:block;cursor:pointer;border:1px solid var(--ink-2);padding:8px 14px;font-size:15px;background:transparent;color:var(--ink-2);user-select:none}
+.opts.stack .opt label{padding:9px 12px}
+.opt label small{display:block;font-size:13px;color:var(--muted);margin-top:2px}
+.opt input:checked + label{background:var(--ink-2);color:var(--bg);border-color:var(--ink-2)}
+.opt input:checked + label small{color:var(--bg);opacity:.85}
+.opt input:focus-visible + label{outline:3px solid var(--link);outline-offset:2px}
+.opt label:hover{border-color:var(--link)}
+.sure{display:flex;flex-wrap:wrap;gap:6px;align-items:center;font-size:14px;color:var(--muted)}
+.sure .opt label{padding:4px 10px;font-size:14px;border-color:var(--line-2)}
+textarea,input[type=text],select{width:100%;font:inherit;font-size:15px;color:var(--ink-2);background:var(--bg);border:1px solid var(--line-2);padding:8px 10px;border-radius:0}
+textarea{min-height:58px;resize:vertical}
+textarea:focus,input:focus,select:focus{outline:2px solid var(--link);outline-offset:0;border-color:var(--link)}
+.field{display:grid;gap:4px}
+.field label{font-size:14px;color:var(--muted)}
+.grid2{display:grid;grid-template-columns:repeat(auto-fit,minmax(240px,1fr));gap:12px}
+
+.btn{font:inherit;font-size:16px;cursor:pointer;border:1px solid var(--ink-2);background:transparent;color:var(--ink-2);padding:8px 22px;border-radius:0}
+.btn:hover,.btn:focus-visible{border-color:var(--link);color:var(--link)}
+.btn.primary{background:var(--ink-2);color:var(--bg)}
+.btn.primary:hover,.btn.primary:focus-visible{background:var(--link);border-color:var(--link);color:#fff}
+.btn:disabled{opacity:.45;cursor:not-allowed}
+.actions{display:flex;flex-wrap:wrap;gap:10px;align-items:center}
+.note{font-size:14px;color:var(--muted)}
+.box{border:1px solid var(--line-2);padding:16px 18px;display:grid;gap:12px}
+.ok{color:var(--done);font-weight:600}
+#copyArea{width:100%;min-height:160px;font-size:13px;font-family:ui-monospace,Menlo,Consolas,monospace}
+.owner{border:1px dashed var(--line-2);padding:14px 16px;display:grid;gap:10px}
+.owner table{border-collapse:collapse;font-size:14px;width:100%}
+.owner th,.owner td{text-align:left;border-bottom:1px solid var(--line);padding:6px 8px;font-variant-numeric:tabular-nums}
+.tbl{overflow-x:auto}
+.list{display:grid;gap:14px}
+footer{padding-block:40px 60px;color:var(--muted);font-size:14px}
+
+/* drawing */
+.w{stroke:var(--ink-2);stroke-width:6;stroke-linecap:square}
+.w.thin{stroke-width:3}
+.w.hl{stroke:var(--hl);stroke-width:11}
+.room{fill:var(--bg)}
+.room.hl{fill:var(--hl-soft)}
+.rl{fill:var(--muted);font:12px var(--font)}
+.rl.big{fill:var(--ink-2);font:600 13px var(--font)}
+.door{fill:var(--bg);stroke:var(--ink-2);stroke-width:1.5}
+.door.hl{fill:var(--hl);stroke:var(--hl)}
+.ground{stroke:var(--muted);stroke-width:2;stroke-dasharray:6 5}
+.slab{fill:var(--line-2)}
+.hlabel{fill:var(--hl);font:600 13px var(--font)}
+
+@media (max-width:720px){
+  .card{grid-template-columns:1fr}
+  .card .fig{border-right:0;border-bottom:1px solid var(--line)}
+  body{font-size:16px}
+}
+@media (prefers-reduced-motion:reduce){.meter i{transition:none}}
+</style>
+
+<div class="wrap">
+  <div class="sender">Hochschule München<br>University of Applied Sciences<br>Fakultät für Bauingenieurwesen</div>
+  <header class="top">
+    <h1>Fallprüfung Brandschutz: Trennwände und tragende Wände nach BayBO</h1>
+    <p class="lead">Wir prüfen, ob automatische Prüfregeln für digitale Bauanträge das Gesetz richtig umsetzen. Dafür brauchen wir das Urteil von Fachleuten aus Brandschutz, Feuerwehr und Bauaufsicht: <b>Hält das Gebäude in diesem Fall die Vorschrift ein oder nicht?</b></p>
+    <p>Es gibt keine erwartete „richtige“ Antwort, die Sie treffen sollen. Wir wollen gerade herausfinden, wo unsere eigenen Annahmen falsch oder strittig sind. Wenn ein Fall vom Kontext abhängt, wählen Sie „nicht eindeutig“ und schreiben Sie kurz, wovon.</p>
+    <div class="facts">
+      <div><b>Zeitbedarf</b><span>etwa 60–90 Minuten; Teil 1 allein etwa 15 Minuten</span></div>
+      <div><b>Rechtsgrundlage</b><span>BayBO, Stand April 2026, Art. 25 und 27 (entspricht weitgehend §§ 27 und 29 MBO)</span></div>
+      <div><b>Speichern</b><span id="saveHint">Ihre Antworten werden in diesem Browser zwischengespeichert</span></div>
+      <div><b>Verwendung</b><span>nur für die Studie; in Veröffentlichungen ohne Namen</span></div>
+    </div>
+  </header>
+</div>
+
+<div class="bar" role="navigation" aria-label="Fortschritt">
+  <div class="wrap">
+    <nav>
+      <a href="#gebaeude">Gebäude</a>
+      <a href="#teil1">1 Grundsatzfragen <b id="c1">0/9</b></a>
+      <a href="#teil2">2 Trennwände <b id="c2">0/19</b></a>
+      <a href="#teil3">3 Tragende Wände <b id="c3">0/11</b></a>
+      <a href="#abschluss">Abschluss</a>
+    </nav>
+    <div class="meter" aria-hidden="true"><i id="meter"></i></div>
+    <span class="save" id="saveState" aria-live="polite">Noch nichts gespeichert</span>
+  </div>
+</div>
+
+<main class="wrap">
+
+  <section class="part" id="gebaeude">
+    <div class="part-head">
+      <div class="eyebrow">Ausgangslage</div>
+      <h2>Das Gebäude</h2>
+      <p>Alle Fälle verändern dasselbe Gebäude jeweils an einer Stelle. Was nicht ausdrücklich geändert ist, bleibt wie hier beschrieben. Die Eigenschaften (Gebäudeklasse, Feuerwiderstand, „ist Trennwand“ usw.) sind im digitalen Modell hinterlegt. Bitte nehmen Sie sie als gegeben an, auch wo sie für ein reales Haus ungewöhnlich wären. Ob sie realistisch sind, fragen wir in Teil 1.</p>
+    </div>
+    <div class="card" style="grid-template-columns:minmax(0,1.2fr) minmax(0,1fr)">
+      <div class="fig" id="figBase"></div>
+      <div class="body">
+        <h3>Doppelhaus mit zwei Wohnungen</h3>
+        <ul style="margin:0;padding-left:20px;display:grid;gap:6px">
+          <li>Zwei Wohnungen (A und B) nebeneinander, jede über Erdgeschoss und Obergeschoss. Im Modell ist es <b>ein Gebäude</b> mit zwei Nutzungseinheiten.</li>
+          <li>Wohngebäude, <b>Gebäudeklasse 3</b>, sofern im Fall nichts anderes steht. Fußboden des Obergeschosses 3,10 m über Gelände.</li>
+          <li>Zwischen den Wohnungen liegt in beiden Geschossen eine <b>Wohnungstrennwand</b>: als Trennwand ausgeführt, feuerhemmend (tragend und raumabschließend), bis zur Rohdecke geführt.</li>
+          <li>Die Außenwände der Längsseiten laufen durch; an sie grenzen Räume beider Wohnungen. Sie sind tragend und feuerhemmend, aber nicht als Trennwände ausgeführt.</li>
+          <li>Tragende oberirdische Wände feuerhemmend. <b>Kein Kellergeschoss</b> und <b>keine notwendigen Flure</b>, sofern im Fall nichts anderes steht.</li>
+          <li>Im Obergeschoss der Wohnung B liegt ein Hauswirtschaftsraum (HWR).</li>
+        </ul>
+      </div>
+    </div>
+  </section>
+
+  <section class="part" id="teil1">
+    <div class="part-head">
+      <div class="eyebrow">Teil 1 von 3 · 9 Fragen</div>
+      <h2>Grundsatzfragen zur Auslegung</h2>
+      <p>Hier gehen Lesarten auseinander, und davon hängt ab, wie eine Prüfregel entscheiden muss. Diese Fragen sind für uns am wichtigsten. Wenn Sie wenig Zeit haben, beantworten Sie bitte zuerst diesen Teil.</p>
+      <details class="law"><summary>Wortlaut Art. 27 BayBO (Trennwände) anzeigen</summary><pre id="law27"></pre></details>
+    </div>
+    <div id="list1" class="list"></div>
+  </section>
+
+  <section class="part" id="teil2">
+    <div class="part-head">
+      <div class="eyebrow">Teil 2 von 3 · 19 Fälle</div>
+      <h2>Fälle zu Art. 27: Trennwände</h2>
+      <p>Bitte beurteilen Sie jeden Fall so, wie Sie es in einer Prüfung tun würden: <b>Erfüllt das Gebäude Art. 27 BayBO?</b> Die Zeichnung ist ein Schema des Obergeschosses, nicht maßstäblich. Blau markiert ist das Bauteil, das sich gegenüber dem Ausgangsgebäude ändert. Alles, was nicht genannt ist, bleibt wie im Ausgangsgebäude.</p>
+      <div class="box" style="gap:6px"><b>Eindeutige Fälle und Auslegungsfälle</b><p class="note">Ein Teil der Fälle ist bewusst so gebaut, dass das Urteil von einer Grundsatzfrage aus Teil 1 abhängt. Diese Fälle tragen den Hinweis „hängt mit Frage … zusammen“. Bitte urteilen Sie dort nach Ihrer eigenen Lesart und begründen Sie kurz. Einige Annahmen sind für den Test künstlich gesetzt (z. B. ein Obergeschoss, das als Kellergeschoss gilt); sie sind als „Annahme für den Test“ gekennzeichnet. Wenn Ihnen für ein Urteil eine Angabe fehlt, wählen Sie „Nicht eindeutig“ und schreiben Sie, welche.</p></div>
+      <details class="law"><summary>Wortlaut Art. 27 BayBO (Trennwände) anzeigen</summary><pre class="law27"></pre></details>
+    </div>
+    <div id="list2" class="list"></div>
+  </section>
+
+  <section class="part" id="teil3">
+    <div class="part-head">
+      <div class="eyebrow">Teil 3 von 3 · 11 Fälle</div>
+      <h2>Fälle zu Art. 25: tragende Wände</h2>
+      <p>Bitte beurteilen Sie nur die tragenden <b>Wände</b>, nicht Stützen: <b>Erfüllt das Gebäude Art. 25 BayBO?</b> Die Zeichnung ist ein schematischer Schnitt. Was nicht genannt ist, bleibt wie im Ausgangsgebäude; ein Kellergeschoss gibt es nur, wo es genannt ist.</p>
+      <details class="law"><summary>Wortlaut Art. 25 BayBO (Tragende Wände, Stützen) anzeigen</summary><pre id="law25"></pre></details>
+    </div>
+    <div id="list3" class="list"></div>
+  </section>
+
+  <section class="part" id="abschluss">
+    <div class="part-head">
+      <div class="eyebrow">Abschluss</div>
+      <h2>Zu Ihrer Person und Ihren Antworten</h2>
+      <p>Die Angaben helfen uns, die Urteile einzuordnen. Alle Felder sind freiwillig.</p>
+    </div>
+    <div class="box">
+      <div class="grid2">
+        <div class="field"><label for="p_name">Name</label><input type="text" id="p_name" autocomplete="name"></div>
+        <div class="field"><label for="p_role">Fachliche Rolle</label>
+          <select id="p_role">
+            <option value="">Bitte wählen</option>
+            <option>Prüfsachverständige/r für Brandschutz</option>
+            <option>Bauaufsicht / Genehmigungsbehörde</option>
+            <option>Feuerwehr / vorbeugender Brandschutz</option>
+            <option>Brandschutzplanung / Fachplanung</option>
+            <option>Architektur / Entwurfsplanung</option>
+            <option>Tragwerksplanung</option>
+            <option>Sonstiges</option>
+          </select></div>
+        <div class="field"><label for="p_years">Berufserfahrung im Brandschutz (Jahre)</label><input type="text" id="p_years" inputmode="numeric"></div>
+        <div class="field"><label for="p_lbo">Nach welcher Landesbauordnung arbeiten Sie meist?</label><input type="text" id="p_lbo" placeholder="z. B. BayBO, BauO NRW, MBO"></div>
+      </div>
+      <div class="field"><label for="p_note">Gibt es Anforderungen aus Art. 25 oder 27, die in den Fällen fehlen und die eine Prüfregel unbedingt abdecken sollte? Sonstige Anmerkungen?</label><textarea id="p_note" rows="4"></textarea></div>
+    </div>
+
+    <div class="box">
+      <h3>Antworten übermitteln</h3>
+      <p id="submitInfo" class="note">Ihre Antworten werden in diesem Browser zwischengespeichert. Bitte laden Sie sie am Ende herunter oder kopieren Sie sie und senden Sie sie per E-Mail an die Person, die Sie angefragt hat.</p>
+      <div class="actions">
+        <button class="btn primary" id="btnSubmit" type="button" hidden>Antworten an die Studie senden</button>
+        <button class="btn" id="btnMd" type="button">Als Textdatei herunterladen</button>
+        <button class="btn" id="btnJson" type="button">Als JSON herunterladen</button>
+        <button class="btn" id="btnCopy" type="button">Als Text kopieren</button>
+      </div>
+      <p id="actionMsg" class="note" aria-live="polite"></p>
+      <textarea id="copyArea" readonly hidden aria-label="Antworten als Text"></textarea>
+      <div class="actions"><button class="btn" id="btnNext" type="button">Zur nächsten offenen Frage</button></div>
+    </div>
+
+    <div class="owner" id="ownerBox" hidden>
+      <h3>Eingegangene Antworten (nur für Sie sichtbar)</h3>
+      <div class="tbl"><table><thead><tr><th>Person</th><th>Rolle</th><th>beantwortet</th><th>zuletzt</th></tr></thead><tbody id="ownerRows"></tbody></table></div>
+      <div class="actions"><button class="btn" id="btnAll" type="button">Alle Antworten herunterladen (JSON)</button></div>
+    </div>
+  </section>
+</main>
+
+<footer class="wrap">
+  <p>Hochschule München, Fakultät für Bauingenieurwesen. Studie zur Prüfung automatischer Prüfregeln gegen das Bauordnungsrecht (Rule Fidelity Study). Die Fälle sind Varianten eines Beispielmodells und beziehen sich auf kein reales Bauvorhaben.</p>
+</footer>
+
+<script>
+(function(){
+"use strict";
+const LAW27 = `Art. 27 Trennwände
+(1) Trennwände nach Abs. 2 müssen als raumabschließende Bauteile von Räumen oder Nutzungseinheiten innerhalb von Geschossen ausreichend lang widerstandsfähig gegen die Brandausbreitung sein.
+(2) Trennwände sind erforderlich
+1. zwischen Nutzungseinheiten sowie zwischen Nutzungseinheiten und anders genutzten Räumen, ausgenommen notwendigen Fluren,
+2. zum Abschluss von Räumen mit Explosions- oder erhöhter Brandgefahr,
+3. zwischen Aufenthaltsräumen und anders genutzten Räumen im Kellergeschoss.
+(3) 1Trennwände nach Abs. 2 Nr. 1 und 3 müssen die Feuerwiderstandsfähigkeit der tragenden und aussteifenden Bauteile des Geschosses haben, jedoch mindestens feuerhemmend sein. 2Trennwände nach Abs. 2 Nr. 2 müssen feuerbeständig sein.
+(4) Die Trennwände nach Abs. 2 sind bis zur Rohdecke, im Dachraum bis unter die Dachhaut zu führen; werden in Dachräumen Trennwände nur bis zur Rohdecke geführt, ist diese Decke als raumabschließendes Bauteil einschließlich der sie tragenden und aussteifenden Bauteile feuerhemmend herzustellen.
+(5) Öffnungen in Trennwänden nach Abs. 2 müssen feuerhemmende, dicht- und selbstschließende Abschlüsse haben.
+(6) Die Abs. 1 bis 5 gelten nicht innerhalb von Wohngebäuden der Gebäudeklassen 1 und 2.`;
+const LAW25 = `Art. 25 Tragende Wände, Stützen
+(1) 1Tragende und aussteifende Wände und Stützen müssen im Brandfall ausreichend lang standsicher sein. 2Sie müssen
+1. in Gebäuden der Gebäudeklasse 5 feuerbeständig,
+2. in Gebäuden der Gebäudeklasse 4 hochfeuerhemmend,
+3. in Gebäuden der Gebäudeklassen 2 und 3 feuerhemmend
+sein. 3Satz 2 gilt
+1. für Geschosse im Dachraum nur, wenn darüber noch Aufenthaltsräume möglich sind; Art. 27 Abs. 4 bleibt unberührt,
+2. nicht für Balkone, ausgenommen offene Gänge, die als notwendige Flure dienen.
+(2) Im Kellergeschoss müssen tragende und aussteifende Wände und Stützen
+1. in Gebäuden der Gebäudeklassen 3 bis 5 feuerbeständig,
+2. in Gebäuden der Gebäudeklassen 1 und 2 feuerhemmend
+sein.`;
+
+/* ---------- Teil 1: Grundsatzfragen (ids C1–C8 match the study key) ---------- */
+const Q1 = [
+ {id:"C1", fig:"hwr", cap:"Hauswirtschaftsraum, der keiner Wohnung angehört",
+  q:"Ist ein Raum, der keiner Nutzungseinheit angehört (z. B. ein gemeinsam genutzter Hauswirtschaftsraum), ein „anders genutzter Raum“ im Sinne von Art. 27 Abs. 2 Nr. 1?",
+  why:"Davon hängt ab, ob die Wände eines solchen Raums Trennwände sein müssen.",
+  opts:[["ja","Ja","Seine Wände zu den Wohnungen müssen Trennwände sein."],["nein","Nein","Art. 27 Abs. 2 Nr. 1 greift hier nicht."],["abh","Hängt vom Einzelfall ab","Bitte in der Anmerkung erläutern."]]},
+ {id:"C2", fig:"keller", cap:"Obergeschoss gedanklich als Kellergeschoss",
+  q:"Art. 27 Abs. 2 Nr. 3 (Aufenthaltsräume und anders genutzte Räume im Kellergeschoss): Welche Räume gelten als „anders genutzte Räume“?",
+  why:"Mehrfachauswahl möglich. Davon hängt ab, zwischen welchen Räumen im Keller Trennwände nötig sind.",
+  multi:true, opts:[["flur","Flur innerhalb der Wohnung"],["bad","Bad / WC"],["hwr","Hauswirtschaftsraum"],["abst","Abstell- und Technikräume"],["keine","Keiner dieser Räume innerhalb derselben Wohnung"]]},
+ {id:"C3", fig:"party", cap:"Wohnungstrennwand",
+  q:"Art. 27 Abs. 3 Satz 1 verlangt „die Feuerwiderstandsfähigkeit der tragenden und aussteifenden Bauteile des Geschosses“. Welche ist gemeint?",
+  why:"Beispiel: Gebäudeklasse 4 verlangt hochfeuerhemmend. Sind die tragenden Wände tatsächlich feuerbeständig ausgeführt, muss die Trennwand dann hochfeuerhemmend oder feuerbeständig sein?",
+  opts:[["gefordert","Die nach Gebäudeklasse geforderte","Hier also hochfeuerhemmend."],["vorhanden","Die tatsächlich ausgeführte","Hier also feuerbeständig."],["abh","Hängt ab / anders","Bitte erläutern."]]},
+ {id:"C4", fig:"ext", cap:"Außenwände, an die beide Wohnungen grenzen",
+  q:"Sind Außenwände, an die Räume verschiedener Nutzungseinheiten grenzen, Trennwände im Sinne von Art. 27?",
+  why:"Im Gebäude laufen die Außenwände der Längsseiten über beide Wohnungen durch.",
+  opts:[["nein26","Nein, Außenwände regelt allein Art. 26","Art. 27 betrifft nur Innenwände."],["ja","Ja, Art. 27 gilt auch für diese Außenwände",""],["abh","Hängt ab","Bitte erläutern."]]},
+ {id:"C5", fig:"flur", cap:"Flur der Wohnung B",
+  q:"Gehören die Wände eines notwendigen Flurs zu Art. 27, oder regelt Art. 34 (Notwendige Flure, offene Gänge) sie abschließend?",
+  why:"Art. 27 Abs. 2 Nr. 1 nimmt notwendige Flure aus. Die Frage ist, ob dann gar keine Anforderung aus Art. 27 bleibt.",
+  opts:[["36","Art. 34 regelt abschließend","Für Art. 27 nichts zu prüfen."],["beide","Art. 27 gilt zusätzlich",""],["abh","Hängt ab","Bitte erläutern."]]},
+ {id:"C6", fig:"base", cap:"Ausgangsgebäude",
+  q:"Welche Gebäudeklasse hätte dieses Doppelhaus nach Art. 2 Abs. 3 realistisch?",
+  why:"Zwei Wohnungen, zwei oberirdische Geschosse, zusammen etwa 2 × 120 m², Fußboden Obergeschoss 3,10 m über Gelände, im Modell ein Gebäude. Unsere Fälle nehmen Gebäudeklasse 3 an.",
+  opts:[["1","Gebäudeklasse 1"],["2","Gebäudeklasse 2"],["3","Gebäudeklasse 3"],["abh","Hängt ab","z. B. davon, ob es ein oder zwei Gebäude sind."]]},
+ {id:"C7", fig:"party", cap:"Wand zwischen den Doppelhaushälften",
+  q:"Ist die Wand zwischen zwei Doppelhaushälften fachlich eine Trennwand (Art. 27) oder eine Gebäudeabschlusswand bzw. Brandwand (Art. 28)?",
+  why:"Davon hängt ab, ob das Testgebäude Art. 27 überhaupt richtig trifft, und welche Fälle wir für Art. 28 bauen.",
+  opts:[["27","Trennwand nach Art. 27","Ein Gebäude mit zwei Nutzungseinheiten."],["28","Gebäudeabschlusswand / Brandwand nach Art. 28","Zwei Gebäude, z. B. an der Grundstücksgrenze."],["abh","Hängt ab","z. B. von Grundstücksteilung oder Grenzabstand; bitte erläutern."]]},
+ {id:"C9", fig:"party", cap:"Wohnungstrennwand im Obergeschoss",
+  q:"Art. 27 Abs. 4 lässt in Dachräumen zu, Trennwände nur bis zur Rohdecke zu führen, wenn diese Decke feuerhemmend ist. Ist das Obergeschoss dieses Hauses (oberstes Vollgeschoss, darüber das Dach) ein „Dachraum“ in diesem Sinn?",
+  why:"Davon hängt ab, ob eine Trennwand im Obergeschoss bis unter die Dachhaut geführt werden muss oder ob die Rohdecke genügt.",
+  opts:[["nein","Nein, ein normales Geschoss","Die Trennwand muss bis zur Rohdecke geführt werden; die Ausnahme greift nicht."],["ja","Ja, ein Dachraum","Die Ausnahme in Abs. 4 kann greifen."],["abh","Hängt ab","z. B. von Dachneigung oder Nutzung des Raums darüber; bitte erläutern."]]},
+ {id:"C8", fig:null, cap:"",
+  q:"Was sollte eine automatische Prüfung von Art. 25 und Art. 27 unbedingt abdecken, das in unseren Fällen fehlt?",
+  why:"Freitext. Typische Fehlerquellen aus Ihrer Praxis helfen uns besonders.", text:true}
+];
+
+/* ---------- Teil 2: Art. 27 (ids B1–B19 match the study key; order as in the study form) ---------- */
+const GK3 = ["GK 3","Wohngebäude"];
+const Q2 = [
+ {id:"B1", fig:"hwrdoor", chips:GK3, cap:"Tür des Hauswirtschaftsraums", rel:["C1"],
+  t:"Gemeinsamer Hauswirtschaftsraum, Tür nicht selbstschließend",
+  ann:"Der Hauswirtschaftsraum im Obergeschoss ist keiner der beiden Wohnungen zugeordnet (z. B. gemeinsam genutzt). Seine Tür führt in den Flur der Wohnung B.",
+  ch:["Die Wände des Hauswirtschaftsraums sind Trennwände: feuerhemmend, bis zur Rohdecke.","Seine Tür ist feuerhemmend und dichtschließend, aber <mark>nicht selbstschließend</mark>."]},
+ {id:"B2", fig:"party", chips:["GK 2","Wohngebäude"], cap:"Wohnungstrennwand im Obergeschoss",
+  t:"Gebäudeklasse 2, Wohngebäude, keine Trennwand zwischen den Wohnungen",
+  ch:["<mark>Gebäudeklasse 2</mark>, weiterhin Wohngebäude.","Die Wand zwischen den beiden Wohnungen im Obergeschoss ist <mark>keine Trennwand</mark> (kein Feuerwiderstand als raumabschließendes Bauteil)."]},
+ {id:"B3", fig:"party", chips:GK3, cap:"Wohnungstrennwand im Obergeschoss", rel:["C9"],
+  t:"Wohnungstrennwand endet unter der Rohdecke",
+  ch:["Die Wohnungstrennwand im Obergeschoss ist <mark>nicht bis zur Rohdecke</mark> geführt; sie endet darunter.","Feuerwiderstand und Kennzeichnung als Trennwand bleiben unverändert (feuerhemmend)."]},
+ {id:"B4", fig:"keller", chips:GK3, cap:"Obergeschoss als Kellergeschoss ausgewiesen", rel:["C2"],
+  t:"„Kellergeschoss“: Schlafräume mit Trennwänden abgetrennt",
+  ann:"Künstlich gesetzt, weil das Modell keinen echten Keller hat: Das Obergeschoss gilt als Kellergeschoss. Schlafräume sind Aufenthaltsräume; Flur, Bad und Hauswirtschaftsraum sind keine.",
+  ch:["Alle Wände zwischen den Schlafräumen und Flur, Bad und Hauswirtschaftsraum sind Trennwände: <mark>feuerbeständig</mark>, bis zur Rohdecke.","Die Türen in diesen Wänden sind feuerhemmend, dicht- und selbstschließend."]},
+ {id:"B5", fig:"base", chips:GK3, cap:"Ausgangsgebäude",
+  t:"Ausgangsgebäude ohne Änderung",
+  ch:["<mark>Keine Änderung.</mark> Bitte beurteilen Sie das Ausgangsgebäude wie oben beschrieben."]},
+ {id:"B6", fig:"hwr", chips:GK3, cap:"Wände des Hauswirtschaftsraums", rel:["C1"],
+  t:"Gemeinsamer Hauswirtschaftsraum ohne Trennwände",
+  ann:"Der Hauswirtschaftsraum im Obergeschoss ist keiner der beiden Wohnungen zugeordnet (z. B. gemeinsam genutzt). Seine Tür führt in den Flur der Wohnung B.",
+  ch:["Die Wände des Hauswirtschaftsraums zu den angrenzenden Räumen der Wohnung B sind <mark>keine Trennwände</mark> (kein Feuerwiderstand)."]},
+ {id:"B7", fig:"party", chips:["GK 4","Wohngebäude"], cap:"Wohnungstrennwand im Obergeschoss", rel:["C3"],
+  t:"Gebäudeklasse 4, Wohnungstrennwand nur feuerhemmend",
+  ch:["<mark>Gebäudeklasse 4</mark>; alle tragenden und aussteifenden Bauteile sind <mark>hochfeuerhemmend</mark>.","Die Wohnungstrennwand im Obergeschoss ist nur <mark>feuerhemmend</mark>."]},
+ {id:"B8", fig:"party", chips:GK3, cap:"Wohnungstrennwand im Obergeschoss",
+  t:"Trennwand ohne Angabe zum raumabschließenden Feuerwiderstand",
+  ch:["Die Wohnungstrennwand im Obergeschoss ist als Trennwand gekennzeichnet.","Als tragendes Bauteil ist sie feuerhemmend. Für ihren Feuerwiderstand <mark>als raumabschließendes Bauteil gibt es keine Angabe</mark>."],
+  hint:"Bitte werten Sie die fehlende Angabe so, wie Sie es bei unvollständigen Bauvorlagen tun würden, und schreiben Sie, ob Sie nachfordern oder ablehnen würden."},
+ {id:"B9", fig:"hwr", chips:GK3, cap:"Hauswirtschaftsraum der Wohnung B",
+  t:"Raum mit erhöhter Brandgefahr, feuerbeständig abgetrennt",
+  ch:["Der Hauswirtschaftsraum <mark>gehört zur Wohnung B</mark> und hat <mark>erhöhte Brandgefahr</mark>.","Seine umschließenden Innenwände sind Trennwände: <mark>feuerbeständig</mark>, bis zur Rohdecke.","Seine Tür ist feuerhemmend, dicht- und selbstschließend."]},
+ {id:"B10", fig:"hwr", chips:GK3, cap:"Hauswirtschaftsraum der Wohnung B",
+  t:"Raum mit Explosionsgefahr ohne Trennwände",
+  ch:["Der Hauswirtschaftsraum <mark>gehört zur Wohnung B</mark> und hat <mark>Explosionsgefahr</mark>.","Seine umschließenden Innenwände sind <mark>keine Trennwände</mark> (kein Feuerwiderstand)."]},
+ {id:"B11", fig:"hwr", chips:GK3, cap:"Hauswirtschaftsraum, der keiner Wohnung angehört", rel:["C1"],
+  t:"Gemeinsamer Hauswirtschaftsraum, vollständig abgetrennt",
+  ann:"Der Hauswirtschaftsraum im Obergeschoss ist keiner der beiden Wohnungen zugeordnet (z. B. gemeinsam genutzt). Seine Tür führt in den Flur der Wohnung B.",
+  ch:["Seine Wände sind Trennwände: <mark>feuerhemmend</mark>, bis zur Rohdecke.","Seine Tür ist feuerhemmend, dicht- und selbstschließend."]},
+ {id:"B12", fig:"party", chips:GK3, cap:"Wohnungstrennwand im Obergeschoss",
+  t:"Keine Trennwand zwischen den Wohnungen",
+  ch:["Die Wand zwischen den beiden Wohnungen im Obergeschoss ist <mark>keine Trennwand</mark> (kein Feuerwiderstand als raumabschließendes Bauteil)."]},
+ {id:"B13", fig:"party", chips:["GK 4","Wohngebäude"], cap:"Wohnungstrennwand im Obergeschoss", rel:["C3"],
+  t:"Gebäudeklasse 4, alles hochfeuerhemmend",
+  ch:["<mark>Gebäudeklasse 4</mark>.","Alle tragenden und aussteifenden Bauteile und alle Trennwände sind <mark>hochfeuerhemmend</mark>."]},
+ {id:"B14", fig:"flur", chips:GK3, cap:"Flur im Obergeschoss", rel:["C5"],
+  t:"Notwendiger Flur ohne Trennwände",
+  ann:"Der Flur im Obergeschoss der Wohnung B ist keiner Wohnung zugeordnet und gilt als notwendiger Flur im Sinne von Art. 34.",
+  ch:["Die Wände dieses Flurs sind <mark>keine Trennwände</mark>."],
+  hint:"Wenn Art. 34 eigene Anforderungen an diese Wände stellt, beurteilen Sie hier bitte nur Art. 27 und vermerken Art. 34 in der Begründung."},
+ {id:"B15", fig:"hwr", chips:GK3, cap:"Hauswirtschaftsraum der Wohnung B",
+  t:"Raum mit erhöhter Brandgefahr, nur feuerhemmend abgetrennt",
+  ch:["Der Hauswirtschaftsraum <mark>gehört zur Wohnung B</mark> und hat <mark>erhöhte Brandgefahr</mark>.","Seine umschließenden Innenwände sind Trennwände, aber nur <mark>feuerhemmend</mark>.","Seine Tür ist feuerhemmend, dicht- und selbstschließend."]},
+ {id:"B16", fig:"hwrdoor", chips:GK3, cap:"Tür des Hauswirtschaftsraums", rel:["C1"],
+  t:"Gemeinsamer Hauswirtschaftsraum, Tür ohne Feuerwiderstand",
+  ann:"Der Hauswirtschaftsraum im Obergeschoss ist keiner der beiden Wohnungen zugeordnet (z. B. gemeinsam genutzt). Seine Tür führt in den Flur der Wohnung B.",
+  ch:["Seine Wände sind Trennwände: feuerhemmend, bis zur Rohdecke.","Seine Tür ist dicht- und selbstschließend, hat aber <mark>keinen Feuerwiderstand</mark>."]},
+ {id:"B17", fig:"keller", chips:GK3, cap:"Obergeschoss als Kellergeschoss ausgewiesen", rel:["C2"],
+  t:"„Kellergeschoss“: Schlafräume nicht abgetrennt",
+  ann:"Künstlich gesetzt, weil das Modell keinen echten Keller hat: Das Obergeschoss gilt als Kellergeschoss. Schlafräume sind Aufenthaltsräume; Flur, Bad und Hauswirtschaftsraum sind keine.",
+  ch:["Die Wände zwischen den Schlafräumen und Flur, Bad und Hauswirtschaftsraum sind <mark>keine Trennwände</mark>."]},
+ {id:"B18", fig:"party", chips:["GK 2","kein Wohngebäude"], cap:"Wand zwischen den Nutzungseinheiten",
+  t:"Gebäudeklasse 2, kein Wohngebäude, Trennwand fehlt",
+  ann:"Gleiche Geometrie, aber das Gebäude ist kein Wohngebäude; die beiden Hälften sind zwei Nutzungseinheiten anderer Art (z. B. zwei Büroeinheiten).",
+  ch:["<mark>Gebäudeklasse 2</mark>, <mark>kein Wohngebäude</mark>.","Die Wand zwischen den beiden Nutzungseinheiten im Obergeschoss ist <mark>keine Trennwand</mark>."]},
+ {id:"B19", fig:"ext", chips:GK3, cap:"Außenwände der Längsseiten", rel:["C4"],
+  t:"Außenwände, an die beide Wohnungen grenzen",
+  ch:["<mark>Keine Änderung</mark> gegenüber dem Ausgangsgebäude.","Bitte beurteilen Sie nur die <mark>Außenwände der Längsseiten</mark>: Sie laufen an beiden Wohnungen vorbei, sind tragend und feuerhemmend, aber <mark>nicht als Trennwände</mark> ausgeführt."]}
+];
+
+/* ---------- Teil 3: Art. 25 (ids A1–A11) ---------- */
+const Q3 = [
+ {id:"A1", sec:{k:true,hl:"kg",og:"feuerhemmend",kg:"feuerhemmend",x:"ohne Feuerwiderstand"}, chips:["GK 2","mit Keller"],
+  ch:["<mark>Gebäudeklasse 2</mark>, <mark>Kellergeschoss</mark> vorhanden.","Eine tragende Kellerwand hat <mark>keinen Feuerwiderstand</mark>; die übrigen Kellerwände sind feuerhemmend."]},
+ {id:"A2", sec:{k:false,og:"hochfeuerhemmend"}, chips:["GK 4","ohne Keller"],
+  ch:["<mark>Gebäudeklasse 4</mark>.","Alle tragenden Wände sind <mark>hochfeuerhemmend</mark>."]},
+ {id:"A3", sec:{k:true,og:"ohne Feuerwiderstand",kg:"feuerhemmend"}, chips:["GK 1","mit Keller"],
+  ch:["<mark>Gebäudeklasse 1</mark>, Kellergeschoss vorhanden.","Tragende oberirdische Wände <mark>ohne Feuerwiderstand</mark>; Kellerwände feuerhemmend."]},
+ {id:"A4", sec:{k:false,hl:"og",og:"feuerhemmend",x:"ohne Feuerwiderstand"}, chips:["GK 3","ohne Keller"],
+  ch:["Gebäudeklasse 3.","<mark>Eine</mark> tragende oberirdische Wand hat <mark>keinen Feuerwiderstand</mark>."]},
+ {id:"A5", sec:{k:false,og:"feuerbeständig"}, chips:["GK 5","ohne Keller"],
+  ch:["<mark>Gebäudeklasse 5</mark>.","Alle tragenden Wände sind <mark>feuerbeständig</mark>."]},
+ {id:"A6", sec:{k:false,hl:"og",og:"hochfeuerhemmend",x:"feuerbeständig"}, chips:["GK 4","ohne Keller"],
+  ch:["<mark>Gebäudeklasse 4</mark>.","Alle tragenden Wände sind hochfeuerhemmend, <mark>eine davon feuerbeständig</mark>."]},
+ {id:"A7", sec:{k:false,og:"feuerhemmend"}, chips:["GK 3","ohne Keller"],
+  ch:["<mark>Keine Änderung.</mark> Ausgangsgebäude, Gebäudeklasse 3."]},
+ {id:"A8", sec:{k:true,hl:"kg",og:"feuerhemmend",kg:"feuerbeständig",x:"nur feuerhemmend"}, chips:["GK 3","mit Keller"],
+  ch:["Gebäudeklasse 3, <mark>Kellergeschoss</mark> vorhanden.","Eine tragende Kellerwand ist <mark>nur feuerhemmend</mark>; die übrigen Kellerwände sind feuerbeständig."]},
+ {id:"A9", sec:{k:false,hl:"og",og:"feuerbeständig",x:"nur hochfeuerhemmend"}, chips:["GK 5","ohne Keller"],
+  ch:["<mark>Gebäudeklasse 5</mark>.","Eine tragende oberirdische Wand ist <mark>nur hochfeuerhemmend</mark>, die übrigen feuerbeständig."]},
+ {id:"A10", sec:{k:true,og:"feuerhemmend",kg:"feuerhemmend"}, chips:["GK 2","mit Keller"],
+  ch:["<mark>Gebäudeklasse 2</mark>, <mark>Kellergeschoss</mark> vorhanden.","Alle Kellerwände sind <mark>feuerhemmend</mark>."]},
+ {id:"A11", sec:{k:false,hl:"og",og:"hochfeuerhemmend",x:"nur feuerhemmend"}, chips:["GK 4","ohne Keller"],
+  ch:["<mark>Gebäudeklasse 4</mark>.","Eine tragende oberirdische Wand ist <mark>nur feuerhemmend</mark>, die übrigen hochfeuerhemmend."]}
+];
+const VERDICT = [["ja","Erfüllt"],["nein","Nicht erfüllt"],["unklar","Nicht eindeutig / hängt ab"]];
+const QNUM = id => Q1.findIndex(q=>q.id===id)+1;
+const SURE = [["sicher","sicher"],["eher","eher sicher"],["unsicher","unsicher"]];
+
+/* ---------- drawings ---------- */
+const NS = "http://www.w3.org/2000/svg";
+function plan(mode){
+  const W = [ // id, x1,y1,x2,y2, groups
+    ["top",20,20,620,20,"ext"],["bottom",20,330,620,330,"ext"],["left",20,20,20,330,"ext"],["right",620,20,620,330,"ext"],
+    ["party",320,20,320,330,"party"],
+    ["amid",20,170,320,170,"keller"],["abed",170,20,170,170,""],["abad",130,170,130,330,"keller"],
+    ["bmid",320,170,520,170,"flur keller"],["bbed",470,20,470,170,""],["hwrtop",520,170,620,170,"hwr keller"],["hwrleft",520,170,520,330,"hwr flur keller"]
+  ];
+  const rooms = [[20,20,150,150,"Schlafen",""],[170,20,150,150,"Schlafen",""],[20,170,110,160,"Bad",""],[130,170,190,160,"Flur",""],
+                 [320,20,150,150,"Schlafen",""],[470,20,150,150,"Schlafen",""],[320,170,200,160,"Flur","flur"],[520,170,100,160,"HWR","hwr hwrdoor"]];
+  const doors = [["d1",135,165,170,"h",""],["d2",200,240,170,"h",""],["d3",225,265,130,"v",""],["d4",360,400,170,"h",""],["d5",478,512,170,"h",""],["hwrdoor",230,270,520,"v","hwrdoor"]];
+  let s = `<svg viewBox="0 0 640 372" role="img" aria-label="Schema Obergeschoss">`;
+  const roomHl = mode==="hwr"||mode==="hwrdoor" ? "hwr" : mode==="flur" ? "flur" : "";
+  for(const [x,y,w,h,l,g] of rooms){
+    const hl = roomHl && g.split(" ").includes(roomHl);
+    s += `<rect class="room${hl?" hl":""}" x="${x}" y="${y}" width="${w}" height="${h}"/>`;
+    s += `<text class="rl" x="${x+w/2}" y="${y+h/2+4}" text-anchor="middle">${l}</text>`;
+  }
+  for(const [id,x1,y1,x2,y2,g] of W){
+    const groups = g.split(" ");
+    const hl = (mode==="party"&&id==="party") || (mode==="ext"&&groups.includes("ext")) || (mode==="hwr"&&groups.includes("hwr")) ||
+               (mode==="flur"&&groups.includes("flur")) || (mode==="keller"&&groups.includes("keller"));
+    s += `<line class="w${groups.includes("ext")||id==="party"?"":" thin"}${hl?" hl":""}" x1="${x1}" y1="${y1}" x2="${x2}" y2="${y2}"/>`;
+  }
+  for(const [id,a,b,c,o,g] of doors){
+    const hl = mode==="hwrdoor" && id==="hwrdoor";
+    if(o==="h") s += `<rect class="door${hl?" hl":""}" x="${a}" y="${c-5}" width="${b-a}" height="10"/>`;
+    else s += `<rect class="door${hl?" hl":""}" x="${c-5}" y="${a}" width="10" height="${b-a}"/>`;
+  }
+  s += `<text class="rl big" x="170" y="356" text-anchor="middle">Wohnung A</text><text class="rl big" x="470" y="356" text-anchor="middle">Wohnung B</text>`;
+  if(mode==="keller") s += `<text class="hlabel" x="320" y="13" text-anchor="middle">als Kellergeschoss ausgewiesen</text>`;
+  return s + `</svg>`;
+}
+function section(p){
+  const top = 34, h = 96, g = top+2*h+6;
+  let s = `<svg viewBox="0 0 640 ${p.k?330:250}" role="img" aria-label="Schema Schnitt">`;
+  const lv = [["OG",top],["EG",top+h]]; if(p.k) lv.push(["KG",g+2]);
+  for(const [n,y] of lv){
+    s += `<rect class="slab" x="30" y="${y-6}" width="580" height="6"/>`;
+    s += `<text class="rl big" x="8" y="${y+h/2}" >${n}</text>`;
+  }
+  s += `<rect class="slab" x="30" y="${p.k?g+2+h-2:g-6}" width="580" height="6"/>`;
+  s += `<line class="ground" x1="0" y1="${g}" x2="640" y2="${g}"/><text class="rl" x="636" y="${g-6}" text-anchor="end">Gelände</text>`;
+  const xs = [40,320,600];
+  for(const [n,y] of lv){
+    xs.forEach((x,i)=>{
+      const hl = (p.hl==="og" && n==="OG" && i===0) || (p.hl==="kg" && n==="KG" && i===0);
+      s += `<line class="w${hl?" hl":""}" x1="${x}" y1="${y}" x2="${x}" y2="${y+h-8}"/>`;
+    });
+    const lab = n==="KG" ? p.kg : p.og;
+    s += `<text class="rl" x="180" y="${y+h/2+4}" text-anchor="middle">${lab}</text><text class="rl" x="460" y="${y+h/2+4}" text-anchor="middle">${lab}</text>`;
+  }
+  if(p.hl){
+    const y = p.hl==="og" ? top : g+2;
+    s += `<text class="hlabel" x="54" y="${y+18}">${p.x}</text>`;
+  }
+  return s + `</svg>`;
+}
+
+/* ---------- state ---------- */
+const KEY = "fallpruefung-brandschutz-v1";
+let state = {answers:{}, person:{}, updatedAt:null};
+try{ const raw = localStorage.getItem(KEY); if(raw){ const p = JSON.parse(raw); if(p && p.answers) state = p; } }catch(e){}
+const esc = t => String(t).replace(/[&<>"]/g, c => ({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;"}[c]));
+
+function radioGroup(name, opts, cur, cls){
+  return `<div class="opts${cls?" "+cls:""}" role="radiogroup">` + opts.map(([v,l,sm])=>{
+    const id = `${name}-${v}`;
+    return `<div class="opt"><input type="radio" name="${name}" id="${id}" value="${v}"${cur===v?" checked":""}><label for="${id}">${esc(l)}${sm?`<small>${esc(sm)}</small>`:""}</label></div>`;
+  }).join("") + `</div>`;
+}
+function checkGroup(name, opts, cur){
+  cur = Array.isArray(cur) ? cur : [];
+  return `<div class="opts stack">` + opts.map(([v,l])=>{
+    const id = `${name}-${v}`;
+    return `<div class="opt"><input type="checkbox" name="${name}" id="${id}" value="${v}"${cur.includes(v)?" checked":""}><label for="${id}">${esc(l)}</label></div>`;
+  }).join("") + `</div>`;
+}
+function card(item, idx, total, kind){
+  const a = state.answers[item.id] || {};
+  let fig = "";
+  if(kind===1 && item.fig) fig = `<div class="fig">${plan(item.fig)}<div class="cap">Markiert: ${esc(item.cap)}</div></div>`;
+  if(kind===2) fig = `<div class="fig">${plan(item.fig)}<div class="cap">Markiert: ${esc(item.cap)}</div></div>`;
+  if(kind===3) fig = `<div class="fig">${section(item.sec)}<div class="cap">${item.sec.hl?"Markiert: die geänderte Wand":"Schnitt, alle tragenden Wände gleich"}</div></div>`;
+  let body = `<div class="no"><h3>${kind===1?"Frage "+(idx+1):"Fall "+item.id}</h3><span>${idx+1} von ${total} <span class="tag" data-tag="${item.id}"${isDone(item,kind)?"":" hidden"}>beantwortet</span></span></div>`;
+  if(kind===1){
+    body += `<p class="q">${esc(item.q)}</p><p class="why">${esc(item.why)}</p>`;
+    if(item.text) body += `<div class="field"><label for="${item.id}-note">Ihre Antwort</label><textarea id="${item.id}-note" data-note="${item.id}" rows="4">${esc(a.note||"")}</textarea></div>`;
+    else {
+      body += item.multi ? checkGroup(item.id, item.opts, a.v) : radioGroup(item.id, item.opts, a.v, "stack");
+      body += `<div class="field"><label for="${item.id}-note">Anmerkung, Begründung oder Fundstelle (optional)</label><textarea id="${item.id}-note" data-note="${item.id}">${esc(a.note||"")}</textarea></div>`;
+    }
+  } else {
+    if(item.t) body += `<p class="q" style="font-weight:400">${esc(item.t)}</p>`;
+    body += `<div class="chips">${item.chips.map(c=>`<span class="chip">${esc(c)}</span>`).join("")}${(item.rel||[]).map(r=>`<a class="chip rel" href="#card-${r}">hängt mit Frage ${QNUM(r)} zusammen</a>`).join("")}</div>`;
+    if(item.ann) body += `<p class="ann"><b>Annahme für den Test:</b> ${esc(item.ann)}</p>`;
+    body += `<div class="change"><span class="lbl">Gegenüber dem Ausgangsgebäude:</span><ul>${item.ch.map(c=>`<li>${c}</li>`).join("")}</ul></div>`;
+    if(item.hint) body += `<p class="why">${esc(item.hint)}</p>`;
+    body += `<p class="q">Erfüllt das Gebäude ${kind===2?"Art. 27":"Art. 25"} BayBO?</p>`;
+    body += radioGroup(item.id, VERDICT, a.v);
+    body += `<div class="sure"><span>Wie sicher sind Sie?</span>${radioGroup(item.id+"_s", SURE, a.s)}</div>`;
+    body += `<div class="field"><label for="${item.id}-note">Begründung oder Fundstelle (optional); bei „nicht eindeutig“: wovon hängt es ab, welche Angabe fehlt?</label><textarea id="${item.id}-note" data-note="${item.id}">${esc(a.note||"")}</textarea></div>`;
+  }
+  return `<article class="card${isDone(item,kind)?" answered":""}" id="card-${item.id}"${fig?"":` style="grid-template-columns:1fr"`}>${fig}<div class="body">${body}</div></article>`;
+}
+function isDone(item, kind){
+  const a = state.answers[item.id] || {};
+  if(kind===1 && item.text) return !!(a.note && a.note.trim());
+  if(Array.isArray(a.v)) return a.v.length>0;
+  return !!a.v;
+}
+const ALL = [...Q1.map(i=>[i,1]), ...Q2.map(i=>[i,2]), ...Q3.map(i=>[i,3])];
+function render(){
+  document.getElementById("list1").innerHTML = Q1.map((q,i)=>card(q,i,Q1.length,1)).join("");
+  document.getElementById("list2").innerHTML = Q2.map((q,i)=>card(q,i,Q2.length,2)).join("");
+  document.getElementById("list3").innerHTML = Q3.map((q,i)=>card(q,i,Q3.length,3)).join("");
+  document.getElementById("figBase").innerHTML = plan("base") + `<div class="cap">Schema Obergeschoss, nicht maßstäblich. Dicke Linien: Außenwände und Wohnungstrennwand.</div>`;
+  document.getElementById("law27").textContent = LAW27;
+  document.querySelectorAll(".law27").forEach(e=>e.textContent = LAW27);
+  document.getElementById("law25").textContent = LAW25;
+  const p = state.person || {};
+  for(const k of ["name","role","years","lbo","note"]){ const el = document.getElementById("p_"+k); if(el && p[k]!=null) el.value = p[k]; }
+  progress();
+}
+function progress(){
+  const cnt = (arr,kind) => arr.filter(i=>isDone(i,kind)).length;
+  const a = cnt(Q1,1), b = cnt(Q2,2), c = cnt(Q3,3);
+  document.getElementById("c1").textContent = `${a}/${Q1.length}`;
+  document.getElementById("c2").textContent = `${b}/${Q2.length}`;
+  document.getElementById("c3").textContent = `${c}/${Q3.length}`;
+  document.getElementById("meter").style.width = `${Math.round(100*(a+b+c)/ALL.length)}%`;
+  for(const [item,kind] of ALL){
+    const done = isDone(item,kind);
+    const el = document.getElementById("card-"+item.id); if(el) el.classList.toggle("answered", done);
+    const t = document.querySelector(`[data-tag="${item.id}"]`); if(t) t.hidden = !done;
+  }
+}
+
+/* ---------- persistence ---------- */
+let db = null, uid = null, remoteOk = false, saveTimer = null, writing = false, pending = false;
+function setSave(msg){ document.getElementById("saveState").textContent = msg; }
+function saveLocal(){
+  state.updatedAt = new Date().toISOString();
+  try{ localStorage.setItem(KEY, JSON.stringify(state)); }catch(e){}
+}
+function changed(){
+  saveLocal(); progress();
+  if(remoteOk){ setSave("Wird gespeichert …"); clearTimeout(saveTimer); saveTimer = setTimeout(pushRemote, 1200); }
+  else setSave("In diesem Browser gespeichert");
+}
+async function pushRemote(){
+  if(!remoteOk) return;
+  if(writing){ pending = true; return; }
+  writing = true;
+  try{
+    await db.doc("antworten/"+uid).set({answers: state.answers, person: state.person, updatedAt: state.updatedAt, version: 1});
+    setSave("Gespeichert · " + new Date().toLocaleTimeString("de-DE",{hour:"2-digit",minute:"2-digit"}));
+  }catch(e){
+    if(e && e.code === "invalid_argument"){ remoteOk = false; localOnly(); }
+    else setSave("Speichern in der Studie gerade nicht möglich; im Browser gesichert");
+  }
+  writing = false;
+  if(pending){ pending = false; pushRemote(); }
+}
+function localOnly(){
+  setSave("In diesem Browser gespeichert");
+  document.getElementById("saveHint").textContent = "in diesem Browser; am Ende bitte herunterladen oder kopieren";
+  document.getElementById("btnSubmit").hidden = true;
+}
+document.addEventListener("change", e=>{
+  const t = e.target;
+  if(t.matches('input[type=radio]')){
+    const n = t.name;
+    if(n.endsWith("_s")){ const id = n.slice(0,-2); (state.answers[id] ||= {}).s = t.value; }
+    else (state.answers[n] ||= {}).v = t.value;
+    changed();
+  } else if(t.matches('input[type=checkbox]')){
+    const n = t.name;
+    (state.answers[n] ||= {}).v = [...document.querySelectorAll(`input[name="${n}"]:checked`)].map(x=>x.value);
+    changed();
+  }
+});
+let typeTimer = null;
+document.addEventListener("input", e=>{
+  const t = e.target;
+  if(t.dataset && t.dataset.note){ (state.answers[t.dataset.note] ||= {}).note = t.value; }
+  else if(t.id && t.id.startsWith("p_")){ (state.person ||= {})[t.id.slice(2)] = t.value; }
+  else return;
+  clearTimeout(typeTimer); typeTimer = setTimeout(changed, 700);
+});
+
+/* ---------- export ---------- */
+function labelOf(item, kind, v){
+  if(kind!==1) return (VERDICT.find(x=>x[0]===v)||[,v||"–"])[1];
+  if(Array.isArray(v)) return v.map(x=>(item.opts.find(o=>o[0]===x)||[,x])[1]).join(", ") || "–";
+  return (item.opts||[]).find(o=>o[0]===v)?.[1] || v || "–";
+}
+function asText(){
+  const p = state.person || {};
+  const L = ["Fallprüfung Brandschutz BayBO – Antworten", ""];
+  L.push(`Name: ${p.name||"–"}`, `Rolle: ${p.role||"–"}`, `Erfahrung (Jahre): ${p.years||"–"}`, `Landesbauordnung: ${p.lbo||"–"}`, `Stand: ${state.updatedAt||"–"}`, "");
+  const sec = [["Teil 1: Grundsatzfragen",Q1,1],["Teil 2: Art. 27 Trennwände",Q2,2],["Teil 3: Art. 25 tragende Wände",Q3,3]];
+  for(const [t,arr,kind] of sec){
+    L.push("## "+t);
+    for(const it of arr){
+      const a = state.answers[it.id] || {};
+      let line = `${it.id}: ${it.text ? "" : labelOf(it,kind,a.v)}`;
+      if(kind!==1 && a.s) line += ` (${(SURE.find(x=>x[0]===a.s)||[,a.s])[1]})`;
+      L.push(line);
+      if(a.note && a.note.trim()) L.push("   " + a.note.trim().replace(/\n/g,"\n   "));
+    }
+    L.push("");
+  }
+  if(p.note) L.push("## Anmerkungen", p.note, "");
+  return L.join("\n");
+}
+function asJson(){ return JSON.stringify({form:"fallpruefung-brandschutz-v1", person: state.person, answers: state.answers, updatedAt: state.updatedAt}, null, 1); }
+const msg = t => { document.getElementById("actionMsg").textContent = t; };
+async function save(filename, data){
+  let dl = null; try{ dl = await claude.use("downloads"); }catch(e){}
+  if(!dl){ showCopy(); msg("Herunterladen ist hier nicht möglich. Bitte kopieren Sie den Text unten."); return; }
+  try{ await dl.save({filename, data}); msg("Datei gespeichert."); }
+  catch(e){ if(e && e.code==="declined") msg("Herunterladen abgebrochen."); else { showCopy(); msg("Herunterladen ging nicht. Bitte kopieren Sie den Text unten."); } }
+}
+function showCopy(){ const ta = document.getElementById("copyArea"); ta.value = asText(); ta.hidden = false; }
+document.getElementById("btnMd").addEventListener("click", ()=>save("Fallpruefung_Brandschutz_Antworten.md", asText()));
+document.getElementById("btnJson").addEventListener("click", ()=>save("Fallpruefung_Brandschutz_Antworten.json", asJson()));
+document.getElementById("btnCopy").addEventListener("click", ()=>{
+  const txt = asText(); showCopy();
+  const ta = document.getElementById("copyArea");
+  try{ navigator.clipboard.writeText(txt).then(()=>msg("Text kopiert. Sie können ihn jetzt in eine E-Mail einfügen."), ()=>{ ta.select(); msg("Bitte markierten Text mit Strg+C bzw. Cmd+C kopieren."); }); }
+  catch(e){ ta.select(); msg("Bitte markierten Text mit Strg+C bzw. Cmd+C kopieren."); }
+});
+document.getElementById("btnSubmit").addEventListener("click", async ()=>{
+  saveLocal(); clearTimeout(saveTimer); await pushRemote();
+  if(remoteOk){ const n = ALL.filter(([i,k])=>isDone(i,k)).length; msg(`Ihre Antworten sind bei der Studie eingegangen (${n} von ${ALL.length} beantwortet). Sie können sie hier weiter ergänzen. Vielen Dank!`); }
+});
+document.getElementById("btnNext").addEventListener("click", ()=>{
+  const open = ALL.find(([i,k])=>!isDone(i,k));
+  if(!open){ msg("Alle Fragen sind beantwortet. Vielen Dank!"); return; }
+  const el = document.getElementById("card-"+open[0].id);
+  el.scrollIntoView({behavior: matchMedia("(prefers-reduced-motion: reduce)").matches ? "auto" : "smooth", block:"start"});
+  const f = el.querySelector("input,textarea"); if(f) f.focus({preventScroll:true});
+});
+
+/* ---------- connect to the study store when this viewer may write ---------- */
+render();
+setSave(state.updatedAt ? "In diesem Browser gespeichert" : "Noch nichts gespeichert");
+(async ()=>{
+  let user = null;
+  try{ [db, user] = await Promise.all([claude.use("db"), claude.use("user")]); }catch(e){}
+  if(!db || !user){ localOnly(); return; }
+  try{ uid = await user.id(); }catch(e){ uid = null; }
+  let owner = false; try{ owner = await user.isOwner(); }catch(e){}
+  if(owner) ownerView();
+  if(!uid){ localOnly(); return; }
+  try{
+    const snap = await db.doc("antworten/"+uid).get();
+    if(snap.exists){
+      const d = snap.data();
+      if(d && d.answers && (!state.updatedAt || (d.updatedAt && d.updatedAt > state.updatedAt))){
+        state = {answers: JSON.parse(JSON.stringify(d.answers)), person: JSON.parse(JSON.stringify(d.person||{})), updatedAt: d.updatedAt};
+        saveLocal(); render();
+      }
+    }
+    remoteOk = true;
+    document.getElementById("btnSubmit").hidden = false;
+    document.getElementById("saveHint").textContent = "automatisch bei der Studie und in diesem Browser";
+    document.getElementById("submitInfo").textContent = "Ihre Antworten werden automatisch bei der Studie gespeichert. Mit „Antworten an die Studie senden“ bestätigen Sie, dass Sie fertig sind. Zusätzlich können Sie eine Kopie herunterladen.";
+    setSave(snap.exists ? "Bei der Studie gespeichert" : "Speichert automatisch");
+  }catch(e){ localOnly(); }
+})();
+
+async function ownerView(){
+  const box = document.getElementById("ownerBox"); box.hidden = false;
+  const rows = document.getElementById("ownerRows");
+  rows.innerHTML = `<tr><td colspan="4">Antworten werden geladen …</td></tr>`;
+  let all = [];
+  const timer = setTimeout(()=>{ if(!all.length) rows.innerHTML = `<tr><td colspan="4">Die Antworten sind gerade nicht erreichbar.</td></tr>`; }, 10000);
+  db.collection("antworten").onSnapshot(snap=>{
+    clearTimeout(timer);
+    all = snap.docs.map(d=>({id:d.id, ...d.data()}));
+    if(!all.length){ rows.innerHTML = `<tr><td colspan="4">Noch keine Antworten eingegangen. Teilen Sie den Link mit Fachleuten.</td></tr>`; return; }
+    rows.innerHTML = "";
+    for(const r of all){
+      const n = ALL.filter(([i,k])=>{ const a=(r.answers||{})[i.id]||{}; return k===1&&i.text ? !!(a.note&&a.note.trim()) : Array.isArray(a.v)? a.v.length>0 : !!a.v; }).length;
+      const tr = document.createElement("tr");
+      for(const v of [(r.person&&r.person.name)||"ohne Namen", (r.person&&r.person.role)||"–", `${n}/${ALL.length}`, r.updatedAt ? new Date(r.updatedAt).toLocaleString("de-DE") : "–"]){
+        const td = document.createElement("td"); td.textContent = v; tr.appendChild(td);
+      }
+      rows.appendChild(tr);
+    }
+  }, ()=>{ clearTimeout(timer); rows.innerHTML = `<tr><td colspan="4">Die Antworten sind gerade nicht erreichbar.</td></tr>`; });
+  document.getElementById("btnAll").addEventListener("click", ()=>save("Fallpruefung_Brandschutz_alle_Antworten.json", JSON.stringify(all, null, 1)));
+}
+})();
+</script>

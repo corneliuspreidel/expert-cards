@@ -1,0 +1,1070 @@
+{
+ "schema": "expert-cards/deck@0.1-draft",
+ "id": "e1-baybo-art27",
+ "version": "0.1.0",
+ "language": "de",
+ "title": "Fallprüfung Brandschutz BayBO",
+ "subtitle": "Trennwände (Art. 27) und tragende Wände (Art. 25)",
+ "owner": {
+  "name": "Cornelius Preidel",
+  "institution": "Hochschule München, Fakultät für Bauingenieurwesen"
+ },
+ "estimated_minutes": {
+  "part1": 15,
+  "total": 35
+ },
+ "consent_text": "Ihre Antworten werden nur für die Studie verwendet und in Veröffentlichungen ohne Namen berichtet.",
+ "identity_fields": [
+  {
+   "id": "name",
+   "label": "Name",
+   "type": "text",
+   "required": false
+  },
+  {
+   "id": "role",
+   "label": "Fachliche Rolle",
+   "type": "choice",
+   "options": [
+    "Prüfsachverständige/r für Brandschutz",
+    "Bauaufsicht / Genehmigungsbehörde",
+    "Feuerwehr / vorbeugender Brandschutz",
+    "Brandschutzplanung / Fachplanung",
+    "Architektur / Entwurfsplanung",
+    "Tragwerksplanung",
+    "Sonstiges"
+   ]
+  },
+  {
+   "id": "years",
+   "label": "Berufserfahrung im Brandschutz (Jahre)",
+   "type": "number"
+  },
+  {
+   "id": "lbo",
+   "label": "Landesbauordnung, nach der Sie meist arbeiten",
+   "type": "text"
+  }
+ ],
+ "references": {
+  "law27": {
+   "title": "Art. 27 BayBO (Trennwände), Stand April 2026",
+   "text": "Art. 27 Trennwände\n(1) Trennwände nach Abs. 2 müssen als raumabschließende Bauteile von Räumen oder Nutzungseinheiten innerhalb von Geschossen ausreichend lang widerstandsfähig gegen die Brandausbreitung sein.\n(2) Trennwände sind erforderlich\n1. zwischen Nutzungseinheiten sowie zwischen Nutzungseinheiten und anders genutzten Räumen, ausgenommen notwendigen Fluren,\n2. zum Abschluss von Räumen mit Explosions- oder erhöhter Brandgefahr,\n3. zwischen Aufenthaltsräumen und anders genutzten Räumen im Kellergeschoss.\n(3) 1Trennwände nach Abs. 2 Nr. 1 und 3 müssen die Feuerwiderstandsfähigkeit der tragenden und aussteifenden Bauteile des Geschosses haben, jedoch mindestens feuerhemmend sein. 2Trennwände nach Abs. 2 Nr. 2 müssen feuerbeständig sein.\n(4) Die Trennwände nach Abs. 2 sind bis zur Rohdecke, im Dachraum bis unter die Dachhaut zu führen; werden in Dachräumen Trennwände nur bis zur Rohdecke geführt, ist diese Decke als raumabschließendes Bauteil einschließlich der sie tragenden und aussteifenden Bauteile feuerhemmend herzustellen.\n(5) Öffnungen in Trennwänden nach Abs. 2 müssen feuerhemmende, dicht- und selbstschließende Abschlüsse haben.\n(6) Die Abs. 1 bis 5 gelten nicht innerhalb von Wohngebäuden der Gebäudeklassen 1 und 2."
+  },
+  "law25": {
+   "title": "Art. 25 BayBO (Tragende Wände, Stützen)",
+   "text": "Art. 25 Tragende Wände, Stützen\n(1) 1Tragende und aussteifende Wände und Stützen müssen im Brandfall ausreichend lang standsicher sein. 2Sie müssen\n1. in Gebäuden der Gebäudeklasse 5 feuerbeständig,\n2. in Gebäuden der Gebäudeklasse 4 hochfeuerhemmend,\n3. in Gebäuden der Gebäudeklassen 2 und 3 feuerhemmend\nsein. 3Satz 2 gilt\n1. für Geschosse im Dachraum nur, wenn darüber noch Aufenthaltsräume möglich sind; Art. 27 Abs. 4 bleibt unberührt,\n2. nicht für Balkone, ausgenommen offene Gänge, die als notwendige Flure dienen.\n(2) Im Kellergeschoss müssen tragende und aussteifende Wände und Stützen\n1. in Gebäuden der Gebäudeklassen 3 bis 5 feuerbeständig,\n2. in Gebäuden der Gebäudeklassen 1 und 2 feuerhemmend\nsein."
+  }
+ },
+ "intro_cards": [
+  {
+   "type": "info",
+   "title": "Worum es geht",
+   "body": "Wir prüfen, ob automatische Prüfregeln für digitale Bauanträge das Gesetz richtig umsetzen. Bitte beurteilen Sie jeden Fall so, wie Sie es in einer Prüfung tun würden. Es gibt keine erwartete richtige Antwort."
+  },
+  {
+   "type": "info",
+   "title": "Das Gebäude",
+   "figure": {
+    "template": "duplex-plan",
+    "highlight": "base"
+   },
+   "body": "Doppelhaus mit zwei Wohnungen (A und B), je Erdgeschoss und Obergeschoss; im Modell ein Gebäude mit zwei Nutzungseinheiten. Wohngebäude, Gebäudeklasse 3, sofern nicht anders angegeben; Fußboden OG 3,10 m über Gelände. Zwischen den Wohnungen in beiden Geschossen eine Wohnungstrennwand (Trennwand, feuerhemmend, bis zur Rohdecke). Die Außenwände der Längsseiten laufen durch; an sie grenzen Räume beider Wohnungen; sie sind tragend und feuerhemmend, aber keine Trennwände. Kein Kellergeschoss, keine notwendigen Flure, sofern nicht anders angegeben. Im OG der Wohnung B liegt ein Hauswirtschaftsraum."
+  },
+  {
+   "type": "info",
+   "title": "Eindeutige Fälle und Auslegungsfälle",
+   "body": "Einige Fälle hängen bewusst von einer Grundsatzfrage ab und sind entsprechend markiert. Künstliche Annahmen sind als „Annahme für den Test“ gekennzeichnet. Was nicht genannt ist, bleibt wie im Ausgangsgebäude. Fehlt Ihnen eine Angabe, wählen Sie „Hängt ab“ und sagen Sie, welche."
+  }
+ ],
+ "sections": [
+  {
+   "id": "part1",
+   "title": "Grundsatzfragen zur Auslegung",
+   "reference": "law27",
+   "cards": [
+    {
+     "id": "C1",
+     "type": "single_choice",
+     "prompt": "Ist ein Raum, der keiner Nutzungseinheit angehört (z. B. ein gemeinsam genutzter Hauswirtschaftsraum), ein „anders genutzter Raum“ im Sinne von Art. 27 Abs. 2 Nr. 1?",
+     "hint": "Davon hängt ab, ob die Wände eines solchen Raums Trennwände sein müssen.",
+     "figure": {
+      "template": "duplex-plan",
+      "highlight": "hwr",
+      "caption": "Hauswirtschaftsraum, der keiner Wohnung angehört"
+     },
+     "options": [
+      {
+       "id": "ja",
+       "label": "Ja",
+       "detail": "Seine Wände zu den Wohnungen müssen Trennwände sein."
+      },
+      {
+       "id": "nein",
+       "label": "Nein",
+       "detail": "Art. 27 Abs. 2 Nr. 1 greift hier nicht."
+      },
+      {
+       "id": "abh",
+       "label": "Hängt vom Einzelfall ab",
+       "detail": "Bitte in der Anmerkung erläutern."
+      }
+     ],
+     "follow_up": {
+      "type": "free_text",
+      "label": "Anmerkung, Begründung oder Fundstelle (optional)",
+      "voice": true
+     }
+    },
+    {
+     "id": "C2",
+     "type": "multi_choice",
+     "prompt": "Art. 27 Abs. 2 Nr. 3 (Aufenthaltsräume und anders genutzte Räume im Kellergeschoss): Welche Räume gelten als „anders genutzte Räume“?",
+     "hint": "Mehrfachauswahl möglich. Davon hängt ab, zwischen welchen Räumen im Keller Trennwände nötig sind.",
+     "figure": {
+      "template": "duplex-plan",
+      "highlight": "keller",
+      "caption": "Obergeschoss gedanklich als Kellergeschoss"
+     },
+     "options": [
+      {
+       "id": "flur",
+       "label": "Flur innerhalb der Wohnung",
+       "detail": ""
+      },
+      {
+       "id": "bad",
+       "label": "Bad / WC",
+       "detail": ""
+      },
+      {
+       "id": "hwr",
+       "label": "Hauswirtschaftsraum",
+       "detail": ""
+      },
+      {
+       "id": "abst",
+       "label": "Abstell- und Technikräume",
+       "detail": ""
+      },
+      {
+       "id": "keine",
+       "label": "Keiner dieser Räume innerhalb derselben Wohnung",
+       "detail": ""
+      }
+     ],
+     "follow_up": {
+      "type": "free_text",
+      "label": "Anmerkung, Begründung oder Fundstelle (optional)",
+      "voice": true
+     }
+    },
+    {
+     "id": "C3",
+     "type": "single_choice",
+     "prompt": "Art. 27 Abs. 3 Satz 1 verlangt „die Feuerwiderstandsfähigkeit der tragenden und aussteifenden Bauteile des Geschosses“. Welche ist gemeint?",
+     "hint": "Beispiel: Gebäudeklasse 4 verlangt hochfeuerhemmend. Sind die tragenden Wände tatsächlich feuerbeständig ausgeführt, muss die Trennwand dann hochfeuerhemmend oder feuerbeständig sein?",
+     "figure": {
+      "template": "duplex-plan",
+      "highlight": "party",
+      "caption": "Wohnungstrennwand"
+     },
+     "options": [
+      {
+       "id": "gefordert",
+       "label": "Die nach Gebäudeklasse geforderte",
+       "detail": "Hier also hochfeuerhemmend."
+      },
+      {
+       "id": "vorhanden",
+       "label": "Die tatsächlich ausgeführte",
+       "detail": "Hier also feuerbeständig."
+      },
+      {
+       "id": "abh",
+       "label": "Hängt ab / anders",
+       "detail": "Bitte erläutern."
+      }
+     ],
+     "follow_up": {
+      "type": "free_text",
+      "label": "Anmerkung, Begründung oder Fundstelle (optional)",
+      "voice": true
+     }
+    },
+    {
+     "id": "C4",
+     "type": "single_choice",
+     "prompt": "Sind Außenwände, an die Räume verschiedener Nutzungseinheiten grenzen, Trennwände im Sinne von Art. 27?",
+     "hint": "Im Gebäude laufen die Außenwände der Längsseiten über beide Wohnungen durch.",
+     "figure": {
+      "template": "duplex-plan",
+      "highlight": "ext",
+      "caption": "Außenwände, an die beide Wohnungen grenzen"
+     },
+     "options": [
+      {
+       "id": "nein26",
+       "label": "Nein, Außenwände regelt allein Art. 26",
+       "detail": "Art. 27 betrifft nur Innenwände."
+      },
+      {
+       "id": "ja",
+       "label": "Ja, Art. 27 gilt auch für diese Außenwände",
+       "detail": ""
+      },
+      {
+       "id": "abh",
+       "label": "Hängt ab",
+       "detail": "Bitte erläutern."
+      }
+     ],
+     "follow_up": {
+      "type": "free_text",
+      "label": "Anmerkung, Begründung oder Fundstelle (optional)",
+      "voice": true
+     }
+    },
+    {
+     "id": "C5",
+     "type": "single_choice",
+     "prompt": "Gehören die Wände eines notwendigen Flurs zu Art. 27, oder regelt Art. 34 (Notwendige Flure, offene Gänge) sie abschließend?",
+     "hint": "Art. 27 Abs. 2 Nr. 1 nimmt notwendige Flure aus. Die Frage ist, ob dann gar keine Anforderung aus Art. 27 bleibt.",
+     "figure": {
+      "template": "duplex-plan",
+      "highlight": "flur",
+      "caption": "Flur der Wohnung B"
+     },
+     "options": [
+      {
+       "id": "36",
+       "label": "Art. 34 regelt abschließend",
+       "detail": "Für Art. 27 nichts zu prüfen."
+      },
+      {
+       "id": "beide",
+       "label": "Art. 27 gilt zusätzlich",
+       "detail": ""
+      },
+      {
+       "id": "abh",
+       "label": "Hängt ab",
+       "detail": "Bitte erläutern."
+      }
+     ],
+     "follow_up": {
+      "type": "free_text",
+      "label": "Anmerkung, Begründung oder Fundstelle (optional)",
+      "voice": true
+     }
+    },
+    {
+     "id": "C6",
+     "type": "single_choice",
+     "prompt": "Welche Gebäudeklasse hätte dieses Doppelhaus nach Art. 2 Abs. 3 realistisch?",
+     "hint": "Zwei Wohnungen, zwei oberirdische Geschosse, zusammen etwa 2 × 120 m², Fußboden Obergeschoss 3,10 m über Gelände, im Modell ein Gebäude. Unsere Fälle nehmen Gebäudeklasse 3 an.",
+     "figure": {
+      "template": "duplex-plan",
+      "highlight": "base",
+      "caption": "Ausgangsgebäude"
+     },
+     "options": [
+      {
+       "id": "1",
+       "label": "Gebäudeklasse 1",
+       "detail": ""
+      },
+      {
+       "id": "2",
+       "label": "Gebäudeklasse 2",
+       "detail": ""
+      },
+      {
+       "id": "3",
+       "label": "Gebäudeklasse 3",
+       "detail": ""
+      },
+      {
+       "id": "abh",
+       "label": "Hängt ab",
+       "detail": "z. B. davon, ob es ein oder zwei Gebäude sind."
+      }
+     ],
+     "follow_up": {
+      "type": "free_text",
+      "label": "Anmerkung, Begründung oder Fundstelle (optional)",
+      "voice": true
+     }
+    },
+    {
+     "id": "C7",
+     "type": "single_choice",
+     "prompt": "Ist die Wand zwischen zwei Doppelhaushälften fachlich eine Trennwand (Art. 27) oder eine Gebäudeabschlusswand bzw. Brandwand (Art. 28)?",
+     "hint": "Davon hängt ab, ob das Testgebäude Art. 27 überhaupt richtig trifft, und welche Fälle wir für Art. 28 bauen.",
+     "figure": {
+      "template": "duplex-plan",
+      "highlight": "party",
+      "caption": "Wand zwischen den Doppelhaushälften"
+     },
+     "options": [
+      {
+       "id": "27",
+       "label": "Trennwand nach Art. 27",
+       "detail": "Ein Gebäude mit zwei Nutzungseinheiten."
+      },
+      {
+       "id": "28",
+       "label": "Gebäudeabschlusswand / Brandwand nach Art. 28",
+       "detail": "Zwei Gebäude, z. B. an der Grundstücksgrenze."
+      },
+      {
+       "id": "abh",
+       "label": "Hängt ab",
+       "detail": "z. B. von Grundstücksteilung oder Grenzabstand; bitte erläutern."
+      }
+     ],
+     "follow_up": {
+      "type": "free_text",
+      "label": "Anmerkung, Begründung oder Fundstelle (optional)",
+      "voice": true
+     }
+    },
+    {
+     "id": "C9",
+     "type": "single_choice",
+     "prompt": "Art. 27 Abs. 4 lässt in Dachräumen zu, Trennwände nur bis zur Rohdecke zu führen, wenn diese Decke feuerhemmend ist. Ist das Obergeschoss dieses Hauses (oberstes Vollgeschoss, darüber das Dach) ein „Dachraum“ in diesem Sinn?",
+     "hint": "Davon hängt ab, ob eine Trennwand im Obergeschoss bis unter die Dachhaut geführt werden muss oder ob die Rohdecke genügt.",
+     "figure": {
+      "template": "duplex-plan",
+      "highlight": "party",
+      "caption": "Wohnungstrennwand im Obergeschoss"
+     },
+     "options": [
+      {
+       "id": "nein",
+       "label": "Nein, ein normales Geschoss",
+       "detail": "Die Trennwand muss bis zur Rohdecke geführt werden; die Ausnahme greift nicht."
+      },
+      {
+       "id": "ja",
+       "label": "Ja, ein Dachraum",
+       "detail": "Die Ausnahme in Abs. 4 kann greifen."
+      },
+      {
+       "id": "abh",
+       "label": "Hängt ab",
+       "detail": "z. B. von Dachneigung oder Nutzung des Raums darüber; bitte erläutern."
+      }
+     ],
+     "follow_up": {
+      "type": "free_text",
+      "label": "Anmerkung, Begründung oder Fundstelle (optional)",
+      "voice": true
+     }
+    },
+    {
+     "id": "C8",
+     "type": "free_text",
+     "prompt": "Was sollte eine automatische Prüfung von Art. 25 und Art. 27 unbedingt abdecken, das in unseren Fällen fehlt?",
+     "hint": "Freitext. Typische Fehlerquellen aus Ihrer Praxis helfen uns besonders."
+    }
+   ]
+  },
+  {
+   "id": "part2",
+   "title": "Fälle zu Art. 27: Trennwände",
+   "reference": "law27",
+   "question": "Erfüllt das Gebäude Art. 27 BayBO?",
+   "cards": [
+    {
+     "id": "B1",
+     "type": "verdict",
+     "title": "Gemeinsamer Hauswirtschaftsraum, Tür nicht selbstschließend",
+     "chips": [
+      "GK 3",
+      "Wohngebäude"
+     ],
+     "related": [
+      "C1"
+     ],
+     "assumption": "Der Hauswirtschaftsraum im Obergeschoss ist keiner der beiden Wohnungen zugeordnet (z. B. gemeinsam genutzt). Seine Tür führt in den Flur der Wohnung B.",
+     "changes_html": [
+      "Die Wände des Hauswirtschaftsraums sind Trennwände: feuerhemmend, bis zur Rohdecke.",
+      "Seine Tür ist feuerhemmend und dichtschließend, aber <mark>nicht selbstschließend</mark>."
+     ],
+     "hint": null,
+     "figure": {
+      "template": "duplex-plan",
+      "highlight": "hwrdoor",
+      "caption": "Tür des Hauswirtschaftsraums"
+     }
+    },
+    {
+     "id": "B2",
+     "type": "verdict",
+     "title": "Gebäudeklasse 2, Wohngebäude, keine Trennwand zwischen den Wohnungen",
+     "chips": [
+      "GK 2",
+      "Wohngebäude"
+     ],
+     "related": [],
+     "assumption": null,
+     "changes_html": [
+      "<mark>Gebäudeklasse 2</mark>, weiterhin Wohngebäude.",
+      "Die Wand zwischen den beiden Wohnungen im Obergeschoss ist <mark>keine Trennwand</mark> (kein Feuerwiderstand als raumabschließendes Bauteil)."
+     ],
+     "hint": null,
+     "figure": {
+      "template": "duplex-plan",
+      "highlight": "party",
+      "caption": "Wohnungstrennwand im Obergeschoss"
+     }
+    },
+    {
+     "id": "B3",
+     "type": "verdict",
+     "title": "Wohnungstrennwand endet unter der Rohdecke",
+     "chips": [
+      "GK 3",
+      "Wohngebäude"
+     ],
+     "related": [
+      "C9"
+     ],
+     "assumption": null,
+     "changes_html": [
+      "Die Wohnungstrennwand im Obergeschoss ist <mark>nicht bis zur Rohdecke</mark> geführt; sie endet darunter.",
+      "Feuerwiderstand und Kennzeichnung als Trennwand bleiben unverändert (feuerhemmend)."
+     ],
+     "hint": null,
+     "figure": {
+      "template": "duplex-plan",
+      "highlight": "party",
+      "caption": "Wohnungstrennwand im Obergeschoss"
+     }
+    },
+    {
+     "id": "B4",
+     "type": "verdict",
+     "title": "„Kellergeschoss“: Schlafräume mit Trennwänden abgetrennt",
+     "chips": [
+      "GK 3",
+      "Wohngebäude"
+     ],
+     "related": [
+      "C2"
+     ],
+     "assumption": "Künstlich gesetzt, weil das Modell keinen echten Keller hat: Das Obergeschoss gilt als Kellergeschoss. Schlafräume sind Aufenthaltsräume; Flur, Bad und Hauswirtschaftsraum sind keine.",
+     "changes_html": [
+      "Alle Wände zwischen den Schlafräumen und Flur, Bad und Hauswirtschaftsraum sind Trennwände: <mark>feuerbeständig</mark>, bis zur Rohdecke.",
+      "Die Türen in diesen Wänden sind feuerhemmend, dicht- und selbstschließend."
+     ],
+     "hint": null,
+     "figure": {
+      "template": "duplex-plan",
+      "highlight": "keller",
+      "caption": "Obergeschoss als Kellergeschoss ausgewiesen"
+     }
+    },
+    {
+     "id": "B5",
+     "type": "verdict",
+     "title": "Ausgangsgebäude ohne Änderung",
+     "chips": [
+      "GK 3",
+      "Wohngebäude"
+     ],
+     "related": [],
+     "assumption": null,
+     "changes_html": [
+      "<mark>Keine Änderung.</mark> Bitte beurteilen Sie das Ausgangsgebäude wie oben beschrieben."
+     ],
+     "hint": null,
+     "figure": {
+      "template": "duplex-plan",
+      "highlight": "base",
+      "caption": "Ausgangsgebäude"
+     }
+    },
+    {
+     "id": "B6",
+     "type": "verdict",
+     "title": "Gemeinsamer Hauswirtschaftsraum ohne Trennwände",
+     "chips": [
+      "GK 3",
+      "Wohngebäude"
+     ],
+     "related": [
+      "C1"
+     ],
+     "assumption": "Der Hauswirtschaftsraum im Obergeschoss ist keiner der beiden Wohnungen zugeordnet (z. B. gemeinsam genutzt). Seine Tür führt in den Flur der Wohnung B.",
+     "changes_html": [
+      "Die Wände des Hauswirtschaftsraums zu den angrenzenden Räumen der Wohnung B sind <mark>keine Trennwände</mark> (kein Feuerwiderstand)."
+     ],
+     "hint": null,
+     "figure": {
+      "template": "duplex-plan",
+      "highlight": "hwr",
+      "caption": "Wände des Hauswirtschaftsraums"
+     }
+    },
+    {
+     "id": "B7",
+     "type": "verdict",
+     "title": "Gebäudeklasse 4, Wohnungstrennwand nur feuerhemmend",
+     "chips": [
+      "GK 4",
+      "Wohngebäude"
+     ],
+     "related": [
+      "C3"
+     ],
+     "assumption": null,
+     "changes_html": [
+      "<mark>Gebäudeklasse 4</mark>; alle tragenden und aussteifenden Bauteile sind <mark>hochfeuerhemmend</mark>.",
+      "Die Wohnungstrennwand im Obergeschoss ist nur <mark>feuerhemmend</mark>."
+     ],
+     "hint": null,
+     "figure": {
+      "template": "duplex-plan",
+      "highlight": "party",
+      "caption": "Wohnungstrennwand im Obergeschoss"
+     }
+    },
+    {
+     "id": "B8",
+     "type": "verdict",
+     "title": "Trennwand ohne Angabe zum raumabschließenden Feuerwiderstand",
+     "chips": [
+      "GK 3",
+      "Wohngebäude"
+     ],
+     "related": [],
+     "assumption": null,
+     "changes_html": [
+      "Die Wohnungstrennwand im Obergeschoss ist als Trennwand gekennzeichnet.",
+      "Als tragendes Bauteil ist sie feuerhemmend. Für ihren Feuerwiderstand <mark>als raumabschließendes Bauteil gibt es keine Angabe</mark>."
+     ],
+     "hint": "Bitte werten Sie die fehlende Angabe so, wie Sie es bei unvollständigen Bauvorlagen tun würden, und schreiben Sie, ob Sie nachfordern oder ablehnen würden.",
+     "figure": {
+      "template": "duplex-plan",
+      "highlight": "party",
+      "caption": "Wohnungstrennwand im Obergeschoss"
+     }
+    },
+    {
+     "id": "B9",
+     "type": "verdict",
+     "title": "Raum mit erhöhter Brandgefahr, feuerbeständig abgetrennt",
+     "chips": [
+      "GK 3",
+      "Wohngebäude"
+     ],
+     "related": [],
+     "assumption": null,
+     "changes_html": [
+      "Der Hauswirtschaftsraum <mark>gehört zur Wohnung B</mark> und hat <mark>erhöhte Brandgefahr</mark>.",
+      "Seine umschließenden Innenwände sind Trennwände: <mark>feuerbeständig</mark>, bis zur Rohdecke.",
+      "Seine Tür ist feuerhemmend, dicht- und selbstschließend."
+     ],
+     "hint": null,
+     "figure": {
+      "template": "duplex-plan",
+      "highlight": "hwr",
+      "caption": "Hauswirtschaftsraum der Wohnung B"
+     }
+    },
+    {
+     "id": "B10",
+     "type": "verdict",
+     "title": "Raum mit Explosionsgefahr ohne Trennwände",
+     "chips": [
+      "GK 3",
+      "Wohngebäude"
+     ],
+     "related": [],
+     "assumption": null,
+     "changes_html": [
+      "Der Hauswirtschaftsraum <mark>gehört zur Wohnung B</mark> und hat <mark>Explosionsgefahr</mark>.",
+      "Seine umschließenden Innenwände sind <mark>keine Trennwände</mark> (kein Feuerwiderstand)."
+     ],
+     "hint": null,
+     "figure": {
+      "template": "duplex-plan",
+      "highlight": "hwr",
+      "caption": "Hauswirtschaftsraum der Wohnung B"
+     }
+    },
+    {
+     "id": "B11",
+     "type": "verdict",
+     "title": "Gemeinsamer Hauswirtschaftsraum, vollständig abgetrennt",
+     "chips": [
+      "GK 3",
+      "Wohngebäude"
+     ],
+     "related": [
+      "C1"
+     ],
+     "assumption": "Der Hauswirtschaftsraum im Obergeschoss ist keiner der beiden Wohnungen zugeordnet (z. B. gemeinsam genutzt). Seine Tür führt in den Flur der Wohnung B.",
+     "changes_html": [
+      "Seine Wände sind Trennwände: <mark>feuerhemmend</mark>, bis zur Rohdecke.",
+      "Seine Tür ist feuerhemmend, dicht- und selbstschließend."
+     ],
+     "hint": null,
+     "figure": {
+      "template": "duplex-plan",
+      "highlight": "hwr",
+      "caption": "Hauswirtschaftsraum, der keiner Wohnung angehört"
+     }
+    },
+    {
+     "id": "B12",
+     "type": "verdict",
+     "title": "Keine Trennwand zwischen den Wohnungen",
+     "chips": [
+      "GK 3",
+      "Wohngebäude"
+     ],
+     "related": [],
+     "assumption": null,
+     "changes_html": [
+      "Die Wand zwischen den beiden Wohnungen im Obergeschoss ist <mark>keine Trennwand</mark> (kein Feuerwiderstand als raumabschließendes Bauteil)."
+     ],
+     "hint": null,
+     "figure": {
+      "template": "duplex-plan",
+      "highlight": "party",
+      "caption": "Wohnungstrennwand im Obergeschoss"
+     }
+    },
+    {
+     "id": "B13",
+     "type": "verdict",
+     "title": "Gebäudeklasse 4, alles hochfeuerhemmend",
+     "chips": [
+      "GK 4",
+      "Wohngebäude"
+     ],
+     "related": [
+      "C3"
+     ],
+     "assumption": null,
+     "changes_html": [
+      "<mark>Gebäudeklasse 4</mark>.",
+      "Alle tragenden und aussteifenden Bauteile und alle Trennwände sind <mark>hochfeuerhemmend</mark>."
+     ],
+     "hint": null,
+     "figure": {
+      "template": "duplex-plan",
+      "highlight": "party",
+      "caption": "Wohnungstrennwand im Obergeschoss"
+     }
+    },
+    {
+     "id": "B14",
+     "type": "verdict",
+     "title": "Notwendiger Flur ohne Trennwände",
+     "chips": [
+      "GK 3",
+      "Wohngebäude"
+     ],
+     "related": [
+      "C5"
+     ],
+     "assumption": "Der Flur im Obergeschoss der Wohnung B ist keiner Wohnung zugeordnet und gilt als notwendiger Flur im Sinne von Art. 34.",
+     "changes_html": [
+      "Die Wände dieses Flurs sind <mark>keine Trennwände</mark>."
+     ],
+     "hint": "Wenn Art. 34 eigene Anforderungen an diese Wände stellt, beurteilen Sie hier bitte nur Art. 27 und vermerken Art. 34 in der Begründung.",
+     "figure": {
+      "template": "duplex-plan",
+      "highlight": "flur",
+      "caption": "Flur im Obergeschoss"
+     }
+    },
+    {
+     "id": "B15",
+     "type": "verdict",
+     "title": "Raum mit erhöhter Brandgefahr, nur feuerhemmend abgetrennt",
+     "chips": [
+      "GK 3",
+      "Wohngebäude"
+     ],
+     "related": [],
+     "assumption": null,
+     "changes_html": [
+      "Der Hauswirtschaftsraum <mark>gehört zur Wohnung B</mark> und hat <mark>erhöhte Brandgefahr</mark>.",
+      "Seine umschließenden Innenwände sind Trennwände, aber nur <mark>feuerhemmend</mark>.",
+      "Seine Tür ist feuerhemmend, dicht- und selbstschließend."
+     ],
+     "hint": null,
+     "figure": {
+      "template": "duplex-plan",
+      "highlight": "hwr",
+      "caption": "Hauswirtschaftsraum der Wohnung B"
+     }
+    },
+    {
+     "id": "B16",
+     "type": "verdict",
+     "title": "Gemeinsamer Hauswirtschaftsraum, Tür ohne Feuerwiderstand",
+     "chips": [
+      "GK 3",
+      "Wohngebäude"
+     ],
+     "related": [
+      "C1"
+     ],
+     "assumption": "Der Hauswirtschaftsraum im Obergeschoss ist keiner der beiden Wohnungen zugeordnet (z. B. gemeinsam genutzt). Seine Tür führt in den Flur der Wohnung B.",
+     "changes_html": [
+      "Seine Wände sind Trennwände: feuerhemmend, bis zur Rohdecke.",
+      "Seine Tür ist dicht- und selbstschließend, hat aber <mark>keinen Feuerwiderstand</mark>."
+     ],
+     "hint": null,
+     "figure": {
+      "template": "duplex-plan",
+      "highlight": "hwrdoor",
+      "caption": "Tür des Hauswirtschaftsraums"
+     }
+    },
+    {
+     "id": "B17",
+     "type": "verdict",
+     "title": "„Kellergeschoss“: Schlafräume nicht abgetrennt",
+     "chips": [
+      "GK 3",
+      "Wohngebäude"
+     ],
+     "related": [
+      "C2"
+     ],
+     "assumption": "Künstlich gesetzt, weil das Modell keinen echten Keller hat: Das Obergeschoss gilt als Kellergeschoss. Schlafräume sind Aufenthaltsräume; Flur, Bad und Hauswirtschaftsraum sind keine.",
+     "changes_html": [
+      "Die Wände zwischen den Schlafräumen und Flur, Bad und Hauswirtschaftsraum sind <mark>keine Trennwände</mark>."
+     ],
+     "hint": null,
+     "figure": {
+      "template": "duplex-plan",
+      "highlight": "keller",
+      "caption": "Obergeschoss als Kellergeschoss ausgewiesen"
+     }
+    },
+    {
+     "id": "B18",
+     "type": "verdict",
+     "title": "Gebäudeklasse 2, kein Wohngebäude, Trennwand fehlt",
+     "chips": [
+      "GK 2",
+      "kein Wohngebäude"
+     ],
+     "related": [],
+     "assumption": "Gleiche Geometrie, aber das Gebäude ist kein Wohngebäude; die beiden Hälften sind zwei Nutzungseinheiten anderer Art (z. B. zwei Büroeinheiten).",
+     "changes_html": [
+      "<mark>Gebäudeklasse 2</mark>, <mark>kein Wohngebäude</mark>.",
+      "Die Wand zwischen den beiden Nutzungseinheiten im Obergeschoss ist <mark>keine Trennwand</mark>."
+     ],
+     "hint": null,
+     "figure": {
+      "template": "duplex-plan",
+      "highlight": "party",
+      "caption": "Wand zwischen den Nutzungseinheiten"
+     }
+    },
+    {
+     "id": "B19",
+     "type": "verdict",
+     "title": "Außenwände, an die beide Wohnungen grenzen",
+     "chips": [
+      "GK 3",
+      "Wohngebäude"
+     ],
+     "related": [
+      "C4"
+     ],
+     "assumption": null,
+     "changes_html": [
+      "<mark>Keine Änderung</mark> gegenüber dem Ausgangsgebäude.",
+      "Bitte beurteilen Sie nur die <mark>Außenwände der Längsseiten</mark>: Sie laufen an beiden Wohnungen vorbei, sind tragend und feuerhemmend, aber <mark>nicht als Trennwände</mark> ausgeführt."
+     ],
+     "hint": null,
+     "figure": {
+      "template": "duplex-plan",
+      "highlight": "ext",
+      "caption": "Außenwände der Längsseiten"
+     }
+    }
+   ]
+  },
+  {
+   "id": "part3",
+   "title": "Fälle zu Art. 25: tragende Wände",
+   "reference": "law25",
+   "question": "Erfüllt das Gebäude Art. 25 BayBO?",
+   "cards": [
+    {
+     "id": "A1",
+     "type": "verdict",
+     "chips": [
+      "GK 2",
+      "mit Keller"
+     ],
+     "changes_html": [
+      "<mark>Gebäudeklasse 2</mark>, <mark>Kellergeschoss</mark> vorhanden.",
+      "Eine tragende Kellerwand hat <mark>keinen Feuerwiderstand</mark>; die übrigen Kellerwände sind feuerhemmend."
+     ],
+     "figure": {
+      "template": "section",
+      "params": {
+       "k": true,
+       "hl": "kg",
+       "og": "feuerhemmend",
+       "kg": "feuerhemmend",
+       "x": "ohne Feuerwiderstand"
+      }
+     }
+    },
+    {
+     "id": "A2",
+     "type": "verdict",
+     "chips": [
+      "GK 4",
+      "ohne Keller"
+     ],
+     "changes_html": [
+      "<mark>Gebäudeklasse 4</mark>.",
+      "Alle tragenden Wände sind <mark>hochfeuerhemmend</mark>."
+     ],
+     "figure": {
+      "template": "section",
+      "params": {
+       "k": false,
+       "og": "hochfeuerhemmend"
+      }
+     }
+    },
+    {
+     "id": "A3",
+     "type": "verdict",
+     "chips": [
+      "GK 1",
+      "mit Keller"
+     ],
+     "changes_html": [
+      "<mark>Gebäudeklasse 1</mark>, Kellergeschoss vorhanden.",
+      "Tragende oberirdische Wände <mark>ohne Feuerwiderstand</mark>; Kellerwände feuerhemmend."
+     ],
+     "figure": {
+      "template": "section",
+      "params": {
+       "k": true,
+       "og": "ohne Feuerwiderstand",
+       "kg": "feuerhemmend"
+      }
+     }
+    },
+    {
+     "id": "A4",
+     "type": "verdict",
+     "chips": [
+      "GK 3",
+      "ohne Keller"
+     ],
+     "changes_html": [
+      "Gebäudeklasse 3.",
+      "<mark>Eine</mark> tragende oberirdische Wand hat <mark>keinen Feuerwiderstand</mark>."
+     ],
+     "figure": {
+      "template": "section",
+      "params": {
+       "k": false,
+       "hl": "og",
+       "og": "feuerhemmend",
+       "x": "ohne Feuerwiderstand"
+      }
+     }
+    },
+    {
+     "id": "A5",
+     "type": "verdict",
+     "chips": [
+      "GK 5",
+      "ohne Keller"
+     ],
+     "changes_html": [
+      "<mark>Gebäudeklasse 5</mark>.",
+      "Alle tragenden Wände sind <mark>feuerbeständig</mark>."
+     ],
+     "figure": {
+      "template": "section",
+      "params": {
+       "k": false,
+       "og": "feuerbeständig"
+      }
+     }
+    },
+    {
+     "id": "A6",
+     "type": "verdict",
+     "chips": [
+      "GK 4",
+      "ohne Keller"
+     ],
+     "changes_html": [
+      "<mark>Gebäudeklasse 4</mark>.",
+      "Alle tragenden Wände sind hochfeuerhemmend, <mark>eine davon feuerbeständig</mark>."
+     ],
+     "figure": {
+      "template": "section",
+      "params": {
+       "k": false,
+       "hl": "og",
+       "og": "hochfeuerhemmend",
+       "x": "feuerbeständig"
+      }
+     }
+    },
+    {
+     "id": "A7",
+     "type": "verdict",
+     "chips": [
+      "GK 3",
+      "ohne Keller"
+     ],
+     "changes_html": [
+      "<mark>Keine Änderung.</mark> Ausgangsgebäude, Gebäudeklasse 3."
+     ],
+     "figure": {
+      "template": "section",
+      "params": {
+       "k": false,
+       "og": "feuerhemmend"
+      }
+     }
+    },
+    {
+     "id": "A8",
+     "type": "verdict",
+     "chips": [
+      "GK 3",
+      "mit Keller"
+     ],
+     "changes_html": [
+      "Gebäudeklasse 3, <mark>Kellergeschoss</mark> vorhanden.",
+      "Eine tragende Kellerwand ist <mark>nur feuerhemmend</mark>; die übrigen Kellerwände sind feuerbeständig."
+     ],
+     "figure": {
+      "template": "section",
+      "params": {
+       "k": true,
+       "hl": "kg",
+       "og": "feuerhemmend",
+       "kg": "feuerbeständig",
+       "x": "nur feuerhemmend"
+      }
+     }
+    },
+    {
+     "id": "A9",
+     "type": "verdict",
+     "chips": [
+      "GK 5",
+      "ohne Keller"
+     ],
+     "changes_html": [
+      "<mark>Gebäudeklasse 5</mark>.",
+      "Eine tragende oberirdische Wand ist <mark>nur hochfeuerhemmend</mark>, die übrigen feuerbeständig."
+     ],
+     "figure": {
+      "template": "section",
+      "params": {
+       "k": false,
+       "hl": "og",
+       "og": "feuerbeständig",
+       "x": "nur hochfeuerhemmend"
+      }
+     }
+    },
+    {
+     "id": "A10",
+     "type": "verdict",
+     "chips": [
+      "GK 2",
+      "mit Keller"
+     ],
+     "changes_html": [
+      "<mark>Gebäudeklasse 2</mark>, <mark>Kellergeschoss</mark> vorhanden.",
+      "Alle Kellerwände sind <mark>feuerhemmend</mark>."
+     ],
+     "figure": {
+      "template": "section",
+      "params": {
+       "k": true,
+       "og": "feuerhemmend",
+       "kg": "feuerhemmend"
+      }
+     }
+    },
+    {
+     "id": "A11",
+     "type": "verdict",
+     "chips": [
+      "GK 4",
+      "ohne Keller"
+     ],
+     "changes_html": [
+      "<mark>Gebäudeklasse 4</mark>.",
+      "Eine tragende oberirdische Wand ist <mark>nur feuerhemmend</mark>, die übrigen hochfeuerhemmend."
+     ],
+     "figure": {
+      "template": "section",
+      "params": {
+       "k": false,
+       "hl": "og",
+       "og": "hochfeuerhemmend",
+       "x": "nur feuerhemmend"
+      }
+     }
+    }
+   ]
+  }
+ ],
+ "verdict_options": [
+  {
+   "id": "ja",
+   "label": "Erfüllt"
+  },
+  {
+   "id": "nein",
+   "label": "Nicht erfüllt"
+  },
+  {
+   "id": "unklar",
+   "label": "Hängt ab",
+   "requires_reason": true
+  }
+ ],
+ "confidence_options": [
+  {
+   "id": "sicher",
+   "label": "sicher"
+  },
+  {
+   "id": "eher",
+   "label": "eher sicher"
+  },
+  {
+   "id": "unsicher",
+   "label": "unsicher"
+  }
+ ],
+ "closing": {
+  "free_text_label": "Gibt es Anforderungen aus Art. 25 oder 27, die in den Fällen fehlen und die eine Prüfregel unbedingt abdecken sollte? Sonstige Anmerkungen?"
+ },
+ "submission": {
+  "mode": "email",
+  "to": "PLEASE_SET",
+  "subject": "Fallprüfung Brandschutz BayBO – Antworten",
+  "backup_file": true
+ }
+}

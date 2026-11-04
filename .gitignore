@@ -1,0 +1,10 @@
+# never commit answer keys or collected answers
+keys/
+*KEY*
+*_key*
+answers/
+submissions/
+*.local.json
+.DS_Store
+node_modules/
+__pycache__/
