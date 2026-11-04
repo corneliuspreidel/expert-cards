@@ -88,6 +88,11 @@
   {
    "id": "part1",
    "title": "Grundsatzfragen zur Auslegung",
+   "icon": "compass",
+   "part_titles": [
+    "Räume, Wände und Flure",
+    "Gebäudeklasse und Prüfung"
+   ],
    "reference": "law27",
    "cards": [
     {
@@ -380,6 +385,13 @@
   {
    "id": "part2",
    "title": "Fälle zu Art. 27: Trennwände",
+   "icon": "wall",
+   "part_titles": [
+    "Grundfälle und Kellergeschoss",
+    "Brandgefahr und Feuerwiderstand",
+    "Wohnungen, Flure und GK 4",
+    "Türen, Keller und Außenwände"
+   ],
    "reference": "law27",
    "question": "Erfüllt das Gebäude Art. 27 BayBO?",
    "cards": [
@@ -806,6 +818,11 @@
   {
    "id": "part3",
    "title": "Fälle zu Art. 25: tragende Wände",
+   "icon": "column",
+   "part_titles": [
+    "Gebäudeklassen und Keller",
+    "Sonderfälle tragender Bauteile"
+   ],
    "reference": "law25",
    "question": "Erfüllt das Gebäude Art. 25 BayBO?",
    "cards": [
@@ -1066,6 +1083,8 @@
   }
  ],
  "closing": {
+  "title": "Zum Schluss",
+  "icon": "note",
   "free_text_label": "Gibt es Anforderungen aus Art. 25 oder 27, die in den Fällen fehlen und die eine Prüfregel unbedingt abdecken sollte? Sonstige Anmerkungen?"
  },
  "submission": {

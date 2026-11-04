@@ -1,6 +1,6 @@
 // verdict: case with three big buttons. After a clear verdict a short "how sure?" row appears
 // and the app advances by itself (unless the expert is editing from the overview or adds a note).
-import { h } from '../ui.js';
+import { h, pulse } from '../ui.js';
 import { T } from '../i18n.js';
 import { head, prompt, fig, hintEl, lawButton, related, assumption, changes, textField } from './common.js';
 
@@ -17,7 +17,7 @@ export const render = (ctx) => {
 
   const confRow = h('div', { class: 'conf', role: 'radiogroup', 'aria-label': T.sure }, h('span', { class: 'conf-q' }, T.sure));
   const confBtns = copts.map((c) => {
-    const b = h('button', { type: 'button', class: 'chipbtn', role: 'radio', onclick: () => { cancel(); ctx.set({ conf: c.id }); paint(); if (autoOn) timer = setTimeout(ctx.next, 350); } }, c.label);
+    const b = h('button', { type: 'button', class: 'chipbtn', role: 'radio' }, c.label);
     confRow.append(b);
     return b;
   });
@@ -36,13 +36,14 @@ export const render = (ctx) => {
       noteBox.append(textField(ctx, { key: 'note', label: T.noteLabel, rows: 3 }));
     }
   }
-  function paint() {
+  function paint(flash) {
     const v = ctx.answer.v;
     const opt = vopts.find((o) => o.id === v);
     vbtns.forEach((b, i) => {
       const on = vopts[i].id === v;
       b.setAttribute('aria-checked', String(on));
       b.classList.toggle('sel', on);
+      if (on && flash) pulse(b);
     });
     const clear = opt && !opt.requires_reason;
     confRow.hidden = !clear;
@@ -51,6 +52,7 @@ export const render = (ctx) => {
       const on = copts[i].id === ctx.answer.conf;
       b.setAttribute('aria-checked', String(on));
       b.classList.toggle('sel', on);
+      if (on && flash === 'conf') pulse(b);
     });
     if (opt && opt.requires_reason && reasonBox.childElementCount === 0) {
       reasonBox.append(textField(ctx, { key: 'reason', label: T.reasonLabel, rows: 4 }));
@@ -62,9 +64,12 @@ export const render = (ctx) => {
     const changed = ctx.answer.v !== o.id;
     ctx.set(o.requires_reason ? { v: o.id, conf: null } : { v: o.id, reason: null });
     if (!o.requires_reason) reasonBox.replaceChildren();
-    paint();
+    paint(true);
     if (!o.requires_reason && autoOn && (changed || !ctx.answer.conf)) timer = setTimeout(ctx.next, AUTO_MS);
   }
+  confBtns.forEach((b, i) => {
+    b.onclick = () => { cancel(); ctx.set({ conf: copts[i].id }); paint('conf'); if (autoOn) timer = setTimeout(ctx.next, 350); };
+  });
   ctx.keyHandler = (e) => {
     const i = Number(e.key) - 1;
     if (i >= 0 && i < vopts.length) { pick(vopts[i]); return true; }

@@ -1,5 +1,5 @@
 // single_choice and multi_choice: large option buttons, optional follow-up text.
-import { h } from '../ui.js';
+import { h, pulse } from '../ui.js';
 import { head, prompt, fig, hintEl, lawButton, textField, isEmpty } from './common.js';
 
 function optionButtons(ctx, multi) {
@@ -15,12 +15,13 @@ function optionButtons(ctx, multi) {
     b.addEventListener('click', () => pick(o.id));
     return b;
   });
-  function paint() {
+  function paint(flashId) {
     buttons.forEach((b, i) => {
       const id = card.options[i].id;
       const on = multi ? cur().includes(id) : cur() === id;
       b.setAttribute('aria-checked', String(on));
       b.classList.toggle('sel', on);
+      if (on && id === flashId) pulse(b);
     });
   }
   function pick(id) {
@@ -32,7 +33,7 @@ function optionButtons(ctx, multi) {
     } else {
       ctx.set({ v: id });
     }
-    paint();
+    paint(id);
   }
   ctx.keyHandler = (e) => {
     const i = Number(e.key) - 1;

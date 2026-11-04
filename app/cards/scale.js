@@ -1,16 +1,27 @@
 // scale: card.min..card.max (default 1..5) with optional end labels card.labels = [low, high].
-import { h } from '../ui.js';
+import { h, pulse } from '../ui.js';
 import { head, prompt, fig, hintEl, lawButton, textField } from './common.js';
 
 export const render = (ctx) => {
   const { card } = ctx;
   const min = card.min ?? 1, max = card.max ?? 5;
   const vals = Array.from({ length: max - min + 1 }, (_, i) => min + i);
-  const btns = vals.map((n) => h('button', { type: 'button', class: 'scale-btn', role: 'radio', onclick: () => { ctx.set({ v: n }); paint(); } }, String(n)));
-  const paint = () => btns.forEach((b, i) => { const on = ctx.answer.v === vals[i]; b.setAttribute('aria-checked', String(on)); b.classList.toggle('sel', on); });
+  const btns = vals.map((n) => h('button', { type: 'button', class: 'scale-btn', role: 'radio', onclick: () => pick(n) }, String(n)));
+  function paint(flash) {
+    btns.forEach((b, i) => {
+      const on = ctx.answer.v === vals[i];
+      b.setAttribute('aria-checked', String(on));
+      b.classList.toggle('sel', on);
+      if (on && flash) pulse(b);
+    });
+  }
+  function pick(n) {
+    ctx.set({ v: n });
+    paint(true);
+  }
   ctx.keyHandler = (e) => {
     const n = Number(e.key);
-    if (vals.includes(n)) { ctx.set({ v: n }); paint(); return true; }
+    if (vals.includes(n)) { pick(n); return true; }
     return false;
   };
   paint();

@@ -31,6 +31,15 @@ export function h(tag, attrs = {}, ...kids) {
   return el;
 }
 
+// Soft pick animation for option / verdict buttons (no-op if reduced motion).
+export function pulse(el) {
+  if (!el || window.matchMedia('(prefers-reduced-motion: reduce)').matches) return;
+  el.classList.remove('pop');
+  // force reflow so the animation restarts when re-selecting
+  void el.offsetWidth;
+  el.classList.add('pop');
+}
+
 export function modal(title, body, closeLabel) {
   const dlg = h('dialog', { class: 'modal', 'aria-label': title });
   const close = () => { try { dlg.close(); } catch { /* ignore */ } dlg.remove(); };

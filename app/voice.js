@@ -13,11 +13,61 @@ const CAN_RECORD = !!(window.MediaRecorder && navigator.mediaDevices && navigato
 const IOS_OTHER = /iP(hone|ad|od)/.test(navigator.userAgent) && /CriOS|FxiOS|EdgiOS|OPiOS|GSA\//.test(navigator.userAgent);
 const USE_SR = !!SR && !IOS_OTHER;
 const IOS = /iP(hone|ad|od)/.test(navigator.userAgent);
+// macOS desktop (not iPhone/iPad): Firefox often reports missing OS mic permission as NotFoundError.
+const MAC_DESKTOP = !IOS && /Mac/.test(navigator.platform || navigator.userAgent);
 
 function pickMime() {
   // webm/opus first (Firefox, Chrome); mp4 only as last resort (Safari). Order matters: Firefox may claim mp4 but record nothing.
   const c = ['audio/webm;codecs=opus', 'audio/webm', 'audio/ogg;codecs=opus', 'audio/mp4'];
   return c.find((m) => MediaRecorder.isTypeSupported && MediaRecorder.isTypeSupported(m)) || '';
+}
+
+// Firefox on macOS is picky: {audio:true} can fail with NotFoundError when OS permission is off
+// or when a constraint set does not match. Try several constraint shapes before giving up.
+async function getMicStream() {
+  if (!window.isSecureContext) {
+    const err = new DOMException('Microphone requires a secure context (HTTPS or localhost).', 'SecurityError');
+    throw err;
+  }
+  const attempts = [
+    { audio: true },
+    { audio: { echoCancellation: true, noiseSuppression: true } },
+    { audio: {} },
+  ];
+  let lastErr = null;
+  for (const constraints of attempts) {
+    try {
+      return await navigator.mediaDevices.getUserMedia(constraints);
+    } catch (err) {
+      lastErr = err;
+      const name = err && err.name;
+      // Permission / security failures will not be fixed by different constraints.
+      if (name === 'NotAllowedError' || name === 'PermissionDeniedError' || name === 'SecurityError') throw err;
+    }
+  }
+  // Last resort: pick an enumerated input device explicitly (helps some Firefox builds).
+  try {
+    const devices = await navigator.mediaDevices.enumerateDevices();
+    const mic = devices.find((d) => d.kind === 'audioinput' && d.deviceId && d.deviceId !== 'default');
+    const any = mic || devices.find((d) => d.kind === 'audioinput' && d.deviceId);
+    if (any) {
+      return await navigator.mediaDevices.getUserMedia({ audio: { deviceId: { ideal: any.deviceId } } });
+    }
+  } catch (err) {
+    lastErr = err;
+  }
+  throw lastErr || new DOMException('No microphone found.', 'NotFoundError');
+}
+
+function micGetUserMediaMessage(err) {
+  const name = (err && err.name) || '';
+  if (name === 'NotAllowedError' || name === 'PermissionDeniedError') return T.micDenied;
+  if (name === 'NotFoundError' || name === 'DevicesNotFoundError') {
+    return MAC_DESKTOP ? T.micNotFoundMac : T.micNotFound;
+  }
+  if (name === 'NotReadableError' || name === 'TrackStartError' || name === 'AbortError') return T.micBusy;
+  if (name === 'SecurityError') return T.micInsecure;
+  return `${T.micError} (${name || 'Fehler'})`;
 }
 
 // Returns {el, stop}. `stop` must be called when the card is left.
@@ -60,9 +110,10 @@ export function attachMic({ textarea, lang, cardId, audio }) {
     };
     btn.addEventListener('click', async () => {
       if (mr) { mr.stop(); return; }
+      status.textContent = T.micStarting;
       try {
-        stream = await navigator.mediaDevices.getUserMedia({ audio: true });
-      } catch (err) { status.textContent = `${T.micDenied} (${err && err.name || 'Fehler'})`; return; }
+        stream = await getMicStream();
+      } catch (err) { status.textContent = micGetUserMediaMessage(err); return; }
       const mime = pickMime();
       try {
         try { mr = new MediaRecorder(stream, mime ? { mimeType: mime } : undefined); } catch { mr = new MediaRecorder(stream); }
@@ -82,7 +133,15 @@ export function attachMic({ textarea, lang, cardId, audio }) {
         set(false, T.micRec);
         showMemo();
       };
-      mr.start(500); // timeslice: chunks arrive while recording, not only at the end
+      try {
+        mr.start(500); // timeslice: chunks arrive while recording, not only at the end
+      } catch (err) {
+        stream.getTracks().forEach((t) => t.stop());
+        mr = null;
+        status.textContent = `${T.micError} (${err && err.name || 'Fehler'})`;
+        set(false, T.micRec);
+        return;
+      }
       status.textContent = T.micRecording;
       set(true, T.micStop);
     });
