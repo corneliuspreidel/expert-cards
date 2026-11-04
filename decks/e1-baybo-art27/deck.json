@@ -1,5 +1,5 @@
 {
- "schema": "expert-cards/deck@0.1-draft",
+ "schema": "expert-cards/deck@0.1",
  "id": "e1-baybo-art27",
  "version": "0.1.0",
  "language": "de",
@@ -38,12 +38,14 @@
   {
    "id": "years",
    "label": "Berufserfahrung im Brandschutz (Jahre)",
-   "type": "number"
+   "type": "number",
+   "at": "end"
   },
   {
    "id": "lbo",
    "label": "Landesbauordnung, nach der Sie meist arbeiten",
-   "type": "text"
+   "type": "text",
+   "at": "end"
   }
  ],
  "references": {
@@ -388,9 +390,9 @@
       "C1"
      ],
      "assumption": "Der Hauswirtschaftsraum im Obergeschoss ist keiner der beiden Wohnungen zugeordnet (z. B. gemeinsam genutzt). Seine Tür führt in den Flur der Wohnung B.",
-     "changes_html": [
+     "changes": [
       "Die Wände des Hauswirtschaftsraums sind Trennwände: feuerhemmend, bis zur Rohdecke.",
-      "Seine Tür ist feuerhemmend und dichtschließend, aber <mark>nicht selbstschließend</mark>."
+      "Seine Tür ist feuerhemmend und dichtschließend, aber ==nicht selbstschließend==."
      ],
      "hint": null,
      "figure": {
@@ -409,9 +411,9 @@
      ],
      "related": [],
      "assumption": null,
-     "changes_html": [
-      "<mark>Gebäudeklasse 2</mark>, weiterhin Wohngebäude.",
-      "Die Wand zwischen den beiden Wohnungen im Obergeschoss ist <mark>keine Trennwand</mark> (kein Feuerwiderstand als raumabschließendes Bauteil)."
+     "changes": [
+      "==Gebäudeklasse 2==, weiterhin Wohngebäude.",
+      "Die Wand zwischen den beiden Wohnungen im Obergeschoss ist ==keine Trennwand== (kein Feuerwiderstand als raumabschließendes Bauteil)."
      ],
      "hint": null,
      "figure": {
@@ -432,8 +434,8 @@
       "C9"
      ],
      "assumption": null,
-     "changes_html": [
-      "Die Wohnungstrennwand im Obergeschoss ist <mark>nicht bis zur Rohdecke</mark> geführt; sie endet darunter.",
+     "changes": [
+      "Die Wohnungstrennwand im Obergeschoss ist ==nicht bis zur Rohdecke== geführt; sie endet darunter.",
       "Feuerwiderstand und Kennzeichnung als Trennwand bleiben unverändert (feuerhemmend)."
      ],
      "hint": null,
@@ -455,8 +457,8 @@
       "C2"
      ],
      "assumption": "Künstlich gesetzt, weil das Modell keinen echten Keller hat: Das Obergeschoss gilt als Kellergeschoss. Schlafräume sind Aufenthaltsräume; Flur, Bad und Hauswirtschaftsraum sind keine.",
-     "changes_html": [
-      "Alle Wände zwischen den Schlafräumen und Flur, Bad und Hauswirtschaftsraum sind Trennwände: <mark>feuerbeständig</mark>, bis zur Rohdecke.",
+     "changes": [
+      "Alle Wände zwischen den Schlafräumen und Flur, Bad und Hauswirtschaftsraum sind Trennwände: ==feuerbeständig==, bis zur Rohdecke.",
       "Die Türen in diesen Wänden sind feuerhemmend, dicht- und selbstschließend."
      ],
      "hint": null,
@@ -476,8 +478,8 @@
      ],
      "related": [],
      "assumption": null,
-     "changes_html": [
-      "<mark>Keine Änderung.</mark> Bitte beurteilen Sie das Ausgangsgebäude wie oben beschrieben."
+     "changes": [
+      "==Keine Änderung.== Bitte beurteilen Sie das Ausgangsgebäude wie oben beschrieben."
      ],
      "hint": null,
      "figure": {
@@ -498,8 +500,8 @@
       "C1"
      ],
      "assumption": "Der Hauswirtschaftsraum im Obergeschoss ist keiner der beiden Wohnungen zugeordnet (z. B. gemeinsam genutzt). Seine Tür führt in den Flur der Wohnung B.",
-     "changes_html": [
-      "Die Wände des Hauswirtschaftsraums zu den angrenzenden Räumen der Wohnung B sind <mark>keine Trennwände</mark> (kein Feuerwiderstand)."
+     "changes": [
+      "Die Wände des Hauswirtschaftsraums zu den angrenzenden Räumen der Wohnung B sind ==keine Trennwände== (kein Feuerwiderstand)."
      ],
      "hint": null,
      "figure": {
@@ -520,9 +522,9 @@
       "C3"
      ],
      "assumption": null,
-     "changes_html": [
-      "<mark>Gebäudeklasse 4</mark>; alle tragenden und aussteifenden Bauteile sind <mark>hochfeuerhemmend</mark>.",
-      "Die Wohnungstrennwand im Obergeschoss ist nur <mark>feuerhemmend</mark>."
+     "changes": [
+      "==Gebäudeklasse 4==; alle tragenden und aussteifenden Bauteile sind ==hochfeuerhemmend==.",
+      "Die Wohnungstrennwand im Obergeschoss ist nur ==feuerhemmend==."
      ],
      "hint": null,
      "figure": {
@@ -541,9 +543,9 @@
      ],
      "related": [],
      "assumption": null,
-     "changes_html": [
+     "changes": [
       "Die Wohnungstrennwand im Obergeschoss ist als Trennwand gekennzeichnet.",
-      "Als tragendes Bauteil ist sie feuerhemmend. Für ihren Feuerwiderstand <mark>als raumabschließendes Bauteil gibt es keine Angabe</mark>."
+      "Als tragendes Bauteil ist sie feuerhemmend. Für ihren Feuerwiderstand ==als raumabschließendes Bauteil gibt es keine Angabe==."
      ],
      "hint": "Bitte werten Sie die fehlende Angabe so, wie Sie es bei unvollständigen Bauvorlagen tun würden, und schreiben Sie, ob Sie nachfordern oder ablehnen würden.",
      "figure": {
@@ -562,9 +564,9 @@
      ],
      "related": [],
      "assumption": null,
-     "changes_html": [
-      "Der Hauswirtschaftsraum <mark>gehört zur Wohnung B</mark> und hat <mark>erhöhte Brandgefahr</mark>.",
-      "Seine umschließenden Innenwände sind Trennwände: <mark>feuerbeständig</mark>, bis zur Rohdecke.",
+     "changes": [
+      "Der Hauswirtschaftsraum ==gehört zur Wohnung B== und hat ==erhöhte Brandgefahr==.",
+      "Seine umschließenden Innenwände sind Trennwände: ==feuerbeständig==, bis zur Rohdecke.",
       "Seine Tür ist feuerhemmend, dicht- und selbstschließend."
      ],
      "hint": null,
@@ -584,9 +586,9 @@
      ],
      "related": [],
      "assumption": null,
-     "changes_html": [
-      "Der Hauswirtschaftsraum <mark>gehört zur Wohnung B</mark> und hat <mark>Explosionsgefahr</mark>.",
-      "Seine umschließenden Innenwände sind <mark>keine Trennwände</mark> (kein Feuerwiderstand)."
+     "changes": [
+      "Der Hauswirtschaftsraum ==gehört zur Wohnung B== und hat ==Explosionsgefahr==.",
+      "Seine umschließenden Innenwände sind ==keine Trennwände== (kein Feuerwiderstand)."
      ],
      "hint": null,
      "figure": {
@@ -607,8 +609,8 @@
       "C1"
      ],
      "assumption": "Der Hauswirtschaftsraum im Obergeschoss ist keiner der beiden Wohnungen zugeordnet (z. B. gemeinsam genutzt). Seine Tür führt in den Flur der Wohnung B.",
-     "changes_html": [
-      "Seine Wände sind Trennwände: <mark>feuerhemmend</mark>, bis zur Rohdecke.",
+     "changes": [
+      "Seine Wände sind Trennwände: ==feuerhemmend==, bis zur Rohdecke.",
       "Seine Tür ist feuerhemmend, dicht- und selbstschließend."
      ],
      "hint": null,
@@ -628,8 +630,8 @@
      ],
      "related": [],
      "assumption": null,
-     "changes_html": [
-      "Die Wand zwischen den beiden Wohnungen im Obergeschoss ist <mark>keine Trennwand</mark> (kein Feuerwiderstand als raumabschließendes Bauteil)."
+     "changes": [
+      "Die Wand zwischen den beiden Wohnungen im Obergeschoss ist ==keine Trennwand== (kein Feuerwiderstand als raumabschließendes Bauteil)."
      ],
      "hint": null,
      "figure": {
@@ -650,9 +652,9 @@
       "C3"
      ],
      "assumption": null,
-     "changes_html": [
-      "<mark>Gebäudeklasse 4</mark>.",
-      "Alle tragenden und aussteifenden Bauteile und alle Trennwände sind <mark>hochfeuerhemmend</mark>."
+     "changes": [
+      "==Gebäudeklasse 4==.",
+      "Alle tragenden und aussteifenden Bauteile und alle Trennwände sind ==hochfeuerhemmend==."
      ],
      "hint": null,
      "figure": {
@@ -673,8 +675,8 @@
       "C5"
      ],
      "assumption": "Der Flur im Obergeschoss der Wohnung B ist keiner Wohnung zugeordnet und gilt als notwendiger Flur im Sinne von Art. 34.",
-     "changes_html": [
-      "Die Wände dieses Flurs sind <mark>keine Trennwände</mark>."
+     "changes": [
+      "Die Wände dieses Flurs sind ==keine Trennwände==."
      ],
      "hint": "Wenn Art. 34 eigene Anforderungen an diese Wände stellt, beurteilen Sie hier bitte nur Art. 27 und vermerken Art. 34 in der Begründung.",
      "figure": {
@@ -693,9 +695,9 @@
      ],
      "related": [],
      "assumption": null,
-     "changes_html": [
-      "Der Hauswirtschaftsraum <mark>gehört zur Wohnung B</mark> und hat <mark>erhöhte Brandgefahr</mark>.",
-      "Seine umschließenden Innenwände sind Trennwände, aber nur <mark>feuerhemmend</mark>.",
+     "changes": [
+      "Der Hauswirtschaftsraum ==gehört zur Wohnung B== und hat ==erhöhte Brandgefahr==.",
+      "Seine umschließenden Innenwände sind Trennwände, aber nur ==feuerhemmend==.",
       "Seine Tür ist feuerhemmend, dicht- und selbstschließend."
      ],
      "hint": null,
@@ -717,9 +719,9 @@
       "C1"
      ],
      "assumption": "Der Hauswirtschaftsraum im Obergeschoss ist keiner der beiden Wohnungen zugeordnet (z. B. gemeinsam genutzt). Seine Tür führt in den Flur der Wohnung B.",
-     "changes_html": [
+     "changes": [
       "Seine Wände sind Trennwände: feuerhemmend, bis zur Rohdecke.",
-      "Seine Tür ist dicht- und selbstschließend, hat aber <mark>keinen Feuerwiderstand</mark>."
+      "Seine Tür ist dicht- und selbstschließend, hat aber ==keinen Feuerwiderstand==."
      ],
      "hint": null,
      "figure": {
@@ -740,8 +742,8 @@
       "C2"
      ],
      "assumption": "Künstlich gesetzt, weil das Modell keinen echten Keller hat: Das Obergeschoss gilt als Kellergeschoss. Schlafräume sind Aufenthaltsräume; Flur, Bad und Hauswirtschaftsraum sind keine.",
-     "changes_html": [
-      "Die Wände zwischen den Schlafräumen und Flur, Bad und Hauswirtschaftsraum sind <mark>keine Trennwände</mark>."
+     "changes": [
+      "Die Wände zwischen den Schlafräumen und Flur, Bad und Hauswirtschaftsraum sind ==keine Trennwände==."
      ],
      "hint": null,
      "figure": {
@@ -760,9 +762,9 @@
      ],
      "related": [],
      "assumption": "Gleiche Geometrie, aber das Gebäude ist kein Wohngebäude; die beiden Hälften sind zwei Nutzungseinheiten anderer Art (z. B. zwei Büroeinheiten).",
-     "changes_html": [
-      "<mark>Gebäudeklasse 2</mark>, <mark>kein Wohngebäude</mark>.",
-      "Die Wand zwischen den beiden Nutzungseinheiten im Obergeschoss ist <mark>keine Trennwand</mark>."
+     "changes": [
+      "==Gebäudeklasse 2==, ==kein Wohngebäude==.",
+      "Die Wand zwischen den beiden Nutzungseinheiten im Obergeschoss ist ==keine Trennwand==."
      ],
      "hint": null,
      "figure": {
@@ -783,9 +785,9 @@
       "C4"
      ],
      "assumption": null,
-     "changes_html": [
-      "<mark>Keine Änderung</mark> gegenüber dem Ausgangsgebäude.",
-      "Bitte beurteilen Sie nur die <mark>Außenwände der Längsseiten</mark>: Sie laufen an beiden Wohnungen vorbei, sind tragend und feuerhemmend, aber <mark>nicht als Trennwände</mark> ausgeführt."
+     "changes": [
+      "==Keine Änderung== gegenüber dem Ausgangsgebäude.",
+      "Bitte beurteilen Sie nur die ==Außenwände der Längsseiten==: Sie laufen an beiden Wohnungen vorbei, sind tragend und feuerhemmend, aber ==nicht als Trennwände== ausgeführt."
      ],
      "hint": null,
      "figure": {
@@ -809,9 +811,9 @@
       "GK 2",
       "mit Keller"
      ],
-     "changes_html": [
-      "<mark>Gebäudeklasse 2</mark>, <mark>Kellergeschoss</mark> vorhanden.",
-      "Eine tragende Kellerwand hat <mark>keinen Feuerwiderstand</mark>; die übrigen Kellerwände sind feuerhemmend."
+     "changes": [
+      "==Gebäudeklasse 2==, ==Kellergeschoss== vorhanden.",
+      "Eine tragende Kellerwand hat ==keinen Feuerwiderstand==; die übrigen Kellerwände sind feuerhemmend."
      ],
      "figure": {
       "template": "section",
@@ -831,9 +833,9 @@
       "GK 4",
       "ohne Keller"
      ],
-     "changes_html": [
-      "<mark>Gebäudeklasse 4</mark>.",
-      "Alle tragenden Wände sind <mark>hochfeuerhemmend</mark>."
+     "changes": [
+      "==Gebäudeklasse 4==.",
+      "Alle tragenden Wände sind ==hochfeuerhemmend==."
      ],
      "figure": {
       "template": "section",
@@ -850,9 +852,9 @@
       "GK 1",
       "mit Keller"
      ],
-     "changes_html": [
-      "<mark>Gebäudeklasse 1</mark>, Kellergeschoss vorhanden.",
-      "Tragende oberirdische Wände <mark>ohne Feuerwiderstand</mark>; Kellerwände feuerhemmend."
+     "changes": [
+      "==Gebäudeklasse 1==, Kellergeschoss vorhanden.",
+      "Tragende oberirdische Wände ==ohne Feuerwiderstand==; Kellerwände feuerhemmend."
      ],
      "figure": {
       "template": "section",
@@ -870,9 +872,9 @@
       "GK 3",
       "ohne Keller"
      ],
-     "changes_html": [
+     "changes": [
       "Gebäudeklasse 3.",
-      "<mark>Eine</mark> tragende oberirdische Wand hat <mark>keinen Feuerwiderstand</mark>."
+      "==Eine== tragende oberirdische Wand hat ==keinen Feuerwiderstand==."
      ],
      "figure": {
       "template": "section",
@@ -891,9 +893,9 @@
       "GK 5",
       "ohne Keller"
      ],
-     "changes_html": [
-      "<mark>Gebäudeklasse 5</mark>.",
-      "Alle tragenden Wände sind <mark>feuerbeständig</mark>."
+     "changes": [
+      "==Gebäudeklasse 5==.",
+      "Alle tragenden Wände sind ==feuerbeständig==."
      ],
      "figure": {
       "template": "section",
@@ -910,9 +912,9 @@
       "GK 4",
       "ohne Keller"
      ],
-     "changes_html": [
-      "<mark>Gebäudeklasse 4</mark>.",
-      "Alle tragenden Wände sind hochfeuerhemmend, <mark>eine davon feuerbeständig</mark>."
+     "changes": [
+      "==Gebäudeklasse 4==.",
+      "Alle tragenden Wände sind hochfeuerhemmend, ==eine davon feuerbeständig==."
      ],
      "figure": {
       "template": "section",
@@ -931,8 +933,8 @@
       "GK 3",
       "ohne Keller"
      ],
-     "changes_html": [
-      "<mark>Keine Änderung.</mark> Ausgangsgebäude, Gebäudeklasse 3."
+     "changes": [
+      "==Keine Änderung.== Ausgangsgebäude, Gebäudeklasse 3."
      ],
      "figure": {
       "template": "section",
@@ -949,9 +951,9 @@
       "GK 3",
       "mit Keller"
      ],
-     "changes_html": [
-      "Gebäudeklasse 3, <mark>Kellergeschoss</mark> vorhanden.",
-      "Eine tragende Kellerwand ist <mark>nur feuerhemmend</mark>; die übrigen Kellerwände sind feuerbeständig."
+     "changes": [
+      "Gebäudeklasse 3, ==Kellergeschoss== vorhanden.",
+      "Eine tragende Kellerwand ist ==nur feuerhemmend==; die übrigen Kellerwände sind feuerbeständig."
      ],
      "figure": {
       "template": "section",
@@ -971,9 +973,9 @@
       "GK 5",
       "ohne Keller"
      ],
-     "changes_html": [
-      "<mark>Gebäudeklasse 5</mark>.",
-      "Eine tragende oberirdische Wand ist <mark>nur hochfeuerhemmend</mark>, die übrigen feuerbeständig."
+     "changes": [
+      "==Gebäudeklasse 5==.",
+      "Eine tragende oberirdische Wand ist ==nur hochfeuerhemmend==, die übrigen feuerbeständig."
      ],
      "figure": {
       "template": "section",
@@ -992,9 +994,9 @@
       "GK 2",
       "mit Keller"
      ],
-     "changes_html": [
-      "<mark>Gebäudeklasse 2</mark>, <mark>Kellergeschoss</mark> vorhanden.",
-      "Alle Kellerwände sind <mark>feuerhemmend</mark>."
+     "changes": [
+      "==Gebäudeklasse 2==, ==Kellergeschoss== vorhanden.",
+      "Alle Kellerwände sind ==feuerhemmend==."
      ],
      "figure": {
       "template": "section",
@@ -1012,9 +1014,9 @@
       "GK 4",
       "ohne Keller"
      ],
-     "changes_html": [
-      "<mark>Gebäudeklasse 4</mark>.",
-      "Eine tragende oberirdische Wand ist <mark>nur feuerhemmend</mark>, die übrigen hochfeuerhemmend."
+     "changes": [
+      "==Gebäudeklasse 4==.",
+      "Eine tragende oberirdische Wand ist ==nur feuerhemmend==, die übrigen hochfeuerhemmend."
      ],
      "figure": {
       "template": "section",
