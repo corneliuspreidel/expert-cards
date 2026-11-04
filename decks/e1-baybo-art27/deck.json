@@ -1065,7 +1065,7 @@
  },
  "submission": {
   "mode": "email",
-  "to": "PLEASE_SET",
+  "to": "cornelius.preidel@hm.edu",
   "subject": "Fallprüfung Brandschutz BayBO – Antworten",
   "backup_file": true
  }
