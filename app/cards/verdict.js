@@ -60,7 +60,8 @@ export const render = (ctx) => {
   function pick(o) {
     cancel();
     const changed = ctx.answer.v !== o.id;
-    ctx.set(o.requires_reason ? { v: o.id, conf: null } : { v: o.id });
+    ctx.set(o.requires_reason ? { v: o.id, conf: null } : { v: o.id, reason: null });
+    if (!o.requires_reason) reasonBox.replaceChildren();
     paint();
     if (!o.requires_reason && autoOn && (changed || !ctx.answer.conf)) timer = setTimeout(ctx.next, AUTO_MS);
   }

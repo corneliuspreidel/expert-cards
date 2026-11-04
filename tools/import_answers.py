@@ -181,7 +181,7 @@ def main():
             })
     rows.sort(key=lambda x: (x["code"], x["_o"], x["card_id"]))
     fields = [k for k in rows[0] if k != "_o"]
-    with out.open("w", newline="", encoding="utf-8") as fh:
+    with out.open("w", newline="", encoding="utf-8-sig") as fh:  # BOM: Excel opens umlauts correctly
         w = csv.DictWriter(fh, fieldnames=fields, extrasaction="ignore")
         w.writeheader()
         w.writerows(rows)

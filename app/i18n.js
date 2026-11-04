@@ -20,6 +20,7 @@ const de = {
     `Gesendet wird erst, wenn Sie am Ende auf „Absenden“ tippen. Dann gehen die Antworten per E-Mail an ${to || 'die Studienleitung'}.`,
     'Wir erfassen auch, wie lange Sie für jede Karte brauchen und wie oft Sie eine Antwort ändern.',
     'Die Spracheingabe nutzt die Spracherkennung Ihres Geräts oder Browsers (Apple in Safari, Google in Chrome). Die Audiodaten verarbeitet dann dieser Anbieter, nicht wir. Wenn Ihr Browser keine Spracherkennung hat, nehmen wir stattdessen eine Sprachnotiz auf; sie liegt nur in der Sicherungsdatei.',
+    'Die Seite wird über GitHub Pages ausgeliefert. GitHub sieht dabei technische Zugriffsdaten wie die IP-Adresse, aber keine Antworten.',
     'Sie brauchen kein Konto. Die Seite funktioniert nach dem ersten Laden auch offline.'
   ],
   progress: (n, total) => `Karte ${n} von ${total}`,
@@ -78,6 +79,8 @@ const de = {
   emailStep2: '2. E-Mail öffnen und senden',
   emailStep3: 'Falls sich kein E-Mail-Programm öffnet: Text kopieren',
   copy: 'Text kopieren',
+  mailShortBody: 'Bitte hier mit Strg+V die kopierten Antworten einfügen und die Sicherungsdatei anhängen.',
+  mailShortHint: 'Die Antworten werden dabei in die Zwischenablage kopiert. Fügen Sie sie in der E-Mail mit Strg+V ein.',
   copied: 'Kopiert.',
   download: 'Sicherungsdatei herunterladen',
   openMail: 'E-Mail vorbereiten',

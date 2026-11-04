@@ -60,7 +60,7 @@ def main():
     ap.add_argument("--types", default="verdict,single_choice", help="card types to include when the CSV has them")
     args = ap.parse_args()
 
-    rows = list(csv.DictReader(open(args.answers, encoding="utf-8")))
+    rows = list(csv.DictReader(open(args.answers, encoding="utf-8-sig")))
     wanted = set(args.cards.split(",")) if args.cards else None
     types = set(args.types.split(","))
     data = defaultdict(dict)  # card -> expert -> value
@@ -81,7 +81,7 @@ def main():
         if inside_git_repo(kp):
             print("refusing: the key file is inside a git work tree. Keep it outside the repository.", file=sys.stderr)
             return 2
-        key = {r["card_id"]: r["expected"] for r in csv.DictReader(open(kp, encoding="utf-8"))}
+        key = {r["card_id"]: r["expected"] for r in csv.DictReader(open(kp, encoding="utf-8-sig"))}
 
     if key:
         print("\nPer expert vs key")

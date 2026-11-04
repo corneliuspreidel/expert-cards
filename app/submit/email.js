@@ -10,7 +10,11 @@ export function render(ctx) {
   const text = ctx.report();
   const ta = h('textarea', { class: 'copy', readonly: true, rows: 5, 'aria-label': T.copy });
   ta.value = text;
-  const mailto = `mailto:${encodeURIComponent(to).replace('%40', '@')}?subject=${encodeURIComponent(sub.subject || ctx.deck.title)}&body=${encodeURIComponent(text)}`;
+  // Windows mail clients cut mailto: links at about 2000 characters: there the full text goes to the clipboard
+  const shortBody = /Windows/.test(navigator.userAgent) && encodeURIComponent(text).length > 1500;
+  const body = shortBody ? T.mailShortBody : text;
+  const mailto = `mailto:${encodeURIComponent(to).replace('%40', '@')}?subject=${encodeURIComponent(sub.subject || ctx.deck.title)}&body=${encodeURIComponent(body)}`;
+  const copy = async () => { try { await navigator.clipboard.writeText(text); copyNote.textContent = T.copied; return true; } catch { ta.select(); return false; } };
   return h('div', { class: 'submit-steps' },
     !to ? h('p', { class: 'warn' }, T.noRecipient) : null,
     sub.backup_file === false ? null : h('div', { class: 'step' },
@@ -18,14 +22,13 @@ export function render(ctx) {
       h('button', { type: 'button', class: 'btn', onclick: () => ctx.download() }, T.download)),
     h('div', { class: 'step' },
       h('p', {}, h('b', {}, T.emailStep2)),
-      h('a', { class: 'btn primary', href: mailto, onclick: () => setTimeout(ctx.sentPrompt, 600) }, T.openMail)),
+      h('a', { class: 'btn primary', href: mailto, onclick: () => { if (shortBody) copy(); } }, T.openMail),
+      shortBody ? h('p', { class: 'hint' }, T.mailShortHint) : null),
     h('div', { class: 'step' },
       h('p', {}, T.emailStep3),
       h('button', {
         type: 'button', class: 'btn',
-        onclick: async () => {
-          try { await navigator.clipboard.writeText(text); copyNote.textContent = T.copied; } catch { ta.select(); }
-        }
+        onclick: copy
       }, T.copy), copyNote,
       ta),
     h('div', { class: 'step' }, h('button', { type: 'button', class: 'btn primary', onclick: ctx.markSent }, T.sentConfirm)));

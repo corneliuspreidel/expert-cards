@@ -1,6 +1,6 @@
 // Simple offline support: network first, fall back to cache. Everything same-origin and GET is cached
 // as it is used, so a deck works offline once it has been opened. Bump CACHE to drop old files.
-const CACHE = 'expert-cards-v1';
+const CACHE = 'expert-cards-v2';
 const CORE = ['./', 'index.html', 'app/style.css', 'app/engine.js', 'app/ui.js', 'app/i18n.js', 'app/storage.js', 'app/voice.js',
   'app/cards/index.js', 'app/cards/common.js', 'app/cards/info.js', 'app/cards/choice.js', 'app/cards/verdict.js', 'app/cards/scale.js', 'app/cards/free_text.js',
   'app/figures/index.js', 'app/figures/duplex-plan.js', 'app/figures/section.js', 'app/submit/index.js', 'app/submit/email.js', 'app/submit/webhook.js', 'decks/index.json'];
@@ -15,7 +15,8 @@ self.addEventListener('fetch', (e) => {
   const req = e.request;
   if (req.method !== 'GET' || new URL(req.url).origin !== location.origin) return;
   e.respondWith(
-    fetch(req).then((res) => {
+    // no-cache: always revalidate with the server, so deck corrections show up at once (offline falls back to the cache)
+    fetch(req, { cache: 'no-cache' }).then((res) => {
       if (res.ok) { const copy = res.clone(); caches.open(CACHE).then((c) => c.put(req, copy)); }
       return res;
     }).catch(() => caches.match(req, { ignoreSearch: true }))

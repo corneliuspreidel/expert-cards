@@ -385,7 +385,7 @@ function renderSubmit(main) {
   }
   const adapter = adapters[(deck.submission || {}).mode] || adapters.email;
   main.append(h('h1', { tabindex: '-1' }, T.submitTitle),
-    adapter.render({ deck, report: reportText, payload, download, markSent, sentPrompt: () => {} }));
+    adapter.render({ deck, report: reportText, payload, download, markSent }));
 }
 
 /* ---------- input: keyboard + swipe ---------- */
@@ -419,5 +419,13 @@ function attachSwipe(el) {
 boot();
 
 if ('serviceWorker' in navigator && location.protocol.startsWith('http')) {
-  navigator.serviceWorker.register('sw.js').catch(() => {});
+  // after the first visit the app and the opened deck are cached, so a later offline start works
+  navigator.serviceWorker.register('sw.js')
+    .then(() => navigator.serviceWorker.ready)
+    .then(() => navigator.serviceWorker.controller || new Promise((res) => {
+      navigator.serviceWorker.addEventListener('controllerchange', res, { once: true });
+      setTimeout(res, 3000);
+    }))
+    .then(() => deckBase && fetch(`${deckBase}deck.json`, { cache: 'no-cache' }))
+    .catch(() => {});
 }
