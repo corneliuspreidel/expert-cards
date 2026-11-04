@@ -15,7 +15,8 @@ const USE_SR = !!SR && !IOS_OTHER;
 const IOS = /iP(hone|ad|od)/.test(navigator.userAgent);
 
 function pickMime() {
-  const c = ['audio/mp4', 'audio/webm;codecs=opus', 'audio/webm', 'audio/ogg;codecs=opus'];
+  // webm/opus first (Firefox, Chrome); mp4 only as last resort (Safari). Order matters: Firefox may claim mp4 but record nothing.
+  const c = ['audio/webm;codecs=opus', 'audio/webm', 'audio/ogg;codecs=opus', 'audio/mp4'];
   return c.find((m) => MediaRecorder.isTypeSupported && MediaRecorder.isTypeSupported(m)) || '';
 }
 
@@ -53,7 +54,7 @@ export function attachMic({ textarea, lang, cardId, audio }) {
       if (!r) return;
       url = URL.createObjectURL(r.blob);
       memo.append(
-        h('p', {}, T.memoSaved(Math.round(r.ms / 1000))),
+        h('p', {}, T.memoSaved(Math.round(r.ms / 1000), `${(r.mime || '').split(';')[0]}, ${Math.max(1, Math.round(r.blob.size / 1024))} KB`)),
         h('audio', { controls: true, src: url, preload: 'metadata', 'aria-label': T.memoPlay }),
         h('button', { type: 'button', class: 'btn small', onclick: () => { audio.del(cardId); showMemo(); } }, T.memoDelete));
     };
@@ -63,20 +64,25 @@ export function attachMic({ textarea, lang, cardId, audio }) {
         stream = await navigator.mediaDevices.getUserMedia({ audio: true });
       } catch (err) { status.textContent = `${T.micDenied} (${err && err.name || 'Fehler'})`; return; }
       const mime = pickMime();
-      try { mr = new MediaRecorder(stream, mime ? { mimeType: mime } : undefined); } catch (err) { stream.getTracks().forEach((t) => t.stop()); status.textContent = `${T.micError} (${err && err.name || 'Fehler'})`; return; }
+      try {
+        try { mr = new MediaRecorder(stream, mime ? { mimeType: mime } : undefined); } catch { mr = new MediaRecorder(stream); }
+      } catch (err) { stream.getTracks().forEach((t) => t.stop()); status.textContent = `${T.micError} (${err && err.name || 'Fehler'})`; return; }
+      mr.onerror = (e) => { status.textContent = `${T.micError} (${(e.error && e.error.name) || 'Aufnahmefehler'})`; };
       chunks = [];
       t0 = Date.now();
       mr.ondataavailable = (e) => { if (e.data && e.data.size) chunks.push(e.data); };
       mr.onstop = () => {
         stream.getTracks().forEach((t) => t.stop());
-        const type = mr.mimeType || mime || 'audio/mp4';
-        if (chunks.length) audio.set(cardId, new Blob(chunks, { type }), type, Date.now() - t0);
+        const type = mr.mimeType || mime || 'audio/webm';
+        const blob = new Blob(chunks, { type });
+        const ok = blob.size > 0;
+        if (ok) audio.set(cardId, blob, type, Date.now() - t0);
         mr = null;
-        status.textContent = '';
+        status.textContent = ok ? '' : T.memoEmpty;
         set(false, T.micRec);
         showMemo();
       };
-      mr.start();
+      mr.start(500); // timeslice: chunks arrive while recording, not only at the end
       status.textContent = T.micRecording;
       set(true, T.micStop);
     });
