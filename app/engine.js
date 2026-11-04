@@ -233,9 +233,19 @@ function renderStart() {
     h('section', { class: 'privacy' }, h('h2', {}, T.privacyTitle), h('ul', {}, T.privacy(to).map((t) => h('li', {}, t)))),
     deck.consent_text ? h('p', { class: 'consent-text' }, deck.consent_text) : null,
     h('label', { class: 'check', for: 'consent' }, consent, h('span', {}, T.consentLabel)),
-    go1);
+    go1, legalLinks());
   app.append(main);
   main.querySelector('h1').focus({ preventScroll: true });
+}
+
+// Links to imprint / privacy statement, taken from the deck (`legal`). Nothing study-specific in the engine.
+function legalLinks() {
+  const l = deck.legal;
+  if (!l || (!l.privacy_url && !l.imprint_url)) return null;
+  const a = (href, text) => h('a', { href, target: '_blank', rel: 'noopener' }, text);
+  return h('p', { class: 'legal hint' }, l.note || T.legalNote, ' ',
+    l.privacy_url ? a(l.privacy_url, T.legalPrivacy) : null, l.privacy_url && l.imprint_url ? ' · ' : null,
+    l.imprint_url ? a(l.imprint_url, T.legalImprint) : null);
 }
 
 function identityFields(at) {
@@ -372,6 +382,7 @@ async function download() {
 }
 
 function markSent() {
+  if (!confirm(T.sentAsk)) return;
   state.submittedAt = now();
   persist(); store.flush(state);
   render();
@@ -380,12 +391,14 @@ function markSent() {
 function renderSubmit(main) {
   if (state.submittedAt) {
     main.append(h('h1', { tabindex: '-1' }, T.doneTitle), h('p', {}, T.doneBody),
-      h('button', { type: 'button', class: 'btn', onclick: () => go(stepIndex('review')) }, T.doneAgain));
+      h('button', { type: 'button', class: 'btn', onclick: () => go(stepIndex('review')) }, T.doneAgain),
+      h('button', { type: 'button', class: 'linkbtn', onclick: () => { state.submittedAt = null; persist(); store.flush(state); render(); } }, T.notSentYet),
+      legalLinks());
     return;
   }
   const adapter = adapters[(deck.submission || {}).mode] || adapters.email;
-  main.append(h('h1', { tabindex: '-1' }, T.submitTitle),
-    adapter.render({ deck, report: reportText, payload, download, markSent }));
+  main.append(h('h1', { tabindex: '-1' }, T.submitTitle), h('p', { class: 'lead' }, T.submitIntro),
+    adapter.render({ deck, report: reportText, payload, download, markSent }), legalLinks());
 }
 
 /* ---------- input: keyboard + swipe ---------- */

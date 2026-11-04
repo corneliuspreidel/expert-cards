@@ -31,5 +31,5 @@ export function render(ctx) {
         onclick: copy
       }, T.copy), copyNote,
       ta),
-    h('div', { class: 'step' }, h('button', { type: 'button', class: 'btn primary', onclick: ctx.markSent }, T.sentConfirm)));
+    h('div', { class: 'step' }, h('p', {}, h('b', {}, T.emailStep4)), h('button', { type: 'button', class: 'btn', onclick: ctx.markSent }, T.sentConfirm)));
 }

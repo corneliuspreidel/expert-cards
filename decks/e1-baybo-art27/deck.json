@@ -1,7 +1,7 @@
 {
  "schema": "expert-cards/deck@0.1",
  "id": "e1-baybo-art27",
- "version": "0.1.0",
+ "version": "0.1.1",
  "language": "de",
  "title": "Fallprüfung Brandschutz BayBO",
  "subtitle": "Trennwände (Art. 27) und tragende Wände (Art. 25)",
@@ -12,6 +12,10 @@
  "estimated_minutes": {
   "part1": 15,
   "total": 35
+ },
+ "legal": {
+  "privacy_url": "https://hm.edu/datenschutz/index.de.html",
+  "imprint_url": "https://hm.edu/impressum/index.de.html"
  },
  "consent_text": "Ihre Antworten werden nur für die Studie verwendet und in Veröffentlichungen ohne Namen berichtet.",
  "identity_fields": [
@@ -71,7 +75,7 @@
     "template": "duplex-plan",
     "highlight": "base"
    },
-   "body": "Doppelhaus mit zwei Wohnungen (A und B), je Erdgeschoss und Obergeschoss; im Modell ein Gebäude mit zwei Nutzungseinheiten. Wohngebäude, Gebäudeklasse 3, sofern nicht anders angegeben; Fußboden OG 3,10 m über Gelände. Zwischen den Wohnungen in beiden Geschossen eine Wohnungstrennwand (Trennwand, feuerhemmend, bis zur Rohdecke). Die Außenwände der Längsseiten laufen durch; an sie grenzen Räume beider Wohnungen; sie sind tragend und feuerhemmend, aber keine Trennwände. Kein Kellergeschoss, keine notwendigen Flure, sofern nicht anders angegeben. Im OG der Wohnung B liegt ein Hauswirtschaftsraum."
+   "body": "Doppelhaus mit zwei Wohnungen (A und B), je Erdgeschoss und Obergeschoss; im Modell ein Gebäude mit zwei Nutzungseinheiten. Wohngebäude, Gebäudeklasse 3, sofern nicht anders angegeben; Fußboden OG 3,10 m über Gelände. Zwischen den Wohnungen in beiden Geschossen eine Wohnungstrennwand (Trennwand, feuerhemmend, bis zur Rohdecke). Die Außenwände der Längsseiten laufen durch; an sie grenzen Räume beider Wohnungen; sie sind tragend und feuerhemmend. Kein Kellergeschoss, keine notwendigen Flure, sofern nicht anders angegeben. Im OG der Wohnung B liegt ein Hauswirtschaftsraum."
   },
   {
    "type": "info",
@@ -208,12 +212,12 @@
       {
        "id": "nein26",
        "label": "Nein, Außenwände regelt allein Art. 26",
-       "detail": "Art. 27 betrifft nur Innenwände."
+       "detail": "Für sie gelten nur die Anforderungen an Außenwände."
       },
       {
        "id": "ja",
        "label": "Ja, Art. 27 gilt auch für diese Außenwände",
-       "detail": ""
+       "detail": "Sie müssen zusätzlich die Anforderungen an Trennwände erfüllen."
       },
       {
        "id": "abh",
