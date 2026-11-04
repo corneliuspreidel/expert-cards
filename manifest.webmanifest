@@ -1,0 +1,20 @@
+{
+  "name": "Expertenbefragung",
+  "short_name": "Befragung",
+  "description": "Strukturierte Expertenfragen, eine Karte nach der anderen.",
+  "lang": "de",
+  "start_url": "./",
+  "scope": "./",
+  "display": "standalone",
+  "orientation": "portrait-primary",
+  "background_color": "#12141a",
+  "theme_color": "#12141a",
+  "icons": [
+    {
+      "src": "icon.svg",
+      "sizes": "any",
+      "type": "image/svg+xml",
+      "purpose": "any"
+    }
+  ]
+}
