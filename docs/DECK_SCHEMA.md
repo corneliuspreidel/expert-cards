@@ -14,14 +14,14 @@ One study = one `decks/<deck-id>/deck.json`. Listed in `decks/index.json`. The e
 | `consent_text` | string | shown above the consent checkbox |
 | `identity_fields` | list | `{id, label, type: text\|number\|choice, options?, required?, at?}`; `at: "end"` moves the field from the start screen to the overview |
 | `references` | map | `{<ref-id>: {title, text}}`, e.g. statute text; sections point to them |
-| `intro_cards` | list of `info` cards | |
+| `intro_cards` | list of `info` cards | optional `before_section: <section id>` puts the card at the start of that section's first lesson; otherwise it opens lesson 1 |
 | `sections` | list | `{id, title, reference?, question?, cards[]}`; `question` is the default prompt for `verdict` cards |
 | `verdict_options` | list | `{id, label, requires_reason?}` |
 | `confidence_options` | list | `{id, label}`; shown after a clear verdict |
 | `closing` | `{free_text_label, title?}` | last card, free text |
 | `legal` | `{privacy_url?, imprint_url?, note?}` | links shown on the start and submit screens (data protection, imprint of the responsible institution) |
 | `submission` | `{mode: email\|webhook, to, subject, backup_file, url?}` | `to: "PLEASE_SET"` is accepted by the validator only with `--allow-placeholder` |
-| `settings` | `{auto_advance?: bool, app_feedback?: bool}` | optional; both default `true`. `app_feedback` shows the collapsed "Feedback zu dieser App" box on the overview; it is stored as answer `_feedback` |
+| `settings` | `{auto_advance?: bool, app_feedback?: bool, lesson_size?: int}` | optional; `auto_advance` and `app_feedback` default `true`. `lesson_size` (default 6) is the target number of cards per lesson: the engine cuts every section into evenly sized lessons ("Häppchen"), shows a lesson overview as home screen and a short "Lektion geschafft" screen after each lesson. A section may set its own `lesson_size`. `app_feedback` shows the collapsed "Feedback zu dieser App" box on the overview; it is stored as answer `_feedback` |
 
 ## Cards
 

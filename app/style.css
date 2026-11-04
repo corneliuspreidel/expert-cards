@@ -165,3 +165,26 @@ dialog.modal .btn { margin-top: 1rem; width: 100%; }
 
 .legal { margin-top: 1.5rem; }
 .legal a { color: inherit; }
+
+/* lessons ("Häppchen"): overview + lesson end */
+.screen.home, .screen.lessondone { padding-bottom: 2.5rem; }
+.bar.thick { height: 14px; border-radius: 7px; margin: .2rem 0 1rem; max-width: none; }
+.bar.thick .bar-fill { border-radius: 7px; }
+.hint.saved { margin-top: 1rem; }
+.lessons { list-style: none; padding: 0; margin: 0 0 .5rem; display: grid; gap: .6rem; }
+.lesson { font: inherit; color: inherit; cursor: pointer; width: 100%; min-height: 64px; display: flex; align-items: center; gap: .9rem; text-align: left; padding: .7rem .9rem; border: 2px solid var(--line-2); border-radius: var(--r); background: var(--bg); }
+.lesson .badge { flex: none; width: 2.6rem; height: 2.6rem; border-radius: 50%; display: grid; place-items: center; font-weight: 700; font-size: 1.05rem; background: var(--surface); border: 2px solid var(--line-2); }
+.lesson-main { display: grid; gap: .1rem; min-width: 0; }
+.lesson-title { font-weight: 700; }
+.lesson-meta { color: var(--muted); font-size: .92rem; }
+.lesson.current { border-color: var(--hl); background: var(--hl-soft); }
+.lesson.current .badge { background: var(--hl); border-color: var(--hl); color: var(--hl-ink); }
+.lesson.started .badge { border-color: var(--hl); color: var(--hl); }
+.lesson.done .badge { background: var(--ok-soft); border-color: var(--ok); color: var(--ok); }
+.lessondone { text-align: center; }
+.lessondone .bar.thick { margin-top: 1rem; }
+.lessondone .warn { text-align: left; margin: 1rem 0; }
+.lessondone .done-actions { margin-top: 1.2rem; display: grid; gap: .2rem; }
+.celebrate { width: 5.5rem; height: 5.5rem; margin: 1.5rem auto 1rem; border-radius: 50%; display: grid; place-items: center; font-size: 3rem; font-weight: 700; background: var(--ok-soft); color: var(--ok); border: 3px solid var(--ok); animation: pop .5s ease-out; }
+.celebrate.part { background: var(--hl-soft); color: var(--hl); border-color: var(--hl); }
+@keyframes pop { 0% { transform: scale(.4); opacity: 0; } 70% { transform: scale(1.12); opacity: 1; } 100% { transform: scale(1); } }

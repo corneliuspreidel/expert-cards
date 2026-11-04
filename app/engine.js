@@ -8,16 +8,20 @@ import { adapters } from './submit/index.js';
 import { textField } from './cards/common.js';
 
 const app = document.getElementById('app');
-let deck, deckBase, steps, state, store;
+let deck, deckBase, steps, lessons, state, store;
 let editing = false;
 let t0 = 0;
 let cleanups = [];
 let keyHandler = null;
 let navEl = null;
+let primary = null; // Enter on the lesson overview / lesson end
 
+// append that skips null/false children (native append would write the text "null")
+const put = (el, ...kids) => el.append(...kids.flat().filter((k) => k != null && k !== false));
 const now = () => new Date().toISOString();
 const stepIndex = (kind) => steps.findIndex((s) => s.kind === kind);
 const cardSteps = () => steps.filter((s) => s.kind === 'card');
+const homeIdx = () => stepIndex('home');
 
 /* ---------- boot ---------- */
 
@@ -46,7 +50,7 @@ async function boot() {
   await store.audio.loadAll();
   steps = buildSteps();
   state = store.load() || { v: 1, deck: { id: deck.id, version: deck.version }, code, person: {}, consent: null, answers: {}, timing: {}, changes: {}, pos: 0, startedAt: null, updatedAt: null, submittedAt: null };
-  if (state.pos >= steps.length) state.pos = 0;
+  state.pos = state.startedAt && state.consent ? homeIdx() : 0; // like a lesson app: returning experts land on the lesson overview
 
   window.addEventListener('hashchange', () => location.reload()); // another invite code = another saved state
   document.addEventListener('keydown', onKey);
@@ -57,15 +61,54 @@ async function boot() {
   render();
 }
 
+// Lessons ("Häppchen"): every section is cut into small lessons of about `settings.lesson_size` cards
+// (default 6, a section may set its own `lesson_size`). Steps: start, home, [lesson cards, lessondone]*, review, submit.
 function buildSteps() {
-  const s = [{ kind: 'start' }];
-  (deck.intro_cards || []).forEach((c, i) => s.push({ kind: 'card', card: { ...c, id: c.id || `intro${i + 1}` }, section: null }));
-  for (const sec of deck.sections || []) sec.cards.forEach((c, i) => s.push({ kind: 'card', card: c, section: sec, idx: i, n: sec.cards.length }));
-  if (deck.closing) {
-    s.push({ kind: 'card', card: { id: 'closing', type: 'free_text', prompt: deck.closing.free_text_label, label: deck.closing.free_text_label }, section: { title: deck.closing.title || 'Zum Schluss', cards: [] } });
+  const size = (deck.settings && deck.settings.lesson_size) || 6;
+  const intro = (deck.intro_cards || []).map((c, i) => ({ kind: 'card', card: { ...c, id: c.id || `intro${i + 1}` }, section: null, before: c.before_section || null }));
+  lessons = [];
+  for (const sec of deck.sections || []) {
+    if (!sec.cards.length) continue;
+    const k = Math.ceil(sec.cards.length / (sec.lesson_size || size));
+    const per = Math.ceil(sec.cards.length / k);
+    for (let j = 0; j < k; j++) {
+      lessons.push({
+        sec: sec.id, title: sec.title, part: k > 1 ? [j + 1, k] : null,
+        steps: sec.cards.slice(j * per, (j + 1) * per).map((c, i) => ({ kind: 'card', card: c, section: sec, idx: j * per + i, n: sec.cards.length }))
+      });
+    }
   }
+  if (deck.closing) {
+    const title = deck.closing.title || T.closingTitle;
+    lessons.push({ sec: '_closing', title, part: null, steps: [{ kind: 'card', card: { id: 'closing', type: 'free_text', prompt: deck.closing.free_text_label, label: deck.closing.free_text_label }, section: { title, cards: [] } }] });
+  }
+  if (!lessons.length) lessons.push({ sec: '_intro', title: deck.title, part: null, steps: [] });
+  for (const c of [...intro].reverse()) {
+    const target = (c.before && lessons.find((l) => l.sec === c.before)) || lessons[0];
+    target.steps.unshift(c);
+  }
+  const s = [{ kind: 'start' }, { kind: 'home' }];
+  lessons.forEach((l, i) => {
+    l.steps.forEach((st) => { st.lesson = i; s.push(st); });
+    s.push({ kind: 'lessondone', lesson: i });
+  });
   s.push({ kind: 'review' }, { kind: 'submit' });
   return s;
+}
+
+const countable = (l) => l.steps.filter((s) => s.card.type !== 'info');
+function lessonStats(l) {
+  const c = countable(l);
+  const answered = c.filter(cardAnswered).length;
+  return { total: c.length, answered, done: answered === c.length };
+}
+const lessonName = (l) => (l.part ? T.lessonPart(l.part[0], l.part[1], l.title) : l.title);
+// where a lesson is entered: first open question if it was started, else its first card
+function lessonEntry(i) {
+  const l = lessons[i];
+  const c = countable(l);
+  const open = c.find((s) => !cardAnswered(s));
+  return steps.indexOf(open && c.some(cardAnswered) ? open : l.steps[0]);
 }
 
 /* ---------- state ---------- */
@@ -98,7 +141,11 @@ function go(pos, opts = {}) {
 }
 
 const next = () => { if (editing) go(stepIndex('review')); else go(state.pos + 1); };
-const prev = () => { if (editing) go(stepIndex('review')); else go(state.pos - 1); };
+const prev = () => {
+  if (editing) return go(stepIndex('review'));
+  const p = steps[state.pos - 1];
+  go(!p || p.kind === 'lessondone' || p.kind === 'home' ? homeIdx() : state.pos - 1);
+};
 
 function answerOf(id) { return state.answers[id] || {}; }
 
@@ -126,13 +173,17 @@ function render() {
   const st = steps[state.pos];
   app.replaceChildren();
   if (st.kind === 'start') return renderStart();
-  app.append(topbar(st));
-  const main = h('main', { class: 'screen', id: 'main' });
+  const bare = st.kind === 'home' || st.kind === 'lessondone';
+  primary = null;
+  if (!bare) app.append(topbar(st));
+  const main = h('main', { class: `screen ${st.kind}`, id: 'main' });
   app.append(main);
   if (st.kind === 'card') renderCard(main, st);
   else if (st.kind === 'review') renderReview(main);
+  else if (st.kind === 'home') renderHome(main);
+  else if (st.kind === 'lessondone') renderLessonDone(main, st);
   else renderSubmit(main);
-  if (st.kind !== 'submit' || !state.submittedAt) { navEl = nav(st); app.append(navEl); }
+  if (!bare && (st.kind !== 'submit' || !state.submittedAt)) { navEl = nav(st); app.append(navEl); }
   attachSwipe(main);
   if (!store.ok) main.prepend(h('p', { class: 'warn' }, T.saveFail));
   const hd = main.querySelector('h1');
@@ -141,21 +192,25 @@ function render() {
 }
 
 function topbar(st) {
-  const cs = cardSteps();
-  const total = cs.length;
-  const n = st.kind === 'card' ? cs.indexOf(st) + 1 : total;
-  const pct = Math.round((state.pos / (steps.length - 1)) * 100);
+  let label, pct;
+  if (st.kind === 'card') {
+    const l = lessons[st.lesson];
+    const p = l.steps.indexOf(st) + 1;
+    label = T.topLabel(st.lesson + 1, p, l.steps.length);
+    pct = Math.round(((p - 1) / l.steps.length) * 100);
+  } else { label = st.kind === 'review' ? T.review : T.submitTitle; pct = 100; }
   return h('header', { class: 'topbar' },
     h('div', { class: 'topbar-row' },
-      h('span', { class: 'topbar-label' }, st.kind === 'card' ? T.progress(n, total) : (st.kind === 'review' ? T.review : T.submitTitle)),
+      h('span', { class: 'topbar-label' }, label),
       h('button', { type: 'button', class: 'linkbtn', onclick: later }, T.later)),
-    h('div', { class: 'bar', role: 'progressbar', 'aria-valuemin': '0', 'aria-valuemax': '100', 'aria-valuenow': String(pct), 'aria-label': T.progress(n, total) },
+    h('div', { class: 'bar', role: 'progressbar', 'aria-valuemin': '0', 'aria-valuemax': '100', 'aria-valuenow': String(pct), 'aria-label': label },
       h('div', { class: 'bar-fill', style: `width:${pct}%` })));
 }
 
+// "Später weitermachen": everything is saved already; go back to the lesson overview
 function later() {
   lap(); store.flush(state);
-  modal(T.laterTitle, h('p', {}, T.laterBody), T.close);
+  go(homeIdx());
 }
 
 function nav(st) {
@@ -203,8 +258,6 @@ function renderCard(main, st) {
 
 function renderStart() {
   const hasProgress = !!state.startedAt && (state.furthest || 0) > 0;
-  const resumePos = Math.min(state.pos || 1, steps.length - 1) || 1;
-  const cs = cardSteps();
   const consent = h('input', { type: 'checkbox', id: 'consent' });
   consent.checked = !!state.consent;
   const go1 = h('button', { type: 'button', class: 'btn primary big', disabled: !consent.checked }, hasProgress ? T.resume : T.start);
@@ -215,7 +268,7 @@ function renderStart() {
   });
   go1.addEventListener('click', () => {
     if (!state.startedAt) state.startedAt = now();
-    go(hasProgress ? resumePos : 1);
+    go(homeIdx());
   });
   const sub = deck.submission || {};
   const to = sub.to && sub.to !== 'PLEASE_SET' ? sub.to : '';
@@ -227,7 +280,7 @@ function renderStart() {
     est ? h('p', {}, T.minutes(est.part1, est.total)) : null,
     state.code ? h('p', { class: 'hint' }, `${T.invite}: `, h('b', {}, state.code)) : null,
     hasProgress ? h('div', { class: 'resume' },
-      h('p', {}, T.resumeInfo(Math.max(1, cs.findIndex((c) => c === steps[resumePos]) + 1), cs.length)),
+      h('p', {}, T.resumeInfo(...overall())),
       h('button', { type: 'button', class: 'linkbtn', onclick: () => { if (confirm(T.restartConfirm)) { store.clear(); location.reload(); } } }, T.restart)) : null,
     ...identityFields('start'),
     h('section', { class: 'privacy' }, h('h2', {}, T.privacyTitle), h('ul', {}, T.privacy(to).map((t) => h('li', {}, t)))),
@@ -246,6 +299,73 @@ function legalLinks() {
   return h('p', { class: 'legal hint' }, l.note || T.legalNote, ' ',
     l.privacy_url ? a(l.privacy_url, T.legalPrivacy) : null, l.privacy_url && l.imprint_url ? ' · ' : null,
     l.imprint_url ? a(l.imprint_url, T.legalImprint) : null);
+}
+
+function overall() {
+  const st = lessons.map(lessonStats);
+  return [st.reduce((a, x) => a + x.answered, 0), st.reduce((a, x) => a + x.total, 0), st.filter((x) => x.done).length, st.length];
+}
+
+function renderHome(main) {
+  const stats = lessons.map(lessonStats);
+  const [ans, total] = overall();
+  const cur = stats.findIndex((x) => !x.done);
+  const pct = total ? Math.round((ans / total) * 100) : 0;
+  const act = () => (cur < 0 ? go(stepIndex('review')) : go(lessonEntry(cur)));
+  primary = act;
+  put(main, 
+    h('p', { class: 'eyebrow' }, deck.title),
+    h('h1', { tabindex: '-1' }, T.homeTitle),
+    h('p', { class: 'lead' }, T.homeProgress(ans, total)),
+    h('div', { class: 'bar thick', role: 'progressbar', 'aria-valuemin': '0', 'aria-valuemax': '100', 'aria-valuenow': String(pct), 'aria-label': T.homeProgress(ans, total) },
+      h('div', { class: 'bar-fill', style: `width:${pct}%` })),
+    h('button', { type: 'button', class: 'btn primary big', onclick: act },
+      cur < 0 ? T.homeToReview : (ans ? T.homeContinue : T.homeStart)(lessonName(lessons[Math.max(cur, 0)]))),
+    h('p', { class: 'hint saved' }, T.homeSaved));
+  let group = null, ul = null;
+  lessons.forEach((l, i) => {
+    if (l.sec !== group) { group = l.sec; main.append(h('h2', {}, l.title)); ul = h('ul', { class: 'lessons' }); main.append(ul); }
+    const s = stats[i];
+    const state_ = s.done ? 'done' : i === cur ? 'current' : s.answered ? 'started' : '';
+    const title = l.part ? T.lessonPartShort(l.part[0], l.part[1]) : l.title;
+    ul.append(h('li', {}, h('button', { type: 'button', class: `lesson ${state_}`, onclick: () => go(lessonEntry(i)) },
+      h('span', { class: 'badge', 'aria-hidden': 'true' }, s.done ? '✓' : String(i + 1)),
+      h('span', { class: 'lesson-main' },
+        h('span', { class: 'lesson-title' }, T.lessonN(i + 1), ' · ', title),
+        h('span', { class: 'lesson-meta' }, s.done ? T.lessonMetaDone(s.total) : s.answered ? T.lessonMetaPart(s.answered, s.total) : T.lessonMetaNew(s.total))))));
+  });
+  const open = total - ans;
+  put(main, h('h2', {}, T.homeEndTitle), h('ul', { class: 'lessons' }, h('li', {},
+    h('button', { type: 'button', class: `lesson ${cur < 0 ? 'current' : ''}`, onclick: () => go(stepIndex('review')) },
+      h('span', { class: 'badge', 'aria-hidden': 'true' }, '★'),
+      h('span', { class: 'lesson-main' },
+        h('span', { class: 'lesson-title' }, T.homeReviewTile),
+        h('span', { class: 'lesson-meta' }, T.openCount(open)))))),
+    h('button', { type: 'button', class: 'linkbtn', onclick: () => go(0) }, T.homeAbout),
+    legalLinks());
+}
+
+function renderLessonDone(main, st) {
+  const i = st.lesson, l = lessons[i], s = lessonStats(l);
+  const last = i === lessons.length - 1;
+  const min = Math.max(1, Math.round(l.steps.reduce((a, x) => a + (state.timing[x.card.id] || 0), 0) / 60000));
+  const [ans, total, doneN, n] = overall();
+  const firstOpen = countable(l).find((x) => !cardAnswered(x));
+  const act = last ? () => go(stepIndex('review')) : () => go(lessonEntry(i + 1));
+  primary = act;
+  put(main, 
+    h('div', { class: `celebrate ${s.done ? '' : 'part'}`, 'aria-hidden': 'true' }, s.done ? '✓' : '…'),
+    h('h1', { tabindex: '-1' }, s.done ? T.lessonDoneTitle(i + 1) : T.lessonEndTitle(i + 1)),
+    h('p', { class: 'lead' }, T.lessonStats(s.answered, s.total, min)),
+    h('div', { class: 'bar thick', role: 'progressbar', 'aria-valuemin': '0', 'aria-valuemax': '100', 'aria-valuenow': String(total ? Math.round((ans / total) * 100) : 0), 'aria-label': T.lessonsDone(doneN, n) },
+      h('div', { class: 'bar-fill', style: `width:${total ? Math.round((ans / total) * 100) : 0}%` })),
+    h('p', { class: 'hint' }, T.lessonsDone(doneN, n)),
+    firstOpen ? h('div', { class: 'warn' }, h('p', {}, T.lessonOpen(s.total - s.answered)),
+      h('button', { type: 'button', class: 'btn small', onclick: () => go(steps.indexOf(firstOpen)) }, T.lessonShowOpen)) : null,
+    h('div', { class: 'done-actions' },
+      h('button', { type: 'button', class: 'btn primary big', onclick: act }, last ? T.homeToReview : T.lessonNext(lessonName(lessons[i + 1]))),
+      h('button', { type: 'button', class: 'btn big', onclick: () => go(homeIdx()) }, T.lessonPause)),
+    h('button', { type: 'button', class: 'linkbtn', onclick: () => go(state.pos - 1) }, T.back));
 }
 
 function identityFields(at) {
@@ -294,7 +414,7 @@ function renderReview(main) {
   for (const st of answerable) { const t = st.section ? st.section.title : ''; (groups.get(t) || groups.set(t, []).get(t)).push(st); }
   for (const [t, sts] of groups) list(t, sts);
   const extra = identityFields('end');
-  main.append(
+  put(main, 
     h('h1', { tabindex: '-1' }, T.review),
     h('p', { class: 'lead' }, T.reviewIntro),
     h('p', { class: open ? 'warn' : 'ok', role: 'status' }, T.openCount(open)),
@@ -390,14 +510,14 @@ function markSent() {
 
 function renderSubmit(main) {
   if (state.submittedAt) {
-    main.append(h('h1', { tabindex: '-1' }, T.doneTitle), h('p', {}, T.doneBody),
+    put(main, h('h1', { tabindex: '-1' }, T.doneTitle), h('p', {}, T.doneBody),
       h('button', { type: 'button', class: 'btn', onclick: () => go(stepIndex('review')) }, T.doneAgain),
       h('button', { type: 'button', class: 'linkbtn', onclick: () => { state.submittedAt = null; persist(); store.flush(state); render(); } }, T.notSentYet),
       legalLinks());
     return;
   }
   const adapter = adapters[(deck.submission || {}).mode] || adapters.email;
-  main.append(h('h1', { tabindex: '-1' }, T.submitTitle), h('p', { class: 'lead' }, T.submitIntro),
+  put(main, h('h1', { tabindex: '-1' }, T.submitTitle), h('p', { class: 'lead' }, T.submitIntro),
     adapter.render({ deck, report: reportText, payload, download, markSent }), legalLinks());
 }
 
@@ -410,8 +530,11 @@ function onKey(e) {
   const st = steps && steps[state.pos];
   if (!st || st.kind === 'start') return;
   if (typing) return;
-  if (e.key === 'ArrowRight') { e.preventDefault(); if (st.kind === 'review') go(stepIndex('submit')); else if (st.kind !== 'submit') next(); }
-  else if (e.key === 'ArrowLeft') { e.preventDefault(); prev(); }
+  const bare = st.kind === 'home' || st.kind === 'lessondone';
+  if (bare && (e.key === 'ArrowRight' || (e.key === 'Enter' && tag !== 'button' && tag !== 'a'))) { e.preventDefault(); if (primary) primary(); }
+  else if (e.key === 'ArrowLeft') { e.preventDefault(); if (st.kind !== 'home') prev(); }
+  else if (bare) return;
+  else if (e.key === 'ArrowRight') { e.preventDefault(); if (st.kind === 'review') go(stepIndex('submit')); else if (st.kind !== 'submit') next(); }
   else if (e.key === 'Enter' && tag !== 'button' && tag !== 'a') { e.preventDefault(); if (st.kind === 'review') go(stepIndex('submit')); else if (st.kind === 'card') next(); }
   else if (keyHandler && keyHandler(e)) e.preventDefault();
 }

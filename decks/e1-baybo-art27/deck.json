@@ -80,7 +80,8 @@
   {
    "type": "info",
    "title": "Eindeutige Fälle und Auslegungsfälle",
-   "body": "Einige Fälle hängen bewusst von einer Grundsatzfrage ab und sind entsprechend markiert. Künstliche Annahmen sind als „Annahme für den Test“ gekennzeichnet. Was nicht genannt ist, bleibt wie im Ausgangsgebäude. Fehlt Ihnen eine Angabe, wählen Sie „Hängt ab“ und sagen Sie, welche."
+   "body": "Einige Fälle hängen bewusst von einer Grundsatzfrage ab und sind entsprechend markiert. Künstliche Annahmen sind als „Annahme für den Test“ gekennzeichnet. Was nicht genannt ist, bleibt wie im Ausgangsgebäude. Fehlt Ihnen eine Angabe, wählen Sie „Hängt ab“ und sagen Sie, welche.",
+   "before_section": "part2"
   }
  ],
  "sections": [
@@ -1072,5 +1073,8 @@
   "to": "cornelius.preidel@hm.edu",
   "subject": "Fallprüfung Brandschutz BayBO – Antworten",
   "backup_file": true
+ },
+ "settings": {
+  "lesson_size": 6
  }
 }
