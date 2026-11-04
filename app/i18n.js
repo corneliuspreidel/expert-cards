@@ -57,7 +57,7 @@ const de = {
   keyboardHintIos: 'Am einfachsten auf dem iPhone: Tippen Sie ins Feld und dann auf das Mikrofon-Symbol unten rechts auf der Tastatur. Das funktioniert in jedem Browser.',
   micStarting: 'Starte … bitte „Erlauben“ tippen, falls Sie gefragt werden.',
   micFallback: 'Die Spracherkennung dieses Browsers funktioniert hier nicht.',
-  micNotInThisBrowser: 'Die Spracherkennung gibt es in diesem Browser auf dem iPhone nicht (nur in Safari).',
+  micNotInThisBrowser: 'In diesem Browser ist auf dem iPhone keine Spracheingabe über die Seite möglich. Öffnen Sie den Link in Safari, oder nutzen Sie das Mikrofon der Tastatur.',
   unsupportedCard: 'Dieser Kartentyp wird von dieser Version nicht unterstützt.',
   review: 'Ihre Antworten',
   reviewIntro: 'Tippen Sie auf eine Zeile, um die Antwort zu ändern.',

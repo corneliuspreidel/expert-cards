@@ -89,7 +89,8 @@ export function attachMic({ textarea, lang, cardId, audio }) {
   }
 
   function fallback(note) {
-    if (CAN_RECORD) setupMemo(note); else setupKeyboardOnly(note);
+    // iOS browsers other than Safari block the microphone for web pages: no dead button there
+    if (CAN_RECORD && !IOS_OTHER) setupMemo(note); else setupKeyboardOnly(note);
   }
 
   function setupSpeech() {
