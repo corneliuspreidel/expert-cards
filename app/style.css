@@ -242,6 +242,58 @@ textarea { resize: vertical; }
 .privacy[open] summary { margin-bottom: .4rem; }
 .privacy ul { margin: 0; padding-left: 1.1rem; }
 .privacy li { margin-bottom: .4rem; }
+
+.install-tip {
+  margin: 1.25rem 0 0;
+  padding: .35rem .85rem .9rem;
+  border-radius: var(--r);
+  background: color-mix(in srgb, var(--hl-soft) 55%, var(--surface));
+  border: 1.5px solid color-mix(in srgb, var(--hl) 22%, var(--line));
+  font-size: .95rem;
+}
+.install-tip summary {
+  cursor: pointer; list-style: none;
+  display: grid; grid-template-columns: auto 1fr auto;
+  align-items: center; gap: .7rem;
+  min-height: 52px; font-weight: 700; color: var(--ink-2);
+}
+.install-tip summary::-webkit-details-marker { display: none; }
+.install-tip .install-ico {
+  width: 2.35rem; height: 2.35rem; border-radius: 12px;
+  display: grid; place-items: center;
+  background: var(--hl-soft); color: var(--hl);
+}
+.install-tip .install-ico .pict, .install-tip .install-ico .pict svg {
+  width: 20px; height: 20px;
+}
+.install-tip .install-sum { line-height: 1.25; }
+.install-tip .install-chev {
+  color: var(--muted); font-size: 1.35rem; line-height: 1;
+  transition: transform .18s ease;
+}
+.install-tip[open] .install-chev { transform: rotate(90deg); }
+.install-tip[open] summary { margin-bottom: .35rem; }
+.install-tip .install-lead { margin: 0 0 .65rem; }
+.install-steps {
+  margin: 0; padding: 0; list-style: none; display: grid; gap: .55rem;
+}
+.install-steps li {
+  display: grid; grid-template-columns: 1.7rem 1fr; gap: .65rem;
+  align-items: start; color: var(--ink-2); line-height: 1.4;
+  counter-increment: install-step;
+}
+.install-steps { counter-reset: install-step; }
+.install-steps li::before {
+  content: counter(install-step);
+  width: 1.7rem; height: 1.7rem; border-radius: 50%;
+  display: grid; place-items: center;
+  font-size: .85rem; font-weight: 800;
+  background: var(--hl); color: var(--hl-ink);
+}
+.install-tip .install-btn { width: 100%; margin-top: .85rem; }
+@media (prefers-reduced-motion: reduce) {
+  .install-tip .install-chev { transition: none; }
+}
 .check { display: flex; gap: .8rem; align-items: flex-start; margin: 1rem 0; min-height: 48px; }
 .check input { width: 28px; height: 28px; flex: none; margin: 0; }
 .resume {

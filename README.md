@@ -23,9 +23,36 @@ Erstes Deck: `decks/e1-baybo-art27`. Es enthält die Fallprüfung zum Brandschut
 2. Deck prüfen: `python3 tools/validate_deck.py decks/<id>/deck.json`.
 3. Lokal ansehen: `python3 -m http.server 8765` und `http://localhost:8765/?deck=<id>` öffnen.
 4. Veröffentlichen: committen und nach `main` pushen. GitHub Pages (Branch `main`, Root) aktualisiert sich in etwa einer Minute.
-5. Link verschicken: `https://corneliuspreidel.github.io/expert-cards/?deck=<id>#k=<Einladungscode>`. Pro Expert:in ein eigener Code.
+5. Link verschicken (pro Expert:in ein eigener Code):
 
-Hinweis für die Einladung: Auf dem iPhone Safari verwenden, auf Android und Desktop Chrome. Nur dort wird Sprache live in Text umgewandelt. In anderen Browsern gibt es eine Sprachnotiz (Firefox) oder den Hinweis auf das Tastatur-Mikrofon (iPhone).
+   `https://corneliuspreidel.github.io/expert-cards/?deck=<id>#k=<Einladungscode>`
+
+   **Ein Klick reicht für die Teilnahme.** „Wie eine App“ auf dem Home-Bildschirm geht auf dem iPhone leider nicht mit einem Klick aus der Mail (Apple-Vorgabe); optional `?install=1` in den Link setzen, dann öffnet sich der kurze Hinweis dazu:
+
+   `…/expert-cards/?deck=<id>&install=1#k=<Code>`
+
+### Kurz-Mail an Expert:innen (Vorlage)
+
+```
+Betreff: Kurze Expertenbefragung BayBO – Ihr Link
+
+Guten Tag …,
+
+bitte öffnen Sie diesen Link (ein Klick genügt):
+
+https://corneliuspreidel.github.io/expert-cards/?deck=e1-baybo-art27#k=IHRECODE
+
+Auf dem iPhone bitte in Safari öffnen, auf Android in Chrome.
+Zwischenspeichern passiert nur auf Ihrem Gerät; absenden erst am Ende per E-Mail.
+
+Optional (App-Gefühl): Link öffnen → unten „Auf dem Home-Bildschirm ablegen“ –
+iPhone: Teilen → Zum Home-Bildschirm; Android: Menü → App installieren.
+
+Vielen Dank
+…
+```
+
+Hinweis: Live-Diktat funktioniert in Safari (iPhone) und Chrome (Android/Desktop). Sonst Sprachnotiz bzw. Tastatur-Mikrofon.
 
 ## Antworten auswerten
 

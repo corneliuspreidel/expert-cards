@@ -393,9 +393,54 @@ function renderStart() {
       primaryBtn,
       h('button', { type: 'button', class: 'btn danger big', onclick: restartFresh }, T.restart),
       h('p', { class: 'hint' }, T.restartHint)) : primaryBtn,
+    installTip(),
     legalLinks());
   app.append(main);
   main.querySelector('h1').focus({ preventScroll: true });
+}
+
+function isStandaloneApp() {
+  return window.matchMedia('(display-mode: standalone)').matches
+    || window.navigator.standalone === true;
+}
+
+// Short, platform-aware tip: experts can pin the study like an app (no App Store).
+function installTip() {
+  if (isStandaloneApp()) return null;
+  const ua = navigator.userAgent || '';
+  const ios = /iPad|iPhone|iPod/i.test(ua)
+    || (navigator.platform === 'MacIntel' && navigator.maxTouchPoints > 1);
+  const android = /Android/i.test(ua);
+  const steps = ios ? T.installIosSteps : android ? T.installAndroidSteps : T.installOtherSteps;
+  const tip = h('details', { class: 'install-tip' },
+    h('summary', {},
+      h('span', { class: 'install-ico', 'aria-hidden': 'true' }, pictogram('home')),
+      h('span', { class: 'install-sum' }, T.installTitle),
+      h('span', { class: 'install-chev', 'aria-hidden': 'true' }, '›')),
+    h('p', { class: 'hint install-lead' }, T.installLead),
+    h('ol', { class: 'install-steps' }, steps.map((t) => h('li', {}, t))));
+  // Invite mails can use ?install=1 so the tip opens immediately.
+  if (new URLSearchParams(location.search).get('install') === '1') tip.open = true;
+  // Chrome/Android: one-tap install when the browser offers it
+  if (android || !ios) {
+    const btn = h('button', { type: 'button', class: 'btn small install-btn', hidden: true }, T.installBtn);
+    tip.append(btn);
+    const onPrompt = (e) => {
+      e.preventDefault();
+      btn.hidden = false;
+      tip.open = true;
+      btn.onclick = async () => {
+        try {
+          await e.prompt();
+          await e.userChoice;
+        } catch { /* ignore */ }
+        btn.hidden = true;
+      };
+      window.removeEventListener('beforeinstallprompt', onPrompt);
+    };
+    window.addEventListener('beforeinstallprompt', onPrompt);
+  }
+  return tip;
 }
 
 // Links to imprint / privacy statement, taken from the deck (`legal`). Nothing study-specific in the engine.

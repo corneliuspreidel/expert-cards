@@ -11,7 +11,8 @@ const paths = {
   send: `<path d="M4 11.5 20 4l-4.5 16-3.5-6.5L4 11.5Z"/><path d="M12 13.5 20 4"/>`,
   cards: `<rect x="4" y="5" width="12" height="14" rx="1.5"/><path d="M8 5V4a1 1 0 0 1 1-1h10a1 1 0 0 1 1 1v14a1 1 0 0 1-1 1h-1"/>`,
   chat: `<path d="M5 17.5 4 21l3.6-1.5A8.5 8.5 0 1 0 5 17.5Z"/><path d="M8.5 11h7M8.5 14h4.5"/>`,
-  person: `<circle cx="12" cy="8" r="3.5"/><path d="M5.5 19.5c1.8-3.2 4-4.8 6.5-4.8s4.7 1.6 6.5 4.8"/>`
+  person: `<circle cx="12" cy="8" r="3.5"/><path d="M5.5 19.5c1.8-3.2 4-4.8 6.5-4.8s4.7 1.6 6.5 4.8"/>`,
+  home: `<path d="M4 11.5 12 4l8 7.5"/><path d="M6.5 10.5V20h11V10.5"/><path d="M10 20v-5.5h4V20"/>`
 };
 
 export function pictogram(name, label) {

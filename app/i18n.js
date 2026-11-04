@@ -60,6 +60,24 @@ const de = {
   lessonPause: 'Zur Übersicht',
   minutes: (a, b) => `Dauer: etwa ${a} Minuten für den ersten Teil, insgesamt etwa ${b} Minuten.`,
   invite: 'Einladungscode',
+  installTitle: 'Wie eine App auf dem Home-Bildschirm',
+  installLead: 'Optional – die Befragung geht auch ohne. Danach starten Sie sie mit einem Tipp vom Home-Bildschirm, ohne Browser-Leiste.',
+  installIosSteps: [
+    'Unten in Safari auf Teilen tippen (Quadrat mit Pfeil nach oben).',
+    '„Zum Home-Bildschirm“ wählen.',
+    '„Hinzufügen“ tippen – fertig.'
+  ],
+  installAndroidSteps: [
+    'Oben rechts in Chrome das Menü ⋮ öffnen.',
+    '„App installieren“ oder „Zum Startbildschirm hinzufügen“ tippen.',
+    'Bestätigen – fertig.'
+  ],
+  installOtherSteps: [
+    'Am besten auf dem Handy: iPhone in Safari, Android in Chrome.',
+    'Im Browser-Menü nach „Zum Startbildschirm“ oder „App installieren“ suchen.',
+    'Bestätigen – danach wie eine normale App öffnen.'
+  ],
+  installBtn: 'Jetzt installieren',
   consentLabel: 'Ich habe die Hinweise gelesen und bin einverstanden.',
   yourName: 'Ihr Name',
   optional: 'optional',
