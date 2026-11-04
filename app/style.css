@@ -140,3 +140,22 @@ dialog.modal .btn { margin-top: 1rem; width: 100%; }
 
 .memo { display: grid; gap: .4rem; width: 100%; }
 .memo audio { width: 100%; min-height: 48px; }
+
+/* phones: keep the figure compact so the verdict buttons are reachable without much scrolling */
+@media (max-width: 600px) {
+  .verdict .fig svg, .choice .fig svg { max-height: 30dvh; }
+  .verdict .fig, .choice .fig { margin: .3rem 0 .6rem; }
+  .verdict .assumption { font-size: .9rem; padding: .5rem .7rem; }
+  .verdicts { margin: .7rem 0; }
+  .verdict-btn { min-height: 56px; }
+}
+
+/* phones: the three verdict buttons stay in view above the navigation while the case is read */
+@media (max-width: 600px) {
+  .verdicts {
+    position: sticky; bottom: calc(76px + env(safe-area-inset-bottom)); z-index: 2;
+    grid-template-columns: repeat(3, 1fr); gap: .4rem; background: var(--bg); padding: .5rem 0; margin: .4rem 0;
+  }
+  .verdict-btn { justify-content: center; text-align: center; padding: .4rem .3rem; font-size: 1rem; min-height: 56px; }
+  .verdict-btn .opt-key { display: none; }
+}
