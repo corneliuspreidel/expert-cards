@@ -57,9 +57,9 @@ export function attachMic({ textarea, lang, cardId, audio }) {
       if (mr) { mr.stop(); return; }
       try {
         stream = await navigator.mediaDevices.getUserMedia({ audio: true });
-      } catch { status.textContent = T.micDenied; return; }
+      } catch (err) { status.textContent = `${T.micDenied} (${err && err.name || 'Fehler'})`; return; }
       const mime = pickMime();
-      try { mr = new MediaRecorder(stream, mime ? { mimeType: mime } : undefined); } catch { status.textContent = T.micError; return; }
+      try { mr = new MediaRecorder(stream, mime ? { mimeType: mime } : undefined); } catch (err) { stream.getTracks().forEach((t) => t.stop()); status.textContent = `${T.micError} (${err && err.name || 'Fehler'})`; return; }
       chunks = [];
       t0 = Date.now();
       mr.ondataavailable = (e) => { if (e.data && e.data.size) chunks.push(e.data); };
