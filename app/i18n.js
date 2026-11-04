@@ -49,7 +49,7 @@ const de = {
   mic: 'Diktieren',
   micStop: 'Stopp',
   micListening: 'Ich höre zu … Sprechen Sie.',
-  micDenied: 'Kein Zugriff auf das Mikrofon. Auf dem iPhone: Einstellungen → Chrome (bzw. Ihr Browser) → Mikrofon einschalten. Oder tippen.',
+  micDenied: 'Kein Zugriff auf das Mikrofon. Bitte in den Einstellungen Ihres Browsers (am iPhone: Einstellungen → Ihr Browser) das Mikrofon für diese Seite erlauben. Oder tippen Sie Ihre Antwort.',
   micError: 'Die Spracherkennung ist gerade nicht verfügbar. Sie können tippen.',
   micRec: 'Sprachnotiz aufnehmen',
   micRecording: 'Aufnahme läuft … zum Beenden tippen',

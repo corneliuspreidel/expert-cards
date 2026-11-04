@@ -65,7 +65,7 @@ def main():
     types = set(args.types.split(","))
     data = defaultdict(dict)  # card -> expert -> value
     for r in rows:
-        if not r["value"] or "|" in r["value"]:
+        if r["card_id"].startswith("_") or not r["value"] or "|" in r["value"]:  # _feedback etc. are not study cards
             continue
         if wanted and r["card_id"] not in wanted:
             continue
