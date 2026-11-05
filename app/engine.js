@@ -129,7 +129,7 @@ function lessonStats(l) {
 }
 const lessonTheme = (l) => l.theme || (l.part ? T.lessonPartShort(l.part[0], l.part[1]) : l.title);
 const lessonName = (l) => (l.theme ? `${l.title}: ${l.theme}` : (l.part ? T.lessonPart(l.part[0], l.part[1], l.title) : l.title));
-const toneOf = (icon) => ({ compass: 'compass', wall: 'wall', column: 'column', note: 'note', send: 'send' }[icon] || 'cards');
+const toneOf = (icon) => ({ plan: 'plan', compass: 'plan', wall: 'wall', column: 'column', note: 'note', send: 'send' }[icon] || 'cards');
 function setTone(icon) {
   app.dataset.tone = toneOf(icon || 'cards');
 }

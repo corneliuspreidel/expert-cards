@@ -15,7 +15,7 @@ One study = one `decks/<deck-id>/deck.json`. Listed in `decks/index.json`. The e
 | `identity_fields` | list | `{id, label, type: text\|number\|choice, options?, required?, at?}`; `at: "end"` moves the field from the start screen to the overview |
 | `references` | map | `{<ref-id>: {title, text}}`, e.g. statute text; sections point to them |
 | `intro_cards` | list of `info` cards | optional `before_section: <section id>` puts the card at the start of that section's first lesson; otherwise it opens lesson 1 |
-| `sections` | list | `{id, title, icon?, part_titles?, reference?, question?, cards[]}`; `question` is the default prompt for `verdict` cards. Optional `icon` (`compass`, `wall`, `column`, `note`, `send`, `cards`) and `part_titles` (one short theme label per lesson chunk) give the home overview a clear topic per round |
+| `sections` | list | `{id, title, icon?, part_titles?, reference?, question?, cards[]}`; `question` is the default prompt for `verdict` cards. Optional `icon` (`plan`, `wall`, `column`, `note`, `send`, `cards`; `compass` still accepted as alias of `plan`) and `part_titles` (one short theme label per lesson chunk) give the home overview a clear topic per round |
 | `verdict_options` | list | `{id, label, requires_reason?}` |
 | `confidence_options` | list | `{id, label}`; shown after a clear verdict |
 | `closing` | `{free_text_label, title?, icon?}` | last card, free text |

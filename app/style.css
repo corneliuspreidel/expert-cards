@@ -634,7 +634,7 @@ dialog.fb-sheet::backdrop { background: rgba(0, 0, 0, .42); }
   --tone: var(--hl);
   --tone-soft: var(--hl-soft);
 }
-.tone-compass, #app[data-tone="compass"] { --tone: #3558d4; --tone-soft: #e7ecfb; }
+.tone-plan, .tone-compass, #app[data-tone="plan"], #app[data-tone="compass"] { --tone: #3558d4; --tone-soft: #e7ecfb; }
 .tone-wall, #app[data-tone="wall"] { --tone: #0b7a66; --tone-soft: #ddf5ef; }
 .tone-column, #app[data-tone="column"] { --tone: #b45309; --tone-soft: #fff1e0; }
 .tone-note, #app[data-tone="note"] { --tone: #6d28d9; --tone-soft: #f1e9fb; }
@@ -642,7 +642,7 @@ dialog.fb-sheet::backdrop { background: rgba(0, 0, 0, .42); }
 .tone-cards { --tone: var(--hl); --tone-soft: var(--hl-soft); }
 
 @media (prefers-color-scheme: dark) {
-  .tone-compass, #app[data-tone="compass"] { --tone: #8eabff; --tone-soft: #1a2748; }
+  .tone-plan, .tone-compass, #app[data-tone="plan"], #app[data-tone="compass"] { --tone: #8eabff; --tone-soft: #1a2748; }
   .tone-wall, #app[data-tone="wall"] { --tone: #4ad386; --tone-soft: #123526; }
   .tone-column, #app[data-tone="column"] { --tone: #ffb36b; --tone-soft: #3b2410; }
   .tone-note, #app[data-tone="note"] { --tone: #c4b5fd; --tone-soft: #2a1f45; }

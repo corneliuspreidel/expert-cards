@@ -4,7 +4,9 @@ import { h } from './ui.js';
 const ATTR = 'fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"';
 
 const paths = {
-  compass: `<circle cx="12" cy="12" r="9"/><path d="M14.5 9.5 10 14l-2.5-.5L10 9l4.5.5Z"/><circle cx="12" cy="12" r="1.2" fill="currentColor" stroke="none"/>`,
+  // Mini floor plan: rooms + corridor — used for interpretation / layout themes
+  plan: `<rect x="3.5" y="4.5" width="17" height="15" rx="1.2"/><path d="M3.5 12h17"/><path d="M11 4.5V12"/><path d="M15.5 12v7.5"/>`,
+  compass: `<rect x="3.5" y="4.5" width="17" height="15" rx="1.2"/><path d="M3.5 12h17"/><path d="M11 4.5V12"/><path d="M15.5 12v7.5"/>`,
   wall: `<path d="M4 20V6.5A1.5 1.5 0 0 1 5.5 5h13A1.5 1.5 0 0 1 20 6.5V20"/><path d="M4 10h16M4 15h16M12 5v15"/>`,
   column: `<path d="M7 20h10M8.5 20V9.5M15.5 20V9.5"/><path d="M6 9.5h12M7.5 6h9"/><path d="M9 6V4.5h6V6"/>`,
   note: `<path d="M7 3.5h7.5L19 8v12.5a1 1 0 0 1-1 1H7a1 1 0 0 1-1-1v-16a1 1 0 0 1 1-1Z"/><path d="M14.5 3.5V8H19M8.5 12h7M8.5 15.5h5"/>`,
