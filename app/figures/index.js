@@ -3,6 +3,8 @@
 //   "figure": {"template": "section", "params": {…}, "caption": "…"}
 // Image figures: {"image": "assets/foo.svg", "alt": "…", "caption": "…"} (relative to the deck folder).
 import { h } from '../ui.js';
+import { isFresh } from '../skin.js';
+import { T } from '../i18n.js';
 import { duplexPlan } from './duplex-plan.js';
 import { section } from './section.js';
 
@@ -13,12 +15,18 @@ const templates = {
 
 export function figure(fig, deckBase) {
   if (!fig) return null;
-  const wrap = h('figure', { class: 'fig' });
+  const fresh = isFresh();
+  const wrap = h('figure', {
+    class: `fig${fresh ? ' fig-fresh' : ''}${fresh && fig.template === 'duplex-plan' ? ' plan-hl' : ''}`
+  });
   const label = fig.alt || fig.caption || '';
+  if (fresh) wrap.append(h('p', { class: 'fig-kicker', 'aria-hidden': 'true' }, T.whereLabel));
   if (fig.image) {
     wrap.append(h('img', { src: `${deckBase}${fig.image}`, alt: label, loading: 'lazy' }));
   } else if (templates[fig.template]) {
-    wrap.innerHTML = templates[fig.template](fig, label);
+    const holder = h('div');
+    holder.innerHTML = templates[fig.template](fig, label);
+    wrap.append(...holder.childNodes);
   } else {
     return null;
   }

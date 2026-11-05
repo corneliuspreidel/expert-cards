@@ -410,6 +410,30 @@ dialog.modal .btn { margin-top: 1rem; width: 100%; }
   margin: 0 0 .15rem;
 }
 .home-top .eyebrow { margin: 0; min-width: 0; }
+.home-tools, .start-tools {
+  display: flex; align-items: center; gap: .45rem; flex: none;
+}
+.start-tools { justify-content: flex-end; margin: 1rem 0 0; opacity: .72; }
+.skin-toggle {
+  display: inline-flex; align-items: center; gap: .4rem;
+  min-height: 36px; padding: .25rem .7rem .25rem .45rem;
+  border-radius: 999px; border: 1px solid var(--line);
+  background: color-mix(in srgb, var(--bg) 80%, var(--surface));
+  color: var(--muted); font: inherit; font-size: .78rem; font-weight: 600;
+  cursor: pointer;
+}
+.skin-toggle .skin-dot {
+  width: .55rem; height: .55rem; border-radius: 50%;
+  background: var(--line-2);
+}
+.skin-toggle[aria-pressed="true"] {
+  border-color: color-mix(in srgb, var(--hl) 40%, var(--line));
+  color: var(--hl);
+}
+.skin-toggle[aria-pressed="true"] .skin-dot { background: var(--hl); }
+.skin-toggle:hover, .skin-toggle:focus-visible {
+  border-color: var(--hl); color: var(--hl);
+}
 .iconbtn {
   flex: none; width: 44px; height: 44px; min-width: 44px; min-height: 44px; padding: 0;
   border-radius: 50%; border: 1.5px solid var(--line-2); background: var(--bg);
@@ -677,4 +701,62 @@ dialog.fb-sheet::backdrop { background: rgba(0, 0, 0, .42); }
 }
 #app[data-tone] .btn.primary {
   background: linear-gradient(135deg, var(--tone), color-mix(in srgb, var(--tone) 65%, var(--play-2)));
+}
+
+/* ---------- fresh skin: clearer ask hierarchy + isometric plans ---------- */
+html.skin-fresh .card-fresh .ask {
+  margin: .9rem 0 1rem;
+  padding: .85rem 1rem;
+  border-radius: var(--r);
+  background: var(--hl-soft);
+  border: 2px solid color-mix(in srgb, var(--hl) 28%, transparent);
+}
+html.skin-fresh .card-fresh .ask-kicker {
+  margin: 0 0 .35rem;
+  font-size: .78rem; font-weight: 800; letter-spacing: .04em;
+  text-transform: uppercase; color: var(--hl);
+}
+html.skin-fresh .card-fresh .ask .card-title,
+html.skin-fresh .card-fresh .ask .question {
+  margin: 0; font-size: 1.15rem; line-height: 1.35;
+}
+html.skin-fresh .card-fresh .ask .hint { margin: .55rem 0 0; }
+html.skin-fresh .card-fresh .fig-fresh {
+  margin: .35rem 0 1rem;
+  padding: .65rem .7rem .75rem;
+  border-radius: calc(var(--r) + 4px);
+  background: var(--surface);
+  border: 1px solid var(--line);
+}
+html.skin-fresh .card-fresh .fig-kicker {
+  margin: 0 0 .45rem;
+  font-size: .78rem; font-weight: 800; letter-spacing: .04em;
+  text-transform: uppercase; color: var(--muted);
+}
+html.skin-fresh .card-fresh .fig-fresh svg,
+html.skin-fresh .card-fresh .fig-fresh img {
+  border: 0; background: transparent; border-radius: 10px;
+}
+html.skin-fresh .card-fresh .changes-fresh {
+  margin: 0 0 .9rem;
+  padding: .7rem .85rem;
+  border-radius: var(--r);
+  background: color-mix(in srgb, var(--warn-soft) 55%, var(--bg));
+  border: 1.5px solid color-mix(in srgb, var(--warn) 22%, var(--line));
+}
+html.skin-fresh .card-fresh .changes-fresh .eyebrow {
+  color: var(--warn); font-weight: 800; text-transform: uppercase;
+  letter-spacing: .03em; font-size: .78rem; margin: 0 0 .4rem;
+}
+html.skin-fresh .card-fresh .changes-fresh ul { margin: 0; }
+html.skin-fresh .card-fresh .assumption {
+  border-left-width: 5px; border-left-color: var(--hl);
+  background: var(--hl-soft);
+}
+
+/* Fresh skin: flat 2D plans, only a stronger highlight */
+html.skin-fresh .fig.plan-hl .w.hl { stroke-width: 12; }
+html.skin-fresh .fig.plan-hl .room.hl {
+  stroke: var(--hl);
+  stroke-width: 2.5;
 }

@@ -6,6 +6,7 @@ import { makeStore } from './storage.js';
 import { cards } from './cards/index.js';
 import { adapters } from './submit/index.js';
 import { pictogram } from './icons.js';
+import { applySkin, skinToggle } from './skin.js';
 
 const app = document.getElementById('app');
 let deck, deckBase, steps, lessons, state, store;
@@ -62,6 +63,7 @@ async function boot() {
     if (wiping) return; // restart must not write the old answers back
     lap(); store.flush(state);
   });
+  applySkin();
   render();
 }
 
@@ -153,14 +155,32 @@ function isLastOfSection(i) {
   const next = lessons[i + 1];
   return !next || next.sec !== lessons[i].sec;
 }
-// remaining minutes from average time per answered card (needs a few samples)
+// Remaining minutes for the home screen.
+// Prefer the deck's planned duration scaled by open cards; only blend in personal
+// pace after several real dwell times (skips / 1-second glances must not shrink ETA to nonsense).
 function etaMinutes() {
   const [ans, total] = overall();
-  if (!ans || ans >= total) return null;
-  const times = Object.values(state.timing || {}).filter((t) => t > 800);
-  if (times.length < 2) return null;
+  if (!total || ans >= total) return null;
+  const left = total - ans;
+  const planned = deck.estimated_minutes && Number(deck.estimated_minutes.total);
+  const fromDeck = planned > 0 ? Math.max(1, Math.round(planned * (left / total))) : null;
+
+  const times = [];
+  for (const st of cardSteps()) {
+    if (!st.card || st.card.type === 'info') continue;
+    if (!cardAnswered(st)) continue;
+    const t = state.timing[st.card.id];
+    // 8 s … 8 min: ignore skips and abandoned tabs
+    if (t >= 8000 && t <= 8 * 60 * 1000) times.push(t);
+  }
+  if (times.length < 3 || !fromDeck) return fromDeck;
+
   const avg = times.reduce((a, b) => a + b, 0) / times.length;
-  return Math.max(1, Math.round(((total - ans) * avg) / 60000));
+  let personal = Math.round((left * avg) / 60000);
+  // keep personal estimate in a believable band around the deck plan
+  personal = Math.max(Math.round(fromDeck * 0.5), Math.min(Math.round(fromDeck * 2.2), Math.max(1, personal)));
+  const w = Math.min(0.7, (times.length - 2) / 10); // more weight to own pace only gradually
+  return Math.max(1, Math.round(w * personal + (1 - w) * fromDeck));
 }
 
 /* ---------- state ---------- */
@@ -394,6 +414,7 @@ function renderStart() {
       h('button', { type: 'button', class: 'btn danger big', onclick: restartFresh }, T.restart),
       h('p', { class: 'hint' }, T.restartHint)) : primaryBtn,
     installTip(),
+    h('div', { class: 'start-tools' }, skinToggle(() => render())),
     legalLinks());
   app.append(main);
   main.querySelector('h1').focus({ preventScroll: true });
@@ -496,14 +517,16 @@ function renderHome(main) {
   put(main,
     h('div', { class: 'home-top' },
       h('p', { class: 'eyebrow' }, deck.title),
-      h('button', {
-        type: 'button', class: 'iconbtn aboutbtn',
-        onclick: () => go(0),
-        'aria-label': T.homeAbout, title: T.homeAbout
-      }, pictogram('person'))),
+      h('div', { class: 'home-tools' },
+        skinToggle(() => render()),
+        h('button', {
+          type: 'button', class: 'iconbtn aboutbtn',
+          onclick: () => go(0),
+          'aria-label': T.homeAbout, title: T.homeAbout
+        }, pictogram('person')))),
     h('h1', { tabindex: '-1' }, T.homeTitle),
     h('p', { class: 'lead' }, T.homeProgress(ans, total)),
-    eta ? h('p', { class: 'hint eta' }, T.homeEta(eta)) : null,
+    eta ? h('p', { class: 'hint eta', title: T.homeEtaDetail }, T.homeEta(eta)) : null,
     h('div', { class: 'bar thick', role: 'progressbar', 'aria-valuemin': '0', 'aria-valuemax': '100', 'aria-valuenow': String(pct), 'aria-label': T.homeProgress(ans, total) },
       h('div', { class: 'bar-fill', style: `width:${pct}%` })),
     h('button', { type: 'button', class: 'btn primary big', onclick: act },

@@ -68,6 +68,25 @@ export function changes(ctx) {
     h('ul', {}, list.map((c) => h('li', { html: rich(c) }))));
 }
 
+/** Fresh skin: one clear "your question" block so the ask is hard to miss. */
+export function askBlock(ctx) {
+  const p = prompt(ctx);
+  const hint = hintEl(ctx);
+  if (!p && !hint) return null;
+  return h('div', { class: 'ask' },
+    h('p', { class: 'ask-kicker' }, T.askLabel),
+    p, hint);
+}
+
+/** Fresh skin: rename the changes block for faster scanning. */
+export function changesFresh(ctx) {
+  const list = ctx.card.changes;
+  if (!list || !list.length) return null;
+  return h('div', { class: 'changes changes-fresh' },
+    h('p', { class: 'eyebrow' }, T.changeLabel),
+    h('ul', {}, list.map((c) => h('li', { html: rich(c) }))));
+}
+
 // textarea with microphone; value lives in answer[key]
 export function textField(ctx, { key = 'note', label, rows = 4, autoGrow = true }) {
   const id = `f-${ctx.card.id}-${key}`;

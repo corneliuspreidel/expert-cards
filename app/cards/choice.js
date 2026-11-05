@@ -1,6 +1,7 @@
 // single_choice and multi_choice: large option buttons, optional follow-up text.
 import { h, pulse } from '../ui.js';
-import { head, prompt, fig, hintEl, lawButton, textField, isEmpty } from './common.js';
+import { isFresh } from '../skin.js';
+import { head, prompt, fig, hintEl, lawButton, askBlock, textField, isEmpty } from './common.js';
 
 function optionButtons(ctx, multi) {
   const { card } = ctx;
@@ -47,10 +48,12 @@ function optionButtons(ctx, multi) {
 export const render = (ctx) => {
   const multi = ctx.card.type === 'multi_choice';
   const fu = ctx.card.follow_up;
-  return h('div', { class: 'card choice' },
-    ...head(ctx), prompt(ctx), hintEl(ctx), lawButton(ctx), fig(ctx),
-    optionButtons(ctx, multi),
-    fu ? textField(ctx, { key: 'note', label: fu.label, rows: 3 }) : null);
+  const note = fu ? textField(ctx, { key: 'note', label: fu.label, rows: 3 }) : null;
+  const opts = optionButtons(ctx, multi);
+  const body = isFresh()
+    ? [...head(ctx), fig(ctx), askBlock(ctx), lawButton(ctx), opts, note]
+    : [...head(ctx), prompt(ctx), hintEl(ctx), lawButton(ctx), fig(ctx), opts, note];
+  return h('div', { class: `card choice${isFresh() ? ' card-fresh' : ''}` }, ...body);
 };
 
 export const answered = (card, a) => !isEmpty(a && a.v);
