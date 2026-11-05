@@ -21,6 +21,7 @@ Erstes Deck: `decks/e1-baybo-art27`. Es enthält die Fallprüfung zum Brandschut
 
 1. Deck anlegen: Ordner `decks/<id>/` mit `deck.json` (Vorlage: `decks/e1-baybo-art27/deck.json`, Format: `docs/DECK_SCHEMA.md`) und einen Eintrag in `decks/index.json`.
 2. Rationale schreiben: `decks/<id>/RATIONALE.md`, warum jede Karte existiert und was ihre Antwort entscheidet (Methode und Checkliste: `docs/QUESTION_DESIGN.md`; ohne erwartete Antworten). Dann das Deck prüfen: `python3 tools/validate_deck.py decks/<id>/deck.json`.
+   Soll es dieselbe Studie in einer zweiten Fassung geben (z. B. MBO statt BayBO), wird das zweite Deck mit `tools/derive_deck.py` aus dem ersten erzeugt; in `decks/index.json` bekommen beide dieselbe `group`, dann erscheint auf der Startseite eine Auswahl.
 3. Lokal ansehen: `python3 -m http.server 8765` und `http://localhost:8765/?deck=<id>` öffnen.
 4. Veröffentlichen: committen und nach `main` pushen. GitHub Pages (Branch `main`, Root) aktualisiert sich in etwa einer Minute.
 5. Link verschicken (pro Expert:in ein eigener Code):

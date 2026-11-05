@@ -76,7 +76,7 @@ Das Deck wurde aus `e1-baybo-art27` 0.1.1 mechanisch erzeugt:
 
 Danach wurde jede ersetzte Fundstelle geprüft: Es kommen nur noch § 2, § 27, § 28, § 29, § 30 und § 36 vor.
 
-**Vorschlag:** ein kleines Skript `tools/derive_deck.py`, das genau diese Schritte aus dem BayBO-Deck wiederholt. Dann bleiben beide Decks bei jeder Änderung gleich.
+Diese Schritte stehen jetzt in `derive.json` und werden mit `python3 tools/derive_deck.py decks/e1-mbo-p27-29/derive.json` ausgeführt. Ändere `deck.json` dieses Decks nie von Hand, sondern das BayBO-Deck oder `derive.json`, und erzeuge das Deck dann neu. `--check` meldet, ob das MBO-Deck veraltet ist. Hat sich die Version des BayBO-Decks geändert, weist das Skript darauf hin. Dann wird `set.version` in `derive.json` erhöht und `source_version` nachgezogen.
 
 ## 7. Grenzen
 

@@ -4,7 +4,7 @@
  "version": "0.1.0",
  "language": "de",
  "title": "Fallprüfung Brandschutz MBO",
- "subtitle": "Trennwände (§ 29) und tragende Wände (§ 27) nach Musterbauordnung",
+ "subtitle": "Trennwände (§ 29) und tragende Wände (§ 27) nach Musterbauordnung",
  "owner": {
   "name": "Cornelius Preidel",
   "institution": "Hochschule München, Fakultät für Bauingenieurwesen"
@@ -87,7 +87,7 @@
     {
      "id": "C1",
      "type": "single_choice",
-     "prompt": "Ist ein Raum, der keiner Nutzungseinheit angehört (z. B. ein gemeinsam genutzter Hauswirtschaftsraum), ein „anders genutzter Raum“ im Sinne von § 29 Abs. 2 Nr. 1?",
+     "prompt": "Ist ein Raum, der keiner Nutzungseinheit angehört (z. B. ein gemeinsam genutzter Hauswirtschaftsraum), ein „anders genutzter Raum“ im Sinne von § 29 Abs. 2 Nr. 1?",
      "hint": "Davon hängt ab, ob die Wände eines solchen Raums Trennwände sein müssen.",
      "figure": {
       "template": "duplex-plan",
@@ -103,7 +103,7 @@
       {
        "id": "nein",
        "label": "Nein",
-       "detail": "§ 29 Abs. 2 Nr. 1 greift hier nicht."
+       "detail": "§ 29 Abs. 2 Nr. 1 greift hier nicht."
       },
       {
        "id": "abh",
@@ -120,7 +120,7 @@
     {
      "id": "C2",
      "type": "multi_choice",
-     "prompt": "§ 29 Abs. 2 Nr. 3 (Aufenthaltsräume und anders genutzte Räume im Kellergeschoss): Welche Räume gelten als „anders genutzte Räume“?",
+     "prompt": "§ 29 Abs. 2 Nr. 3 (Aufenthaltsräume und anders genutzte Räume im Kellergeschoss): Welche Räume gelten als „anders genutzte Räume“?",
      "hint": "Mehrfachauswahl möglich. Davon hängt ab, zwischen welchen Räumen im Keller Trennwände nötig sind.",
      "figure": {
       "template": "duplex-plan",
@@ -163,7 +163,7 @@
     {
      "id": "C3",
      "type": "single_choice",
-     "prompt": "§ 29 Abs. 3 Satz 1 verlangt „die Feuerwiderstandsfähigkeit der tragenden und aussteifenden Bauteile des Geschosses“. Welche ist gemeint?",
+     "prompt": "§ 29 Abs. 3 Satz 1 verlangt „die Feuerwiderstandsfähigkeit der tragenden und aussteifenden Bauteile des Geschosses“. Welche ist gemeint?",
      "hint": "Beispiel: Gebäudeklasse 4 verlangt hochfeuerhemmend. Sind die tragenden Wände tatsächlich feuerbeständig ausgeführt, muss die Trennwand dann hochfeuerhemmend oder feuerbeständig sein?",
      "figure": {
       "template": "duplex-plan",
@@ -196,7 +196,7 @@
     {
      "id": "C4",
      "type": "single_choice",
-     "prompt": "Sind Außenwände, an die Räume verschiedener Nutzungseinheiten grenzen, Trennwände im Sinne von § 29?",
+     "prompt": "Sind Außenwände, an die Räume verschiedener Nutzungseinheiten grenzen, Trennwände im Sinne von § 29?",
      "hint": "Im Gebäude laufen die Außenwände der Längsseiten über beide Wohnungen durch.",
      "figure": {
       "template": "duplex-plan",
@@ -206,12 +206,12 @@
      "options": [
       {
        "id": "nein26",
-       "label": "Nein, Außenwände regelt allein § 28",
+       "label": "Nein, Außenwände regelt allein § 28",
        "detail": "Für sie gelten nur die Anforderungen an Außenwände."
       },
       {
        "id": "ja",
-       "label": "Ja, § 29 gilt auch für diese Außenwände",
+       "label": "Ja, § 29 gilt auch für diese Außenwände",
        "detail": "Sie müssen zusätzlich die Anforderungen an Trennwände erfüllen."
       },
       {
@@ -229,8 +229,8 @@
     {
      "id": "C5",
      "type": "single_choice",
-     "prompt": "Gehören die Wände eines notwendigen Flurs zu § 29, oder regelt § 36 (Notwendige Flure, offene Gänge) sie abschließend?",
-     "hint": "§ 29 Abs. 2 Nr. 1 nimmt notwendige Flure aus. Die Frage ist, ob dann gar keine Anforderung aus § 29 bleibt.",
+     "prompt": "Gehören die Wände eines notwendigen Flurs zu § 29, oder regelt § 36 (Notwendige Flure, offene Gänge) sie abschließend?",
+     "hint": "§ 29 Abs. 2 Nr. 1 nimmt notwendige Flure aus. Die Frage ist, ob dann gar keine Anforderung aus § 29 bleibt.",
      "figure": {
       "template": "duplex-plan",
       "highlight": "flur",
@@ -239,12 +239,12 @@
      "options": [
       {
        "id": "36",
-       "label": "§ 36 regelt abschließend",
-       "detail": "Für § 29 nichts zu prüfen."
+       "label": "§ 36 regelt abschließend",
+       "detail": "Für § 29 nichts zu prüfen."
       },
       {
        "id": "beide",
-       "label": "§ 29 gilt zusätzlich",
+       "label": "§ 29 gilt zusätzlich",
        "detail": ""
       },
       {
@@ -262,7 +262,7 @@
     {
      "id": "C6",
      "type": "single_choice",
-     "prompt": "Welche Gebäudeklasse hätte dieses Doppelhaus nach § 2 Abs. 3 realistisch?",
+     "prompt": "Welche Gebäudeklasse hätte dieses Doppelhaus nach § 2 Abs. 3 realistisch?",
      "hint": "Zwei Wohnungen, zwei oberirdische Geschosse, zusammen etwa 2 × 120 m², Fußboden Obergeschoss 3,10 m über Gelände, im Modell ein Gebäude. Unsere Fälle nehmen Gebäudeklasse 3 an.",
      "figure": {
       "template": "duplex-plan",
@@ -300,8 +300,8 @@
     {
      "id": "C7",
      "type": "single_choice",
-     "prompt": "Ist die Wand zwischen zwei Doppelhaushälften fachlich eine Trennwand (§ 29) oder eine Gebäudeabschlusswand bzw. Brandwand (§ 30)?",
-     "hint": "Davon hängt ab, ob das Testgebäude § 29 überhaupt richtig trifft, und welche Fälle wir für § 30 bauen.",
+     "prompt": "Ist die Wand zwischen zwei Doppelhaushälften fachlich eine Trennwand (§ 29) oder eine Gebäudeabschlusswand bzw. Brandwand (§ 30)?",
+     "hint": "Davon hängt ab, ob das Testgebäude § 29 überhaupt richtig trifft, und welche Fälle wir für § 30 bauen.",
      "figure": {
       "template": "duplex-plan",
       "highlight": "party",
@@ -310,12 +310,12 @@
      "options": [
       {
        "id": "27",
-       "label": "Trennwand nach § 29",
+       "label": "Trennwand nach § 29",
        "detail": "Ein Gebäude mit zwei Nutzungseinheiten."
       },
       {
        "id": "28",
-       "label": "Gebäudeabschlusswand / Brandwand nach § 30",
+       "label": "Gebäudeabschlusswand / Brandwand nach § 30",
        "detail": "Zwei Gebäude, z. B. an der Grundstücksgrenze."
       },
       {
@@ -333,7 +333,7 @@
     {
      "id": "C9",
      "type": "single_choice",
-     "prompt": "§ 29 Abs. 4 lässt in Dachräumen zu, Trennwände nur bis zur Rohdecke zu führen, wenn diese Decke feuerhemmend ist. Ist das Obergeschoss dieses Hauses (oberstes Vollgeschoss, darüber das Dach) ein „Dachraum“ in diesem Sinn?",
+     "prompt": "§ 29 Abs. 4 lässt in Dachräumen zu, Trennwände nur bis zur Rohdecke zu führen, wenn diese Decke feuerhemmend ist. Ist das Obergeschoss dieses Hauses (oberstes Vollgeschoss, darüber das Dach) ein „Dachraum“ in diesem Sinn?",
      "hint": "Davon hängt ab, ob eine Trennwand im Obergeschoss bis unter die Dachhaut geführt werden muss oder ob die Rohdecke genügt.",
      "figure": {
       "template": "duplex-plan",
@@ -366,7 +366,7 @@
     {
      "id": "C8",
      "type": "free_text",
-     "prompt": "Was sollte eine automatische Prüfung von § 27 und § 29 unbedingt abdecken, das in unseren Fällen fehlt?",
+     "prompt": "Was sollte eine automatische Prüfung von § 27 und § 29 unbedingt abdecken, das in unseren Fällen fehlt?",
      "hint": "Freitext. Typische Fehlerquellen aus Ihrer Praxis helfen uns besonders."
     },
     {
@@ -397,7 +397,7 @@
       },
       {
        "id": "C5",
-       "label": "C5: Wände notwendiger Flure (§ 29 oder § 36)",
+       "label": "C5: Wände notwendiger Flure (§ 29 oder § 36)",
        "detail": ""
       },
       {
@@ -407,7 +407,7 @@
       },
       {
        "id": "C7",
-       "label": "C7: Wand zwischen Doppelhaushälften (§ 29 oder § 30)",
+       "label": "C7: Wand zwischen Doppelhaushälften (§ 29 oder § 30)",
        "detail": ""
       },
       {
@@ -436,7 +436,7 @@
   },
   {
    "id": "part2",
-   "title": "Fälle zu § 29: Trennwände",
+   "title": "Fälle zu § 29: Trennwände",
    "icon": "wall",
    "part_titles": [
     "Grundfälle und Kellergeschoss",
@@ -445,7 +445,7 @@
     "Türen, Keller und Außenwände"
    ],
    "reference": "mbo29",
-   "question": "Erfüllt das Gebäude § 29 MBO?",
+   "question": "Erfüllt das Gebäude § 29 MBO?",
    "cards": [
     {
      "id": "B1",
@@ -743,11 +743,11 @@
      "related": [
       "C5"
      ],
-     "assumption": "Der Flur im Obergeschoss der Wohnung B ist keiner Wohnung zugeordnet und gilt als notwendiger Flur im Sinne von § 36.",
+     "assumption": "Der Flur im Obergeschoss der Wohnung B ist keiner Wohnung zugeordnet und gilt als notwendiger Flur im Sinne von § 36.",
      "changes": [
       "Die Wände dieses Flurs sind ==keine Trennwände==."
      ],
-     "hint": "Wenn § 36 eigene Anforderungen an diese Wände stellt, beurteilen Sie hier bitte nur § 29 und vermerken § 36 in der Begründung.",
+     "hint": "Wenn § 36 eigene Anforderungen an diese Wände stellt, beurteilen Sie hier bitte nur § 29 und vermerken § 36 in der Begründung.",
      "figure": {
       "template": "duplex-plan",
       "highlight": "flur",
@@ -869,14 +869,14 @@
   },
   {
    "id": "part3",
-   "title": "Fälle zu § 27: tragende Wände",
+   "title": "Fälle zu § 27: tragende Wände",
    "icon": "column",
    "part_titles": [
     "Gebäudeklassen und Keller",
     "Sonderfälle tragender Bauteile"
    ],
    "reference": "mbo27",
-   "question": "Erfüllt das Gebäude § 27 MBO?",
+   "question": "Erfüllt das Gebäude § 27 MBO?",
    "cards": [
     {
      "id": "A1",
@@ -1137,7 +1137,7 @@
  "closing": {
   "title": "Zum Schluss",
   "icon": "note",
-  "free_text_label": "Gibt es Anforderungen aus § 27 oder 27, die in den Fällen fehlen und die eine Prüfregel unbedingt abdecken sollte? Sonstige Anmerkungen?"
+  "free_text_label": "Gibt es Anforderungen aus § 27 oder 27, die in den Fällen fehlen und die eine Prüfregel unbedingt abdecken sollte? Sonstige Anmerkungen?"
  },
  "submission": {
   "mode": "email",

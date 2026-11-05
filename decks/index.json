@@ -4,13 +4,19 @@
    "id": "e1-baybo-art27",
    "title": "Fallprüfung Brandschutz BayBO",
    "language": "de",
-   "status": "draft"
+   "status": "draft",
+   "group": "e1",
+   "label": "BayBO (Bayern)",
+   "hint": "Art. 25 und 27 der Bayerischen Bauordnung."
   },
   {
    "id": "e1-mbo-p27-29",
    "title": "Fallprüfung Brandschutz MBO",
    "language": "de",
-   "status": "draft"
+   "status": "draft",
+   "group": "e1",
+   "label": "MBO (alle Länder)",
+   "hint": "§§ 27 und 29 der Musterbauordnung; Abweichungen Ihres Landes können Sie angeben."
   }
  ]
 }

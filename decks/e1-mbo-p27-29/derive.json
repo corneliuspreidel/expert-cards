@@ -1,0 +1,121 @@
+{
+ "_comment": "Erzeugt deck.json aus dem Quell-Deck: python3 tools/derive_deck.py decks/e1-mbo-p27-29/derive.json. deck.json nie von Hand ändern, sondern hier oder im Quell-Deck.",
+ "source": "decks/e1-baybo-art27/deck.json",
+ "source_version": "0.1.1",
+ "target": "decks/e1-mbo-p27-29/deck.json",
+ "renumber": {
+  "pattern": "Art\\.\\s?(\\d+)\\b",
+  "template": "§ {n}",
+  "map": {
+   "2": "2",
+   "25": "27",
+   "26": "28",
+   "27": "29",
+   "28": "30",
+   "34": "36"
+  }
+ },
+ "replace": {
+  "BayBO": "MBO"
+ },
+ "set": {
+  "id": "e1-mbo-p27-29",
+  "version": "0.1.0",
+  "title": "Fallprüfung Brandschutz MBO",
+  "subtitle": "Trennwände (§ 29) und tragende Wände (§ 27) nach Musterbauordnung",
+  "references": {
+   "mbo29": {
+    "title": "§ 29 MBO (Trennwände)",
+    "text": "§ 29 Trennwände\n(1) Trennwände nach Absatz 2 müssen als raumabschließende Bauteile von Räumen oder Nutzungseinheiten innerhalb von Geschossen ausreichend lang widerstandsfähig gegen die Brandausbreitung sein.\n(2) Trennwände sind erforderlich\n1. zwischen Nutzungseinheiten sowie zwischen Nutzungseinheiten und anders genutzten Räumen, ausgenommen notwendigen Fluren,\n2. zum Abschluss von Räumen mit Explosions- oder erhöhter Brandgefahr,\n3. zwischen Aufenthaltsräumen und anders genutzten Räumen im Kellergeschoss.\n(3) 1Trennwände nach Absatz 2 Nrn. 1 und 3 müssen die Feuerwiderstandsfähigkeit der tragenden und aussteifenden Bauteile des Geschosses haben, jedoch mindestens feuerhemmend sein. 2Trennwände nach Absatz 2 Nr. 2 müssen feuerbeständig sein.\n(4) Die Trennwände nach Absatz 2 sind bis zur Rohdecke, im Dachraum bis unter die Dachhaut zu führen; werden in Dachräumen Trennwände nur bis zur Rohdecke geführt, ist diese Decke als raumabschließendes Bauteil einschließlich der sie tragenden und aussteifenden Bauteile feuerhemmend herzustellen.\n(5) Öffnungen in Trennwänden nach Absatz 2 sind nur zulässig, wenn sie auf die für die Nutzung erforderliche Zahl und Größe beschränkt sind; sie müssen feuerhemmende, dicht- und selbstschließende Abschlüsse haben.\n(6) Die Absätze 1 bis 5 gelten nicht für Wohngebäude der Gebäudeklassen 1 und 2."
+   },
+   "mbo27": {
+    "title": "§ 27 MBO (Tragende Wände, Stützen)",
+    "text": "§ 27 Tragende Wände, Stützen\n(1) 1Tragende und aussteifende Wände und Stützen müssen im Brandfall ausreichend lang standsicher sein. 2Sie müssen\n1. in Gebäuden der Gebäudeklasse 5 feuerbeständig,\n2. in Gebäuden der Gebäudeklasse 4 hochfeuerhemmend,\n3. in Gebäuden der Gebäudeklassen 2 und 3 feuerhemmend\nsein. 3Satz 2 gilt\n1. für Geschosse im Dachraum nur, wenn darüber noch Aufenthaltsräume möglich sind; § 29 Abs. 4 bleibt unberührt,\n2. nicht für Balkone, ausgenommen offene Gänge, die als notwendige Flure dienen.\n(2) Im Kellergeschoss müssen tragende und aussteifende Wände und Stützen\n1. in Gebäuden der Gebäudeklassen 3 bis 5 feuerbeständig,\n2. in Gebäuden der Gebäudeklassen 1 und 2 feuerhemmend\nsein."
+   }
+  },
+  "intro_cards.0.body": "Wir prüfen, ob automatische Prüfregeln für digitale Bauanträge das Bauordnungsrecht richtig umsetzen. Bitte beurteilen Sie jeden Fall nach der Musterbauordnung (MBO), so wie Sie es in einer Prüfung tun würden. Wenn Ihre Landesbauordnung oder die Praxis in Ihrem Land an einer Stelle anders entscheidet, sagen Sie es bitte in der Anmerkung. Es gibt keine erwartete richtige Antwort.",
+  "submission.subject": "Fallprüfung Brandschutz MBO – Antworten",
+  "comparable_with": {
+   "deck": "e1-baybo-art27",
+   "note": "Gleiche Karten-IDs, Fälle und Optionen; nur Fundstellen und Gesetzestext nach MBO. Zusätzliche Karte: L1."
+  }
+ },
+ "section_reference": {
+  "law27": "mbo29",
+  "law25": "mbo27"
+ },
+ "identity_patch": {
+  "lbo": {
+   "label": "Bundesland, in dem Sie überwiegend arbeiten",
+   "at": null
+  }
+ },
+ "append_cards": [
+  {
+   "section": "part1",
+   "card": {
+    "id": "L1",
+    "type": "multi_choice",
+    "prompt": "Bei welchen dieser Grundsatzfragen würde Ihre Landesbauordnung oder die Praxis in Ihrem Land anders entscheiden als die MBO?",
+    "hint": "Mehrfachauswahl möglich. Bitte nennen Sie in der Anmerkung Land und Fundstelle.",
+    "options": [
+     {
+      "id": "C1",
+      "label": "C1: Raum ohne Nutzungseinheit als „anders genutzter Raum“",
+      "detail": ""
+     },
+     {
+      "id": "C2",
+      "label": "C2: „Anders genutzte Räume“ im Kellergeschoss",
+      "detail": ""
+     },
+     {
+      "id": "C3",
+      "label": "C3: Feuerwiderstand „der tragenden Bauteile des Geschosses“",
+      "detail": ""
+     },
+     {
+      "id": "C4",
+      "label": "C4: Außenwände, an die mehrere Nutzungseinheiten grenzen",
+      "detail": ""
+     },
+     {
+      "id": "C5",
+      "label": "C5: Wände notwendiger Flure (§ 29 oder § 36)",
+      "detail": ""
+     },
+     {
+      "id": "C6",
+      "label": "C6: Gebäudeklasse des Doppelhauses",
+      "detail": ""
+     },
+     {
+      "id": "C7",
+      "label": "C7: Wand zwischen Doppelhaushälften (§ 29 oder § 30)",
+      "detail": ""
+     },
+     {
+      "id": "C9",
+      "label": "C9: Obergeschoss als „Dachraum“",
+      "detail": ""
+     },
+     {
+      "id": "keine",
+      "label": "Bei keiner",
+      "detail": ""
+     },
+     {
+      "id": "weissnicht",
+      "label": "Kann ich nicht beurteilen",
+      "detail": ""
+     }
+    ],
+    "follow_up": {
+     "type": "free_text",
+     "label": "Land, Fundstelle und worin die Abweichung besteht (optional)",
+     "voice": true
+    }
+   }
+  }
+ ]
+}

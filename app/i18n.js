@@ -63,6 +63,8 @@ const de = {
   lessonPause: 'Zur Übersicht',
   minutes: (a, b) => `Dauer: etwa ${a} Minuten für den ersten Teil, insgesamt etwa ${b} Minuten.`,
   invite: 'Einladungscode',
+  variantLabel: 'Rechtsgrundlage',
+  variantHint: 'Jede Fassung speichert ihre Antworten getrennt.',
   installTitle: 'Wie eine App auf dem Home-Bildschirm',
   installLead: 'Optional – die Befragung geht auch ohne. Danach starten Sie sie mit einem Tipp vom Home-Bildschirm, ohne Browser-Leiste.',
   installIosSteps: [

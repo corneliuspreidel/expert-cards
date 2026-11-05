@@ -50,3 +50,11 @@ Deck texts are plain text with a tiny markup, never HTML: `==marked==`, `**bold*
 ## Answers (backup file / e-mail JSON block)
 
 `expert-cards/answers@1`: `{deck:{id,version}, code, person, consent, startedAt, updatedAt, submittedAt, answers, timing_ms, changes, audio[]}`. The e-mail JSON block omits `audio`. Answer keys and collected answers never go into this repository.
+
+## `decks/index.json`
+
+`{"decks": [{id, title, language, status, group?, label?, hint?}]}`. The first entry is the default when the URL has no `?deck=`. Decks with the same `group` are versions of one study (e.g. BayBO and MBO); the start screen then shows a picker with each deck's `label` (and its `hint`). Each version keeps its own saved answers.
+
+## Derived decks
+
+A deck can be generated from another one with `tools/derive_deck.py decks/<id>/derive.json`, so that card ids, cases and options stay identical (e.g. `e1-mbo-p27-29` from `e1-baybo-art27`). Never edit a derived `deck.json` by hand: change the source deck or `derive.json` and run the script again; `--check` reports whether the target is out of date. Optional top-level field `comparable_with: {deck, note}` names the source deck.

@@ -10,6 +10,7 @@ import { applySkin, skinToggle } from './skin.js';
 
 const app = document.getElementById('app');
 let deck, deckBase, steps, lessons, state, store;
+let variants = []; // decks of the same group in decks/index.json (e.g. BayBO and MBO), shown as a picker on the start screen
 let editing = false;
 let wiping = false; // true while clearing answers — blocks pagehide from re-saving
 let t0 = 0;
@@ -36,7 +37,14 @@ async function getJson(url) {
 async function boot() {
   try {
     let id = new URLSearchParams(location.search).get('deck');
-    if (!id || !/^[\w-]+$/.test(id)) id = (await getJson('decks/index.json')).decks[0].id;
+    let index = null;
+    try { index = await getJson('decks/index.json'); } catch { /* picker is optional */ }
+    if (!id || !/^[\w-]+$/.test(id)) {
+      if (!index) throw new Error('decks/index.json');
+      id = index.decks[0].id;
+    }
+    const me = index && index.decks.find((d) => d.id === id);
+    variants = me && me.group ? index.decks.filter((d) => d.group === me.group) : [];
     deckBase = `decks/${id}/`;
     deck = await getJson(`${deckBase}deck.json`);
   } catch (e) {
@@ -402,6 +410,7 @@ function renderStart() {
     h('p', { class: 'eyebrow' }, deck.owner ? `${deck.owner.name}, ${deck.owner.institution}` : T.appName),
     h('h1', { tabindex: '-1' }, deck.title),
     deck.subtitle ? h('p', { class: 'lead' }, deck.subtitle) : null,
+    variantPicker(),
     est ? h('p', {}, T.minutes(est.part1, est.total)) : null,
     state.code ? h('p', { class: 'hint' }, `${T.invite}: `, h('b', {}, state.code)) : null,
     ...identityFields('start'),
@@ -418,6 +427,29 @@ function renderStart() {
     legalLinks());
   app.append(main);
   main.querySelector('h1').focus({ preventScroll: true });
+}
+
+// Same study in several versions (e.g. BayBO and MBO): choose one. Each version keeps its own saved answers.
+function variantPicker() {
+  if (variants.length < 2) return null;
+  const btns = variants.map((v) => {
+    const on = v.id === deck.id;
+    return h('button', {
+      type: 'button', class: `chipbtn${on ? ' sel' : ''}`, role: 'radio', 'aria-checked': String(on),
+      onclick: () => {
+        if (on) return;
+        const u = new URL(location.href);
+        u.searchParams.set('deck', v.id); // keeps the invite code in the hash
+        location.assign(u.toString());
+      }
+    }, v.label || v.title);
+  });
+  const cur = variants.find((v) => v.id === deck.id);
+  return h('div', { class: 'field variant-picker' },
+    h('p', { class: 'label', id: 'variant-label' }, T.variantLabel),
+    h('div', { class: 'chipset', role: 'radiogroup', 'aria-labelledby': 'variant-label' }, btns),
+    cur && cur.hint ? h('p', { class: 'hint' }, cur.hint) : null,
+    h('p', { class: 'hint' }, T.variantHint));
 }
 
 function isStandaloneApp() {
