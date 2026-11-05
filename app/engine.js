@@ -249,8 +249,15 @@ function lookup(id) {
 
 /* ---------- screens ---------- */
 
+// Fixed chrome lives on document.body (not #app) so Firefox/macOS keeps bottom:0 on the viewport.
+function clearChrome() {
+  document.querySelectorAll('nav.bottomnav, .fab-feedback').forEach((el) => el.remove());
+  navEl = null;
+}
+
 function render() {
   const st = steps[state.pos];
+  clearChrome();
   app.replaceChildren();
   clearTone();
   if (st.kind === 'start') {
@@ -270,8 +277,10 @@ function render() {
   else if (st.kind === 'home') renderHome(main);
   else if (st.kind === 'lessondone') renderLessonDone(main, st);
   else renderSubmit(main);
-  navEl = null;
-  if (!bare && (st.kind !== 'submit' || !state.submittedAt)) { navEl = nav(st); app.append(navEl); }
+  if (!bare && (st.kind !== 'submit' || !state.submittedAt)) {
+    navEl = nav(st);
+    document.body.append(navEl);
+  }
   mountFeedbackFab(!!navEl);
   attachSwipe(main);
   if (!store.ok) main.prepend(h('p', { class: 'warn' }, T.saveFail));
@@ -834,7 +843,7 @@ function mountFeedbackFab(aboveNav) {
   if (!feedbackEnabled()) return;
   const fb = answerOf('_feedback');
   const has = !!(fb.note || (fb.log && fb.log.length));
-  app.append(h('button', {
+  document.body.append(h('button', {
     type: 'button',
     class: `fab-feedback${has ? ' has' : ''}${aboveNav ? ' above-nav' : ''}`,
     'aria-label': T.fbFab,

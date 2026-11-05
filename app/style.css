@@ -21,7 +21,11 @@ html {
   overscroll-behavior: none;
 }
 body {
-  margin: 0; min-height: 100%; color: var(--ink); font: 17px/1.5 var(--font);
+  margin: 0;
+  min-height: 100%;
+  min-height: 100vh; /* Firefox fallback before svh */
+  min-height: 100svh;
+  color: var(--ink); font: 17px/1.5 var(--font);
   overscroll-behavior: none;
   -webkit-tap-highlight-color: transparent;
   touch-action: manipulation;
@@ -151,14 +155,23 @@ h1:focus { outline: none; }
 .btn:disabled { opacity: .45; cursor: not-allowed; }
 .linkbtn { background: none; border: 0; color: var(--hl); text-decoration: underline; min-height: 48px; padding: 0 .3rem; }
 
-/* bottom nav: always pinned to the viewport, above content */
+/* bottom nav: pinned to the visual viewport (mounted on document.body for Firefox) */
 .bottomnav {
-  position: fixed; left: 0; right: 0; bottom: 0; z-index: 30;
+  position: fixed;
+  left: 0; right: 0; bottom: 0;
+  width: 100%;
+  box-sizing: border-box;
+  z-index: 30;
+  margin: 0;
   background: var(--bg);
   border-top: 1px solid var(--line);
   box-shadow: 0 -8px 24px rgba(0, 0, 0, .12);
-  padding: .7rem 16px calc(.7rem + env(safe-area-inset-bottom));
+  padding: .7rem 16px calc(.7rem + env(safe-area-inset-bottom, 0px));
   display: flex; justify-content: center; gap: 1rem;
+  /* keep a stable containing block on Firefox/macOS */
+  transform: translateZ(0);
+  -webkit-backface-visibility: hidden;
+  backface-visibility: hidden;
 }
 .bottomnav .btn { flex: 1; max-width: 280px; }
 .bottomnav .btn:last-child { margin-left: 0; }
@@ -373,7 +386,7 @@ dialog.modal .btn { margin-top: 1rem; width: 100%; }
 /* quiet icon FAB; expands to label only on mouse hover / keyboard focus */
 .fab-feedback {
   position: fixed; right: 12px; z-index: 40;
-  bottom: calc(12px + env(safe-area-inset-bottom));
+  bottom: calc(12px + env(safe-area-inset-bottom, 0px));
   height: 44px; min-height: 44px; min-width: 44px; padding: 0 11px;
   border-radius: 999px; cursor: pointer;
   display: inline-flex; align-items: center; justify-content: center; gap: 0;
@@ -389,7 +402,7 @@ dialog.modal .btn { margin-top: 1rem; width: 100%; }
   white-space: nowrap; font: inherit; font-size: .88rem; font-weight: 700;
   transition: max-width .22s ease, opacity .18s ease, margin .22s ease;
 }
-.fab-feedback.above-nav { bottom: calc(88px + env(safe-area-inset-bottom)); }
+.fab-feedback.above-nav { bottom: calc(88px + env(safe-area-inset-bottom, 0px)); }
 .fab-feedback.has { color: var(--hl); border-color: color-mix(in srgb, var(--hl) 55%, var(--line-2)); }
 .fab-feedback:focus-visible { outline: 3px solid var(--hl); outline-offset: 3px; }
 @media (hover: hover) {
