@@ -4,7 +4,7 @@
 import { en } from './i18n.en.js';
 
 const de = {
-  appName: 'Expertenbefragung',
+  appName: 'Expertenkarten',
   start: "Los geht's",
   resume: 'Weitermachen',
   restart: 'Neu von vorn',
@@ -78,13 +78,13 @@ const de = {
   deckCatalogHint: 'Jede Befragung speichert Antworten getrennt.',
   deckFilter: 'Befragung suchen …',
   deckFilterEmpty: 'Keine Befragung passt zur Suche.',
-  deckGroupOther: 'Weitere Befragungen',
-  deckGroupE1: 'E1 Brandschutz (Ländervergleich)',
+  deckGroupOther: 'Weitere Studien',
+  deckGroupE1: 'E1 Brandschutz, Ländervergleich',
   deckDraft: 'Entwurf',
-  landingTitle: 'Befragung wählen',
-  landingLead: 'Wählen Sie unten eine Studie. Die Menüs erscheinen danach in der Sprache dieser Befragung.',
-  landingHint: 'Deutsche Bauordnungs-Befragungen auf Deutsch. Der Singapur-Entwurf auf Englisch.',
-  landingBack: 'Alle Befragungen',
+  landingTitle: 'Studie wählen',
+  landingLead: 'Eine Karte nach der anderen zur Bauordnung oder Accessibility. Die Menüs folgen der Sprache der gewählten Studie.',
+  landingHint: 'Deutsche Brandschutz-Decks auf Deutsch. Der Singapur-Entwurf zur Accessibility auf Englisch.',
+  landingBack: 'Alle Studien',
   langLabel: 'Sprache',
   installTitle: 'Wie eine App auf dem Home-Bildschirm',
   installLead: 'Optional – die Befragung geht auch ohne. Danach starten Sie sie mit einem Tipp vom Home-Bildschirm, ohne Browser-Leiste.',
@@ -104,11 +104,6 @@ const de = {
     'Bestätigen – danach wie eine normale App öffnen.'
   ],
   installBtn: 'Jetzt installieren',
-  skinToggleAria: 'Kartendarstellung wechseln',
-  skinClassicOn: 'Klassisch',
-  skinFreshOn: 'Klar',
-  skinToFresh: 'Klarere Kartendarstellung ausprobieren',
-  skinToClassic: 'Zur klassischen Darstellung zurück',
   askLabel: 'Ihre Frage',
   changeLabel: 'Was ändert sich?',
   whereLabel: 'Wo im Gebäude?',
@@ -237,14 +232,14 @@ export function setLang(lang) {
 }
 export const T = new Proxy({}, { get: (_, k) => cur[k] ?? de[k] });
 
-/** Flag + short name for UI chrome (catalog, start header). */
+/** Short language mark for UI chrome (catalog, start header) — no emoji flags. */
 export function langMeta(lang, id = '') {
   const code = String(lang || 'de').toLowerCase().slice(0, 2);
   const sid = String(id || '').toLowerCase();
   if (sid.startsWith('sg') || sid.includes('singapore')) {
-    return { code: 'en', flag: '🇸🇬', name: 'English', label: 'EN · Singapore' };
+    return { code: 'en', mark: 'sg', name: 'English', label: 'EN · SG' };
   }
-  if (code === 'en') return { code: 'en', flag: '🇬🇧', name: 'English', label: 'EN' };
-  if (code === 'de') return { code: 'de', flag: '🇩🇪', name: 'Deutsch', label: 'DE' };
-  return { code, flag: '🏳️', name: code.toUpperCase(), label: code.toUpperCase() };
+  if (code === 'en') return { code: 'en', mark: 'en', name: 'English', label: 'EN' };
+  if (code === 'de') return { code: 'de', mark: 'de', name: 'Deutsch', label: 'DE' };
+  return { code, mark: code, name: code.toUpperCase(), label: code.toUpperCase() };
 }

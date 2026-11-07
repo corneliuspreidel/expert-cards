@@ -58,7 +58,7 @@
     },
     "code-bollards": {
       "title": "Bollards: clauses 3.2.2 and 4.2.3.6",
-      "text": "Code on Accessibility in the Built Environment 2025 (extract)\n\n3.2.2 Where bollards are used, it must be in accordance with clause 4.2.3.6.\n\n4.2.3.6 Where bollards are erected at entrances to walkways or pathways, they must:\n(a) have a minimum clear distance of 900 mm between the bollards;\n(b) not be linked with a chain or rope;\n(c) have a minimum height of 800 mm;\n(d) have a colour that contrasts with the background or be provided with a coloured or reflective band around the neck of the bollard to further aid visibility;\n(e) not have sharp or ornamental features protruding horizontally; and\n(f) be well lit and the light fitting must be positioned in such a manner that will not cause glare."
+      "text": "Code on Accessibility in the Built Environment 2025 (extract)\n\n3.2 Passenger Alighting and Boarding Points, including Taxi Shelters\n3.2.2 Where bollards are used, it must be in accordance with clause 4.2.3.6.\n\n4.2.3.6 Where bollards are erected at entrances to walkways or pathways, they must:\n(a) have a minimum clear distance of 900 mm between the bollards;\n(b) not be linked with a chain or rope;\n(c) have a minimum height of 800 mm;\n(d) have a colour that contrasts with the background or be provided with a coloured or reflective band around the neck of the bollard to further aid visibility;\n(e) not have sharp or ornamental features protruding horizontally; and\n(f) be well lit and the light fitting must be positioned in such a manner that will not cause glare."
     }
   },
   "intro_cards": [
@@ -272,7 +272,7 @@
         {
           "id": "C6",
           "type": "single_choice",
-          "prompt": "Clause 4.2.3.6 applies where bollards are erected at entrances to walkways or pathways. Clause 3.2.2 says that where bollards are used, clause 4.2.3.6 applies. Does the minimum height of 800 mm in 4.2.3.6(c) apply to a bollard that does not stand at an entrance to a walkway or pathway?",
+          "prompt": "Clause 4.2.3.6 applies where bollards are erected at entrances to walkways or pathways. Clause 3.2.2, in the section on passenger alighting and boarding points, says that where bollards are used, clause 4.2.3.6 applies. Does the minimum height of 800 mm in 4.2.3.6(c) apply to a bollard that stands neither at an entrance to a walkway or pathway nor at a passenger alighting or boarding point?",
           "options": [
             {
               "id": "yes",

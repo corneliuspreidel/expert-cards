@@ -6,8 +6,6 @@ import { makeStore } from './storage.js';
 import { cards } from './cards/index.js';
 import { adapters } from './submit/index.js';
 import { pictogram } from './icons.js';
-import { applySkin, skinToggle } from './skin.js';
-
 const app = document.getElementById('app');
 let deck, deckBase, steps, lessons, state, store;
 let catalog = []; // all decks from decks/index.json (landing catalog)
@@ -47,7 +45,6 @@ async function boot() {
       setLang('en');
       document.documentElement.lang = 'en';
       document.title = T.appName;
-      applySkin();
       renderLanding();
       return;
     }
@@ -80,7 +77,6 @@ async function boot() {
     if (wiping) return; // restart must not write the old answers back
     lap(); store.flush(state);
   });
-  applySkin();
   render();
 }
 
@@ -92,8 +88,7 @@ function renderLanding() {
     h('h1', { tabindex: '-1' }, T.landingTitle),
     h('p', { class: 'lead' }, T.landingLead),
     h('p', { class: 'hint' }, T.landingHint),
-    deckCatalog({ landing: true }),
-    h('div', { class: 'start-tools' }, skinToggle(() => { applySkin(); renderLanding(); })));
+    deckCatalog({ landing: true }));
   app.append(main);
   mountFeedbackFab(false);
   main.querySelector('h1').focus({ preventScroll: true });
@@ -467,8 +462,8 @@ function renderStart() {
   const main = h('main', { class: 'screen start', id: 'main' },
     h('div', { class: 'start-head' },
       h('p', { class: 'eyebrow' }, deck.owner ? `${deck.owner.name}, ${deck.owner.institution}` : T.appName),
-      h('span', { class: 'lang-pill', title: `${T.langLabel}: ${lang.name}` },
-        h('span', { class: 'lang-flag', 'aria-hidden': 'true' }, lang.flag),
+      h('span', { class: `lang-pill mark-${lang.mark}`, title: `${T.langLabel}: ${lang.name}` },
+        h('span', { class: 'lang-mark', 'aria-hidden': 'true' }),
         h('span', {}, lang.label))),
     h('h1', { tabindex: '-1' }, deck.title),
     deck.subtitle ? h('p', { class: 'lead' }, deck.subtitle) : null,
@@ -488,7 +483,6 @@ function renderStart() {
     h('label', { class: 'check', for: 'consent' }, consent, h('span', {}, T.consentLabel)),
     resumePanel,
     installTip(),
-    h('div', { class: 'start-tools' }, skinToggle(() => render())),
     legalLinks());
   app.append(main);
   main.querySelector('h1').focus({ preventScroll: true });
@@ -548,7 +542,7 @@ function deckCatalog(opts = {}) {
           'aria-current': on ? 'true' : null,
           onclick: () => goDeck(d.id)
         },
-          h('span', { class: 'deck-row-flag', 'aria-hidden': 'true' }, lm.flag),
+          h('span', { class: `deck-row-mark mark-${lm.mark}`, 'aria-hidden': 'true' }),
           h('span', { class: 'deck-row-main' },
             h('span', { class: 'deck-row-title' }, d.label || d.title),
             d.hint ? h('span', { class: 'deck-row-hint' }, d.hint) : null),
@@ -663,13 +657,11 @@ function renderHome(main) {
   put(main,
     h('div', { class: 'home-top' },
       h('p', { class: 'eyebrow' }, deck.title),
-      h('div', { class: 'home-tools' },
-        skinToggle(() => render()),
-        h('button', {
-          type: 'button', class: 'iconbtn aboutbtn',
-          onclick: () => go(0),
-          'aria-label': T.homeAbout, title: T.homeAbout
-        }, pictogram('person')))),
+      h('button', {
+        type: 'button', class: 'iconbtn aboutbtn',
+        onclick: () => go(0),
+        'aria-label': T.homeAbout, title: T.homeAbout
+      }, pictogram('person'))),
     h('h1', { tabindex: '-1' }, T.homeTitle),
     h('p', { class: 'lead' }, T.homeProgress(ans, total)),
     eta ? h('p', { class: 'hint eta', title: T.homeEtaDetail }, T.homeEta(eta)) : null,

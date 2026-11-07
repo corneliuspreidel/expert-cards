@@ -68,7 +68,7 @@ export function changes(ctx) {
     h('ul', {}, list.map((c) => h('li', { html: rich(c) }))));
 }
 
-/** Fresh skin: one clear "your question" block so the ask is hard to miss. */
+/** One clear "your question" block so the ask is hard to miss. */
 export function askBlock(ctx) {
   const p = prompt(ctx);
   const hint = hintEl(ctx);
@@ -78,11 +78,11 @@ export function askBlock(ctx) {
     p, hint);
 }
 
-/** Fresh skin: rename the changes block for faster scanning. */
+/** Changes block labeled for faster scanning. */
 export function changesFresh(ctx) {
   const list = ctx.card.changes;
   if (!list || !list.length) return null;
-  return h('div', { class: 'changes changes-fresh' },
+  return h('div', { class: 'changes changes-delta' },
     h('p', { class: 'eyebrow' }, T.changeLabel),
     h('ul', {}, list.map((c) => h('li', { html: rich(c) }))));
 }

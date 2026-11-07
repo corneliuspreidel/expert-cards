@@ -2,8 +2,7 @@
 // and the app advances by itself (unless the expert is editing from the overview or adds a note).
 import { h, pulse } from '../ui.js';
 import { T } from '../i18n.js';
-import { isFresh } from '../skin.js';
-import { head, prompt, fig, hintEl, lawButton, related, assumption, changes, changesFresh, askBlock, textField } from './common.js';
+import { head, fig, lawButton, related, assumption, changesFresh, askBlock, textField } from './common.js';
 
 const AUTO_MS = 1800;
 
@@ -80,12 +79,12 @@ export const render = (ctx) => {
     h('div', { class: 'verdicts', role: 'radiogroup', 'aria-label': ctx.section && ctx.section.question || '' }, vbtns),
     confRow, reasonBox, addNote, noteBox
   ];
-  // Fresh: picture first, then delta, then one clear question — classic keeps the previous order.
-  const body = isFresh()
-    ? [...head(ctx), fig(ctx), changesFresh(ctx), assumption(ctx), related(ctx), askBlock(ctx), lawButton(ctx), ...actions]
-    : [...head(ctx), assumption(ctx), changes(ctx), fig(ctx), related(ctx), prompt(ctx), hintEl(ctx), lawButton(ctx), ...actions];
+  const body = [
+    ...head(ctx), fig(ctx), changesFresh(ctx), assumption(ctx), related(ctx),
+    askBlock(ctx), lawButton(ctx), ...actions
+  ];
   // typing or tapping inside notes/reason keeps the card open
-  const root = h('div', { class: `card verdict${isFresh() ? ' card-fresh' : ''}`, onfocusin: cancel }, ...body);
+  const root = h('div', { class: 'card verdict', onfocusin: cancel }, ...body);
   showNote(false);
   paint();
   return root;
