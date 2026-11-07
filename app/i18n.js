@@ -1,15 +1,24 @@
 // Interface strings of the engine (not study content). German first.
 // Study content lives only in the deck.
 
+import { en } from './i18n.en.js';
+
 const de = {
   appName: 'Expertenbefragung',
   start: "Los geht's",
   resume: 'Weitermachen',
-  restart: 'Alle Antworten löschen',
+  restart: 'Neu von vorn',
   restartConfirm: 'Alle bisherigen Antworten auf diesem Gerät wirklich löschen und von vorn beginnen?',
-  restartHint: 'Nur auf diesem Gerät. Schon abgeschickte E-Mails bleiben unberührt.',
-  resumeInfo: (n, total) => `Auf diesem Gerät gespeichert: ${n} von ${total} Fragen. Mit „Weitermachen“ geht es genau dort weiter.`,
+  restartHint: 'Löscht nur die Daten auf diesem Gerät. Schon abgeschickte E-Mails bleiben unberührt.',
+  resumeTitle: 'Gespeicherter Stand auf diesem Gerät',
+  resumeInfo: (n, total, doneL, totalL) => (
+    totalL > 1
+      ? `${n} von ${total} Fragen · ${doneL} von ${totalL} Runden erledigt`
+      : `${n} von ${total} Fragen beantwortet`
+  ),
   resumeContinue: 'Weitermachen',
+  resumeContinueHint: 'Dort weiter, wo Sie aufgehört haben',
+  restartFreshHint: 'Alles löschen und von Null starten',
   privacyMore: 'Details zum Datenschutz',
   closingTitle: 'Zum Schluss',
   topLabel: (l, p, n) => `Runde ${l} · ${p} von ${n}`,
@@ -65,6 +74,18 @@ const de = {
   invite: 'Einladungscode',
   variantLabel: 'Rechtsgrundlage',
   variantHint: 'Jede Fassung speichert ihre Antworten getrennt.',
+  deckCatalogLabel: 'Befragung wählen',
+  deckCatalogHint: 'Jede Befragung speichert Antworten getrennt.',
+  deckFilter: 'Befragung suchen …',
+  deckFilterEmpty: 'Keine Befragung passt zur Suche.',
+  deckGroupOther: 'Weitere Befragungen',
+  deckGroupE1: 'E1 Brandschutz (Ländervergleich)',
+  deckDraft: 'Entwurf',
+  landingTitle: 'Befragung wählen',
+  landingLead: 'Wählen Sie unten eine Studie. Die Menüs erscheinen danach in der Sprache dieser Befragung.',
+  landingHint: 'Deutsche Bauordnungs-Befragungen auf Deutsch. Der Singapur-Entwurf auf Englisch.',
+  landingBack: 'Alle Befragungen',
+  langLabel: 'Sprache',
   installTitle: 'Wie eine App auf dem Home-Bildschirm',
   installLead: 'Optional – die Befragung geht auch ohne. Danach starten Sie sie mit einem Tipp vom Home-Bildschirm, ohne Browser-Leiste.',
   installIosSteps: [
@@ -199,10 +220,31 @@ const de = {
   saveFail: 'Achtung: Das automatische Speichern ist in diesem Browser nicht möglich. Bitte füllen Sie alles in einem Durchgang aus.',
   loadFail: 'Die Befragung konnte nicht geladen werden.',
   noJs: 'Diese Seite braucht JavaScript.',
+  reportNote: 'Anmerkung',
+  reportReason: 'Begründung',
+  reportVoice: '(Sprachnotiz in Sicherungsdatei)',
+  reportFeedbackTitle: 'Feedback zur App',
+  reportOverall: 'Gesamt',
   emptyAnswer: '–'
 };
 
-const dict = { de };
+const dict = { de, en };
 let cur = de;
-export function setLang(lang) { cur = dict[lang] || de; }
+export function setLang(lang) {
+  const code = String(lang || 'de').toLowerCase().slice(0, 2);
+  cur = dict[code] || de;
+  return code;
+}
 export const T = new Proxy({}, { get: (_, k) => cur[k] ?? de[k] });
+
+/** Flag + short name for UI chrome (catalog, start header). */
+export function langMeta(lang, id = '') {
+  const code = String(lang || 'de').toLowerCase().slice(0, 2);
+  const sid = String(id || '').toLowerCase();
+  if (sid.startsWith('sg') || sid.includes('singapore')) {
+    return { code: 'en', flag: '🇸🇬', name: 'English', label: 'EN · Singapore' };
+  }
+  if (code === 'en') return { code: 'en', flag: '🇬🇧', name: 'English', label: 'EN' };
+  if (code === 'de') return { code: 'de', flag: '🇩🇪', name: 'Deutsch', label: 'DE' };
+  return { code, flag: '🏳️', name: code.toUpperCase(), label: code.toUpperCase() };
+}

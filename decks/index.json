@@ -17,6 +17,13 @@
    "group": "e1",
    "label": "MBO (alle Länder)",
    "hint": "§§ 27 und 29 der Musterbauordnung; Abweichungen Ihres Landes können Sie angeben."
+  },
+  {
+   "id": "sg-accessibility-field",
+   "title": "Applying the Code on Accessibility",
+   "language": "en",
+   "status": "draft",
+   "hint": "Local draft, Singapore case. Not for publication."
   }
  ]
 }

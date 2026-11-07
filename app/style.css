@@ -221,7 +221,16 @@ h1:focus { outline: none; }
   -webkit-backface-visibility: hidden;
   backface-visibility: hidden;
 }
-.fig figcaption { color: var(--muted); font-size: .85rem; margin-top: .3rem; }
+/* Deck image figures ship with a light “paper” plate — keep a matching frame so Dark Mode stays readable. */
+.fig img {
+  background: #f4f6fb;
+  border-color: color-mix(in srgb, var(--line-2) 70%, #9aa3b5);
+  box-shadow: 0 1px 0 color-mix(in srgb, #1a1f2c 6%, transparent);
+}
+.fig figcaption {
+  color: var(--ink-2); font-size: .9rem; font-weight: 600;
+  margin-top: .45rem;
+}
 .w { stroke: var(--ink-2); stroke-width: 6; stroke-linecap: square; }
 .w.thin { stroke-width: 3; }
 .w.hl { stroke: var(--hl); stroke-width: 11; }
@@ -315,12 +324,31 @@ textarea { resize: vertical; }
 }
 .check { display: flex; gap: .8rem; align-items: flex-start; margin: 1rem 0; min-height: 48px; }
 .check input { width: 28px; height: 28px; flex: none; margin: 0; }
+.resume-banner {
+  display: flex; flex-wrap: wrap; align-items: baseline; gap: .35rem .65rem;
+  margin: .35rem 0 1rem; padding: .7rem .85rem;
+  border-radius: 12px; border: 1.5px solid color-mix(in srgb, var(--hl) 40%, var(--line));
+  background: var(--hl-soft); color: var(--ink); font-weight: 700; font-size: .95rem;
+}
+.resume-dot { color: var(--hl); font-size: .7rem; transform: translateY(-.05em); }
+.resume-banner-stat {
+  flex: 1 1 100%; font-weight: 550; color: var(--ink-2); font-size: .9rem;
+}
 .resume {
-  background: var(--hl-soft); padding: 1rem; border-radius: var(--r);
-  margin: 1rem 0 0; display: grid; gap: .35rem;
+  background: var(--hl-soft); padding: 1rem .95rem 1.05rem; border-radius: var(--r);
+  margin: 1rem 0 0; display: grid; gap: .55rem;
   border: 2px solid color-mix(in srgb, var(--hl) 35%, transparent);
 }
-.resume .btn.big { margin-top: .35rem; }
+.resume-kicker {
+  margin: 0; font-size: .78rem; font-weight: 800;
+  letter-spacing: .04em; text-transform: uppercase; color: var(--muted);
+}
+.resume-stat { margin: 0; font-weight: 750; font-size: 1.05rem; line-height: 1.3; }
+.resume-actions { display: grid; gap: .75rem; margin-top: .15rem; }
+.resume-choice { display: grid; gap: .25rem; }
+.resume-choice .btn.big { margin: 0; }
+.resume-choice .hint { margin: 0; }
+.resume-note { margin: .15rem 0 0; }
 .btn.danger {
   background: transparent; border-color: var(--warn); color: var(--warn);
 }
@@ -417,6 +445,78 @@ dialog.modal .btn { margin-top: 1rem; width: 100%; }
 @media (prefers-reduced-motion: reduce) {
   .fab-feedback .fab-label { transition: none; }
 }
+
+.start-head {
+  display: flex; align-items: flex-start; justify-content: space-between; gap: .75rem;
+  margin: 0 0 .15rem;
+}
+.start-head .eyebrow { margin: 0; min-width: 0; }
+.lang-pill {
+  flex: none; display: inline-flex; align-items: center; gap: .35rem;
+  min-height: 36px; padding: .2rem .7rem .2rem .45rem;
+  border-radius: 999px; border: 1.5px solid var(--line-2);
+  background: var(--surface); color: var(--ink-2);
+  font-size: .82rem; font-weight: 700;
+}
+.lang-flag { font-size: 1.05rem; line-height: 1; }
+.landing-back { margin: .15rem 0 .85rem; }
+.landing .deck-catalog { margin-top: .85rem; }
+button.linkish {
+  appearance: none; border: 0; background: none; padding: 0;
+  font: inherit; color: var(--hl); cursor: pointer; text-decoration: underline;
+  text-underline-offset: .15em; min-height: 44px;
+}
+button.linkish:hover, button.linkish:focus-visible { color: var(--ink); }
+
+.deck-catalog { margin: .4rem 0 1rem; }
+.deck-badge.lang {
+  color: var(--ink-2);
+  border-color: color-mix(in srgb, var(--hl) 28%, var(--line));
+}
+.deck-filter {
+  width: 100%; margin: 0 0 .55rem; min-height: 44px;
+  font: inherit; color: inherit; background: var(--bg);
+  border: 2px solid var(--line-2); border-radius: 12px; padding: .55rem .8rem;
+}
+.deck-list {
+  display: grid; gap: .45rem;
+  max-height: min(52vh, 420px); overflow: auto;
+  padding: .15rem .1rem .25rem; margin: 0 0 .35rem;
+  border: 1px solid var(--line); border-radius: var(--r);
+  background: color-mix(in srgb, var(--surface) 70%, var(--bg));
+}
+.deck-group-label {
+  margin: .45rem .55rem .1rem; font-size: .78rem; font-weight: 800;
+  letter-spacing: .04em; text-transform: uppercase; color: var(--muted);
+}
+.deck-group-label:first-child { margin-top: .25rem; }
+.deck-row {
+  width: calc(100% - .5rem); margin: 0 .25rem; text-align: left;
+  display: grid; grid-template-columns: auto 1fr auto; align-items: start; column-gap: .7rem;
+  min-height: 52px; padding: .65rem .75rem;
+  border: 1.5px solid var(--line-2); border-radius: 12px;
+  background: var(--bg); color: inherit; font: inherit; cursor: pointer;
+}
+.deck-row-flag { font-size: 1.35rem; line-height: 1.2; margin-top: .1rem; }
+.deck-row:hover, .deck-row:focus-visible {
+  border-color: var(--hl); background: var(--hl-soft);
+}
+.deck-row.current {
+  border-color: var(--hl); background: var(--hl-soft);
+  box-shadow: 0 0 0 2px color-mix(in srgb, var(--hl) 22%, transparent);
+}
+.deck-row-main { display: grid; gap: .15rem; min-width: 0; }
+.deck-row-title { font-weight: 700; line-height: 1.25; }
+.deck-row-hint { color: var(--muted); font-size: .88rem; line-height: 1.35; }
+.deck-row-meta { display: flex; flex-wrap: wrap; gap: .3rem; justify-content: flex-end; flex: none; }
+.deck-badge {
+  font-size: .72rem; font-weight: 800; letter-spacing: .03em;
+  padding: .15rem .45rem; border-radius: 999px;
+  background: var(--surface); color: var(--muted); border: 1px solid var(--line);
+}
+.deck-badge.draft { color: var(--warn); border-color: color-mix(in srgb, var(--warn) 35%, var(--line)); background: var(--warn-soft); }
+.deck-badge.on { color: var(--ok); border-color: color-mix(in srgb, var(--ok) 35%, var(--line)); background: var(--ok-soft); }
+.deck-empty { margin: .4rem .6rem .6rem; }
 
 .home-top {
   display: flex; align-items: center; justify-content: space-between; gap: .75rem;
@@ -746,9 +846,12 @@ html.skin-fresh .card-fresh .fig-kicker {
   font-size: .78rem; font-weight: 800; letter-spacing: .04em;
   text-transform: uppercase; color: var(--muted);
 }
-html.skin-fresh .card-fresh .fig-fresh svg,
-html.skin-fresh .card-fresh .fig-fresh img {
+html.skin-fresh .card-fresh .fig-fresh svg {
   border: 0; background: transparent; border-radius: 10px;
+}
+html.skin-fresh .card-fresh .fig-fresh img {
+  border: 1px solid color-mix(in srgb, var(--line-2) 65%, #9aa3b5);
+  background: #f4f6fb; border-radius: 10px;
 }
 html.skin-fresh .card-fresh .changes-fresh {
   margin: 0 0 .9rem;

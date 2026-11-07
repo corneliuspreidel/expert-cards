@@ -1,0 +1,399 @@
+{
+  "schema": "expert-cards/deck@0.1",
+  "id": "sg-accessibility-field",
+  "version": "0.1.0-draft1",
+  "language": "en",
+  "title": "Applying the Code on Accessibility",
+  "subtitle": "Stair handrails (4.7.3.1) and bollards (4.2.3.6)",
+  "owner": {
+    "name": "Cornelius Preidel",
+    "institution": "Munich University of Applied Sciences, Faculty of Civil Engineering"
+  },
+  "estimated_minutes": {
+    "part1": 10,
+    "total": 20
+  },
+  "legal": {
+    "note": "DRAFT for internal review. Privacy statement and imprint to be added before any expert round."
+  },
+  "consent_text": "DRAFT. Your answers are used only for this study and reported without names. Final consent text to follow the data-protection statement.",
+  "identity_fields": [
+    {
+      "id": "name",
+      "label": "Name",
+      "type": "text",
+      "required": false
+    },
+    {
+      "id": "role",
+      "label": "Your professional role",
+      "type": "choice",
+      "options": [
+        "Processing officer / plan checker",
+        "Developer of automated checking rules",
+        "BIM modeller / IFC+SG specialist",
+        "Architect / designer",
+        "Accessibility consultant",
+        "Code or policy author",
+        "Other"
+      ]
+    },
+    {
+      "id": "years",
+      "label": "Years of experience with the Code on Accessibility",
+      "type": "number",
+      "at": "end"
+    },
+    {
+      "id": "country",
+      "label": "Jurisdiction you mostly work in",
+      "type": "text",
+      "at": "end"
+    }
+  ],
+  "references": {
+    "code-stairs": {
+      "title": "Stairs: clauses 4.7.1.1 and 4.7.3.1",
+      "text": "Code on Accessibility in the Built Environment 2025 (extract)\n\n4.7.1.1 Staircases must be designed with the following requirements:\n(a) step profile in accordance with clause 4.7.2;\n(b) stair handrails in accordance with clause 4.7.3;\n(c) warning TGSI in accordance with clause 4.7.4; and\n(d) where staircases connect one storey to another, tactile and Braille signs in accordance with clause 8.5 must be installed on adjacent walls or handrail extensions to indicate the floor level.\nNote 1: Clause 4.7.1.1 does not apply within residential units.\n\n4.7.3.1 Handrails for stairs must:\n(a) be in accordance with clause 9.3;\n(b) be positioned between 800 mm and 1000 mm measured from the pitch line vertically to the top of the handrails;\n(c) be continuous throughout the entire length of stairs and enclosed intermediate landings where they do not lead to another path of travel;\n(d) extend not less than 300 mm in the direction of the flight of stairs beyond the top and bottom steps; and\n(e) return to the wall, floor or post."
+    },
+    "code-bollards": {
+      "title": "Bollards: clauses 3.2.2 and 4.2.3.6",
+      "text": "Code on Accessibility in the Built Environment 2025 (extract)\n\n3.2.2 Where bollards are used, it must be in accordance with clause 4.2.3.6.\n\n4.2.3.6 Where bollards are erected at entrances to walkways or pathways, they must:\n(a) have a minimum clear distance of 900 mm between the bollards;\n(b) not be linked with a chain or rope;\n(c) have a minimum height of 800 mm;\n(d) have a colour that contrasts with the background or be provided with a coloured or reflective band around the neck of the bollard to further aid visibility;\n(e) not have sharp or ornamental features protruding horizontally; and\n(f) be well lit and the light fitting must be positioned in such a manner that will not cause glare."
+    }
+  },
+  "intro_cards": [
+    {
+      "type": "info",
+      "title": "What this is about",
+      "body": "Rules in a building code are applied by people and, increasingly, by software. Both have to settle details that the text of the code does not spell out. We want to learn how you settle some of them.\n\nPlease answer as you would in your own work. **There is no expected right answer.** \"Depends\" is a valuable answer: choose it whenever the answer depends on something not stated, and tell us on what."
+    },
+    {
+      "type": "info",
+      "title": "How the cards work",
+      "body": "The clause text is available under the book symbol on every card. Some cards ask a general question. Others describe a case: one situation in which only the stated points differ from a plain, otherwise compliant design. Whatever a case does not mention is as it should be. Cards that belong together are linked and show your earlier answer."
+    }
+  ],
+  "sections": [
+    {
+      "id": "stairs",
+      "title": "Stair handrails (4.7.3.1)",
+      "icon": "plan",
+      "reference": "code-stairs",
+      "part_titles": [
+        "Scope and counting",
+        "Limits and a case"
+      ],
+      "question": "Is the handrail in this case in accordance with clause 4.7.3.1(b)?",
+      "cards": [
+        {
+          "id": "C1",
+          "type": "single_choice",
+          "prompt": "Clause 4.7.3.1 states the handrail requirements without mentioning a number of steps. In practice, are they limited to stairs above a certain number of steps?",
+          "options": [
+            {
+              "id": "limited",
+              "label": "Yes, limited to stairs above a certain number of steps",
+              "detail": "Please name the number in the note."
+            },
+            {
+              "id": "every",
+              "label": "No, they apply to every stair",
+              "detail": "Whatever the number of steps."
+            },
+            {
+              "id": "depends",
+              "label": "Depends",
+              "detail": "Please explain."
+            }
+          ],
+          "follow_up": {
+            "type": "free_text",
+            "label": "Number of steps and the document or wording it comes from, if you know it (optional)",
+            "voice": true
+          }
+        },
+        {
+          "id": "C2",
+          "type": "single_choice",
+          "prompt": "A requirement is limited to stairs with more than a stated number of steps. For a flight of stairs, are the steps counted by its risers or by its treads?",
+          "hint": "A flight that begins and ends at a floor or landing level has one tread fewer than it has risers.",
+          "related": [
+            "C1"
+          ],
+          "options": [
+            {
+              "id": "risers",
+              "label": "By its risers",
+              "detail": "The number of risers is compared with the stated number."
+            },
+            {
+              "id": "treads",
+              "label": "By its treads",
+              "detail": "The number of treads is compared with the stated number."
+            },
+            {
+              "id": "depends",
+              "label": "Depends",
+              "detail": "Please explain."
+            }
+          ],
+          "follow_up": {
+            "type": "free_text",
+            "label": "Comment, reasoning or reference (optional)",
+            "voice": true
+          }
+        },
+        {
+          "id": "C3",
+          "type": "single_choice",
+          "prompt": "A requirement is limited to stairs with more than a stated number of steps. A stair has two flights joined by an intermediate landing. Which count is compared with the stated number?",
+          "related": [
+            "C1",
+            "C2"
+          ],
+          "options": [
+            {
+              "id": "stair",
+              "label": "The count of the whole stair",
+              "detail": "The steps of both flights are added together."
+            },
+            {
+              "id": "flight",
+              "label": "The count of each flight, separately",
+              "detail": "Each flight is judged on its own count."
+            },
+            {
+              "id": "depends",
+              "label": "Depends",
+              "detail": "Please explain."
+            }
+          ],
+          "follow_up": {
+            "type": "free_text",
+            "label": "Comment, reasoning or reference (optional)",
+            "voice": true
+          }
+        },
+        {
+          "id": "C4",
+          "type": "single_choice",
+          "prompt": "Note 1 to clause 4.7.1.1 says that clause 4.7.1.1 does not apply within residential units. Clause 4.7.1.1(b) refers to clause 4.7.3 for stair handrails. For a stair inside a residential unit, for example a stair between the two storeys of one maisonette, is the handrail height of 4.7.3.1(b) checked?",
+          "options": [
+            {
+              "id": "checked",
+              "label": "Yes, the height is checked",
+              "detail": "Clause 4.7.3.1(b) applies."
+            },
+            {
+              "id": "not_checked",
+              "label": "No, the height is not checked",
+              "detail": "Clause 4.7.3.1(b) does not apply."
+            },
+            {
+              "id": "depends",
+              "label": "Depends",
+              "detail": "Please explain."
+            }
+          ],
+          "follow_up": {
+            "type": "free_text",
+            "label": "Comment, reasoning or reference (optional)",
+            "voice": true
+          }
+        },
+        {
+          "id": "C5",
+          "type": "single_choice",
+          "prompt": "Clause 4.7.3.1(b) asks for a handrail \"between 800 mm and 1000 mm\" above the pitch line. A handrail measured at exactly 800 mm, or at exactly 1000 mm, is:",
+          "options": [
+            {
+              "id": "both",
+              "label": "Compliant at both limits",
+              "detail": "800 mm and 1000 mm are inside the range."
+            },
+            {
+              "id": "neither",
+              "label": "Compliant at neither limit",
+              "detail": "800 mm and 1000 mm are outside the range."
+            },
+            {
+              "id": "one",
+              "label": "Compliant at one limit only",
+              "detail": "Please say which in the note."
+            },
+            {
+              "id": "depends",
+              "label": "Depends",
+              "detail": "Please explain."
+            }
+          ],
+          "follow_up": {
+            "type": "free_text",
+            "label": "Comment, reasoning or reference (optional)",
+            "voice": true
+          }
+        },
+        {
+          "id": "F1",
+          "type": "verdict",
+          "title": "Two flights, one handrail at 700 mm",
+          "chips": [
+            "Office building",
+            "2 flights × 4 risers"
+          ],
+          "related": [
+            "C1",
+            "C2",
+            "C3"
+          ],
+          "assumption": "The stair is in the common area of an office building, not within a residential unit. Every other requirement of clause 4.7.3.1 is met.",
+          "changes": [
+            "A stair connects two floors. It has two straight flights of ==4 risers== each, joined by an intermediate landing: 8 risers in total.",
+            "The handrail along the first flight has its top ==700 mm== above the pitch line, measured vertically. The handrail along the second flight is at 900 mm."
+          ],
+          "figure": {
+            "image": "assets/f1-two-flights.svg",
+            "alt": "Side view of two flights of four risers with a landing; handrail at 700 mm on the first flight and 900 mm on the second.",
+            "caption": "Side view, not to scale — height measured vertically from pitch line to handrail"
+          }
+        }
+      ]
+    },
+    {
+      "id": "bollards",
+      "title": "Bollards (4.2.3.6)",
+      "icon": "column",
+      "reference": "code-bollards",
+      "part_titles": [
+        "Where the height applies"
+      ],
+      "question": "Does the bollard in this case comply with clause 4.2.3.6(c)?",
+      "cards": [
+        {
+          "id": "C6",
+          "type": "single_choice",
+          "prompt": "Clause 4.2.3.6 applies where bollards are erected at entrances to walkways or pathways. Clause 3.2.2 says that where bollards are used, clause 4.2.3.6 applies. Does the minimum height of 800 mm in 4.2.3.6(c) apply to a bollard that does not stand at an entrance to a walkway or pathway?",
+          "options": [
+            {
+              "id": "yes",
+              "label": "Yes, it applies",
+              "detail": "The 800 mm minimum is required."
+            },
+            {
+              "id": "no",
+              "label": "No, it does not apply",
+              "detail": "The 800 mm minimum is not required by this clause."
+            },
+            {
+              "id": "depends",
+              "label": "Depends",
+              "detail": "Please explain."
+            }
+          ],
+          "follow_up": {
+            "type": "free_text",
+            "label": "Comment, reasoning or reference (optional)",
+            "voice": true
+          }
+        },
+        {
+          "id": "C7",
+          "type": "single_choice",
+          "prompt": "Clause 4.2.3.6(c) gives a minimum height of 800 mm. A bollard stands on a paved area that slopes along the bollard, so the paving at its base is higher on one side than on the other. From which level is the height measured?",
+          "options": [
+            {
+              "id": "centre",
+              "label": "Paving level at the centre of the bollard's base",
+              "detail": "The level directly below the axis of the bollard."
+            },
+            {
+              "id": "high",
+              "label": "Highest paving level at the base",
+              "detail": "The higher side."
+            },
+            {
+              "id": "low",
+              "label": "Lowest paving level at the base",
+              "detail": "The lower side."
+            },
+            {
+              "id": "depends",
+              "label": "Depends",
+              "detail": "Please explain."
+            }
+          ],
+          "follow_up": {
+            "type": "free_text",
+            "label": "Comment, reasoning or reference (optional)",
+            "voice": true
+          }
+        },
+        {
+          "id": "F2",
+          "type": "verdict",
+          "title": "A 700 mm bollard at the far corner of a plaza",
+          "chips": [
+            "Paved plaza",
+            "Footpath 1.5 m wide"
+          ],
+          "related": [
+            "C6"
+          ],
+          "assumption": "The two bollards at the start of the footpath are 900 mm high and meet every other requirement of 4.2.3.6.",
+          "changes": [
+            "A paved plaza of 4 m × 4 m has a footpath, 1.5 m wide, leaving from one side.",
+            "Two bollards stand at the start of the footpath. A third bollard, ==700 mm== high, stands at the far corner of the plaza, about 4 m from the nearest of the two."
+          ],
+          "figure": {
+            "image": "assets/f2-plaza-footpath.svg",
+            "alt": "Plan of a plaza and a footpath. Two 900 mm bollards stand at the footpath start; a 700 mm bollard stands at the far plaza corner.",
+            "caption": "Plan — H = vertical bollard height above paving; 4.00 m / 1.50 m are plan sizes"
+          }
+        }
+      ]
+    }
+  ],
+  "verdict_options": [
+    {
+      "id": "compliant",
+      "label": "Compliant"
+    },
+    {
+      "id": "not_compliant",
+      "label": "Not compliant"
+    },
+    {
+      "id": "depends",
+      "label": "Depends",
+      "requires_reason": true
+    }
+  ],
+  "confidence_options": [
+    {
+      "id": "sure",
+      "label": "sure"
+    },
+    {
+      "id": "fairly",
+      "label": "fairly sure"
+    },
+    {
+      "id": "unsure",
+      "label": "unsure"
+    }
+  ],
+  "closing": {
+    "title": "Finally",
+    "icon": "note",
+    "free_text_label": "Which decisions in applying these two clauses did we not ask about, but a checker should settle explicitly? Any other remarks?"
+  },
+  "submission": {
+    "mode": "email",
+    "to": "PLEASE_SET",
+    "subject": "Applying the Code on Accessibility: answers",
+    "backup_file": true
+  },
+  "settings": {
+    "lesson_size": 4
+  }
+}

@@ -1,7 +1,7 @@
 // Engine: state machine start → intro cards → sections → review → submit.
 // Knows nothing about any particular study; everything comes from the deck.
 import { h, rich, modal } from './ui.js';
-import { T, setLang } from './i18n.js';
+import { T, setLang, langMeta } from './i18n.js';
 import { makeStore } from './storage.js';
 import { cards } from './cards/index.js';
 import { adapters } from './submit/index.js';
@@ -10,7 +10,7 @@ import { applySkin, skinToggle } from './skin.js';
 
 const app = document.getElementById('app');
 let deck, deckBase, steps, lessons, state, store;
-let variants = []; // decks of the same group in decks/index.json (e.g. BayBO and MBO), shown as a picker on the start screen
+let catalog = []; // all decks from decks/index.json (landing catalog)
 let editing = false;
 let wiping = false; // true while clearing answers — blocks pagehide from re-saving
 let t0 = 0;
@@ -36,23 +36,31 @@ async function getJson(url) {
 
 async function boot() {
   try {
-    let id = new URLSearchParams(location.search).get('deck');
+    const id = new URLSearchParams(location.search).get('deck');
     let index = null;
     try { index = await getJson('decks/index.json'); } catch { /* picker is optional */ }
+    catalog = (index && Array.isArray(index.decks)) ? index.decks : [];
+
+    // No deck in the URL → English landing page to pick a survey (language then follows the deck).
     if (!id || !/^[\w-]+$/.test(id)) {
-      if (!index) throw new Error('decks/index.json');
-      id = index.decks[0].id;
+      if (!catalog.length) throw new Error('decks/index.json');
+      setLang('en');
+      document.documentElement.lang = 'en';
+      document.title = T.appName;
+      applySkin();
+      renderLanding();
+      return;
     }
-    const me = index && index.decks.find((d) => d.id === id);
-    variants = me && me.group ? index.decks.filter((d) => d.group === me.group) : [];
+
     deckBase = `decks/${id}/`;
     deck = await getJson(`${deckBase}deck.json`);
   } catch (e) {
+    setLang('en');
     app.replaceChildren(h('main', { class: 'screen' }, h('h1', {}, T.appName), h('p', { class: 'warn' }, T.loadFail), h('p', { class: 'hint' }, String(e.message || e))));
     return;
   }
-  setLang(deck.language);
-  document.documentElement.lang = deck.language || 'de';
+  const uiLang = setLang(deck.language);
+  document.documentElement.lang = uiLang;
   document.title = deck.title;
 
   const code = (new URLSearchParams(location.hash.slice(1)).get('k') || '').replace(/[^\w-]/g, '').slice(0, 32);
@@ -60,12 +68,13 @@ async function boot() {
   await store.audio.loadAll();
   steps = buildSteps();
   state = store.load() || { v: 1, deck: { id: deck.id, version: deck.version }, code, person: {}, consent: null, answers: {}, timing: {}, changes: {}, pos: 0, startedAt: null, updatedAt: null, submittedAt: null };
-  state.pos = state.startedAt && state.consent ? homeIdx() : 0; // like a lesson app: returning experts land on the lesson overview
+  // Always open on the start screen (name, role, consent). Saved progress shows as “resume” there — same for every deck.
+  state.pos = 0;
 
   window.addEventListener('hashchange', () => location.reload()); // another invite code = another saved state
   document.addEventListener('keydown', onKey);
   document.addEventListener('visibilitychange', () => {
-    if (document.hidden) { lap(); t0 = 0; } else if (steps[state.pos].kind === 'card') t0 = Date.now();
+    if (document.hidden) { lap(); t0 = 0; } else if (steps[state.pos] && steps[state.pos].kind === 'card') t0 = Date.now();
   });
   window.addEventListener('pagehide', () => {
     if (wiping) return; // restart must not write the old answers back
@@ -73,6 +82,29 @@ async function boot() {
   });
   applySkin();
   render();
+}
+
+function renderLanding() {
+  clearChrome();
+  app.replaceChildren();
+  const main = h('main', { class: 'screen start landing', id: 'main' },
+    h('p', { class: 'eyebrow' }, T.appName),
+    h('h1', { tabindex: '-1' }, T.landingTitle),
+    h('p', { class: 'lead' }, T.landingLead),
+    h('p', { class: 'hint' }, T.landingHint),
+    deckCatalog({ landing: true }),
+    h('div', { class: 'start-tools' }, skinToggle(() => { applySkin(); renderLanding(); })));
+  app.append(main);
+  mountFeedbackFab(false);
+  main.querySelector('h1').focus({ preventScroll: true });
+}
+
+/** Leave the current deck and return to the English survey picker. */
+function goLanding() {
+  if (store && state) { try { lap(); store.flush(state); } catch { /* ignore */ } }
+  const u = new URL(location.href);
+  u.searchParams.delete('deck');
+  location.assign(u.toString());
 }
 
 function restartFresh() {
@@ -256,6 +288,7 @@ function clearChrome() {
 }
 
 function render() {
+  if (!deck || !steps) return renderLanding();
   const st = steps[state.pos];
   clearChrome();
   app.replaceChildren();
@@ -390,8 +423,9 @@ function renderCard(main, st) {
 }
 
 function renderStart() {
-  const answeredN = Object.keys(state.answers || {}).filter((k) => k !== '_feedback').length;
-  const hasProgress = !!state.startedAt && ((state.furthest || 0) > 0 || answeredN > 0);
+  const [ansN, ansTotal, doneL, totalL] = overall();
+  // Only offer resume when real answers exist — empty “0 of N” would confuse.
+  const hasProgress = ansN > 0;
   const consent = h('input', { type: 'checkbox', id: 'consent' });
   consent.checked = !!state.consent;
   const begin = () => {
@@ -399,12 +433,12 @@ function renderStart() {
     if (!state.startedAt) state.startedAt = now();
     go(homeIdx());
   };
-  const primaryBtn = h('button', {
+  const continueBtn = h('button', {
     type: 'button', class: 'btn primary big', disabled: !consent.checked, onclick: begin
   }, hasProgress ? T.resumeContinue : T.start);
   consent.addEventListener('change', () => {
     state.consent = consent.checked ? { given: true, at: now() } : null;
-    primaryBtn.disabled = !consent.checked;
+    continueBtn.disabled = !consent.checked;
     persist();
   });
   const sub = deck.submission || {};
@@ -415,22 +449,44 @@ function renderStart() {
     h('p', { class: 'label' }, T.privacyTitle),
     h('ul', {}, T.privacy(to).map((t) => h('li', {}, t))));
 
+  const resumePanel = hasProgress
+    ? h('aside', { class: 'resume', role: 'status', 'aria-live': 'polite' },
+      h('p', { class: 'resume-kicker' }, T.resumeTitle),
+      h('p', { class: 'resume-stat' }, T.resumeInfo(ansN, ansTotal, doneL, totalL)),
+      h('div', { class: 'resume-actions' },
+        h('div', { class: 'resume-choice' },
+          continueBtn,
+          h('p', { class: 'hint' }, T.resumeContinueHint)),
+        h('div', { class: 'resume-choice' },
+          h('button', { type: 'button', class: 'btn big', onclick: restartFresh }, T.restart),
+          h('p', { class: 'hint' }, T.restartFreshHint))),
+      h('p', { class: 'hint resume-note' }, T.restartHint))
+    : continueBtn;
+
+  const lang = langMeta(deck.language, deck.id);
   const main = h('main', { class: 'screen start', id: 'main' },
-    h('p', { class: 'eyebrow' }, deck.owner ? `${deck.owner.name}, ${deck.owner.institution}` : T.appName),
+    h('div', { class: 'start-head' },
+      h('p', { class: 'eyebrow' }, deck.owner ? `${deck.owner.name}, ${deck.owner.institution}` : T.appName),
+      h('span', { class: 'lang-pill', title: `${T.langLabel}: ${lang.name}` },
+        h('span', { class: 'lang-flag', 'aria-hidden': 'true' }, lang.flag),
+        h('span', {}, lang.label))),
     h('h1', { tabindex: '-1' }, deck.title),
     deck.subtitle ? h('p', { class: 'lead' }, deck.subtitle) : null,
-    variantPicker(),
+    h('p', { class: 'landing-back' },
+      h('button', { type: 'button', class: 'linkish', onclick: goLanding }, `← ${T.landingBack}`)),
+    hasProgress
+      ? h('p', { class: 'resume-banner', role: 'status' },
+        h('span', { class: 'resume-dot', 'aria-hidden': 'true' }, '●'),
+        T.resumeTitle,
+        h('span', { class: 'resume-banner-stat' }, T.resumeInfo(ansN, ansTotal, doneL, totalL)))
+      : null,
     est ? h('p', {}, T.minutes(est.part1, est.total)) : null,
     state.code ? h('p', { class: 'hint' }, `${T.invite}: `, h('b', {}, state.code)) : null,
     ...identityFields('start'),
     privacy,
     deck.consent_text ? h('p', { class: 'consent-text' }, deck.consent_text) : null,
     h('label', { class: 'check', for: 'consent' }, consent, h('span', {}, T.consentLabel)),
-    hasProgress ? h('div', { class: 'resume' },
-      h('p', {}, T.resumeInfo(...overall())),
-      primaryBtn,
-      h('button', { type: 'button', class: 'btn danger big', onclick: restartFresh }, T.restart),
-      h('p', { class: 'hint' }, T.restartHint)) : primaryBtn,
+    resumePanel,
     installTip(),
     h('div', { class: 'start-tools' }, skinToggle(() => render())),
     legalLinks());
@@ -438,27 +494,76 @@ function renderStart() {
   main.querySelector('h1').focus({ preventScroll: true });
 }
 
-// Same study in several versions (e.g. BayBO and MBO): choose one. Each version keeps its own saved answers.
-function variantPicker() {
-  if (variants.length < 2) return null;
-  const btns = variants.map((v) => {
-    const on = v.id === deck.id;
-    return h('button', {
-      type: 'button', class: `chipbtn${on ? ' sel' : ''}`, role: 'radio', 'aria-checked': String(on),
-      onclick: () => {
-        if (on) return;
-        const u = new URL(location.href);
-        u.searchParams.set('deck', v.id); // keeps the invite code in the hash
-        location.assign(u.toString());
+function goDeck(id) {
+  if (!id || (deck && id === deck.id)) return;
+  const u = new URL(location.href);
+  u.searchParams.set('deck', id); // keeps the invite code in the hash
+  location.assign(u.toString());
+}
+
+// Catalog on the English landing page — pick a survey, then the deck start is identity + consent only.
+function deckCatalog(opts = {}) {
+  if (!catalog.length) return null;
+  const currentId = deck && deck.id;
+  const myGroup = (catalog.find((d) => d.id === currentId) || {}).group || null;
+  const filter = catalog.length >= 5
+    ? h('input', {
+      type: 'search', class: 'deck-filter',
+      placeholder: T.deckFilter, 'aria-label': T.deckFilter, autocomplete: 'off'
+    })
+    : null;
+  const list = h('div', { class: 'deck-list', role: 'list' });
+  const empty = h('p', { class: 'hint deck-empty', hidden: true }, T.deckFilterEmpty);
+  const paint = () => {
+    const q = ((filter && filter.value) || '').trim().toLowerCase();
+    const groups = new Map();
+    for (const d of catalog) {
+      const hay = [d.title, d.label, d.hint, d.id, d.group, d.language].filter(Boolean).join(' ').toLowerCase();
+      if (q && !hay.includes(q)) continue;
+      const key = d.group || '_other';
+      (groups.get(key) || groups.set(key, []).get(key)).push(d);
+    }
+    const keys = [...groups.keys()].sort((a, b) => {
+      if (myGroup && a === myGroup) return -1;
+      if (myGroup && b === myGroup) return 1;
+      if (a === '_other') return 1;
+      if (b === '_other') return -1;
+      return a.localeCompare(b, 'en');
+    });
+    list.replaceChildren();
+    empty.hidden = keys.length > 0;
+    for (const key of keys) {
+      const items = groups.get(key);
+      const heading = key === '_other'
+        ? T.deckGroupOther
+        : (items.find((d) => d.group_title) || {}).group_title || (key === 'e1' ? T.deckGroupE1 : key);
+      put(list, h('p', { class: 'deck-group-label' }, heading));
+      for (const d of items) {
+        const on = d.id === currentId;
+        const lm = langMeta(d.language, d.id);
+        list.append(h('button', {
+          type: 'button',
+          class: `deck-row${on ? ' current' : ''}`,
+          role: 'listitem',
+          'aria-current': on ? 'true' : null,
+          onclick: () => goDeck(d.id)
+        },
+          h('span', { class: 'deck-row-flag', 'aria-hidden': 'true' }, lm.flag),
+          h('span', { class: 'deck-row-main' },
+            h('span', { class: 'deck-row-title' }, d.label || d.title),
+            d.hint ? h('span', { class: 'deck-row-hint' }, d.hint) : null),
+          h('span', { class: 'deck-row-meta' },
+            h('span', { class: 'deck-badge lang', title: lm.name }, lm.label),
+            d.status && d.status !== 'ready' ? h('span', { class: 'deck-badge draft' }, T.deckDraft) : null,
+            on ? h('span', { class: 'deck-badge on' }, '✓') : null)));
       }
-    }, v.label || v.title);
-  });
-  const cur = variants.find((v) => v.id === deck.id);
-  return h('div', { class: 'field variant-picker' },
-    h('p', { class: 'label', id: 'variant-label' }, T.variantLabel),
-    h('div', { class: 'chipset', role: 'radiogroup', 'aria-labelledby': 'variant-label' }, btns),
-    cur && cur.hint ? h('p', { class: 'hint' }, cur.hint) : null,
-    h('p', { class: 'hint' }, T.variantHint));
+    }
+  };
+  paint();
+  if (filter) filter.addEventListener('input', paint);
+  return h('div', { class: 'field deck-catalog' },
+    filter, list, empty,
+    h('p', { class: 'hint' }, T.deckCatalogHint));
 }
 
 function isStandaloneApp() {
@@ -745,6 +850,7 @@ function renderReview(main) {
 }
 
 function feedbackEnabled() {
+  if (!deck || !state) return false; // landing / boot — no deck yet
   return !(deck.settings && deck.settings.app_feedback === false);
 }
 
@@ -893,15 +999,15 @@ function reportText() {
     if (t !== sec) { sec = t; lines.push('', `## ${t}`); }
     const a = answerOf(st.card.id);
     const parts = [summaryOf(st) || '–'];
-    if (st.card.type !== 'free_text' && a.note) parts.push(`Anmerkung: ${a.note}`);
-    if (a.reason) parts.push(`Begründung: ${a.reason}`);
-    if (store.audio.has(st.card.id)) parts.push('(Sprachnotiz in Sicherungsdatei)');
+    if (st.card.type !== 'free_text' && a.note) parts.push(`${T.reportNote}: ${a.note}`);
+    if (a.reason) parts.push(`${T.reportReason}: ${a.reason}`);
+    if (store.audio.has(st.card.id)) parts.push(T.reportVoice);
     lines.push(`${st.card.id}: ${parts.join(' | ')}`);
   }
   const fb = answerOf('_feedback');
   if (fb.v || fb.note || (fb.log && fb.log.length)) {
-    lines.push('', '## Feedback zur App');
-    if (fb.v) lines.push(`Gesamt: ${fb.v}`);
+    lines.push('', `## ${T.reportFeedbackTitle}`);
+    if (fb.v) lines.push(`${T.reportOverall}: ${fb.v}`);
     if (fb.note) lines.push(fb.note);
     else if (fb.log) for (const e of fb.log) {
       const bits = [e.kind === 'card' ? e.card : e.kind, e.tag, e.text].filter(Boolean);

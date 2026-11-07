@@ -34,7 +34,7 @@ Read `docs/PLAN.md` first. It is the agreed plan. Section 9 has the latest decis
 ## Architecture (target)
 
 ```
-index.html            # app shell; loads deck from ?deck=<id> (default: first in decks/index.json)
+index.html            # app shell; loads deck from ?deck=<id> (no param → English landing / catalog)
 app/
   engine.js           # state machine: start → intro cards → sections → review → submit
   cards/*.js          # card renderers: info, single_choice, multi_choice, verdict, scale, free_text, ab_compare, find_error

@@ -53,7 +53,7 @@ Deck texts are plain text with a tiny markup, never HTML: `==marked==`, `**bold*
 
 ## `decks/index.json`
 
-`{"decks": [{id, title, language, status, group?, label?, hint?}]}`. The first entry is the default when the URL has no `?deck=`. Decks with the same `group` are versions of one study (e.g. BayBO and MBO); the start screen then shows a picker with each deck's `label` (and its `hint`). Each version keeps its own saved answers.
+`{"decks": [{id, title, language, status, group?, label?, hint?}]}`. Without `?deck=` the app shows an English landing page listing every survey; picking one loads that deck and switches the UI to `language` (`de` → German menus, `en` → English; Singapore decks also show a 🇸🇬 badge). Decks with the same `group` are versions of one study (e.g. BayBO and MBO); the start screen then shows a picker with each deck's `label` (and its `hint`). Each version keeps its own saved answers.
 
 ## Derived decks
 

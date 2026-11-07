@@ -1,0 +1,84 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 680 420" width="680" height="420" role="img" aria-label="Plan of plaza and footpath; bollard heights called out to each bollard">
+  <defs>
+    <marker id="arr-plan" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="6" markerHeight="6" orient="auto">
+      <path d="M 0 1.2 L 9 5 L 0 8.8 Z" fill="#12151e"/>
+    </marker>
+    <marker id="arr-bad" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="6" markerHeight="6" orient="auto">
+      <path d="M 0 1.2 L 9 5 L 0 8.8 Z" fill="#c62828"/>
+    </marker>
+    <style>
+      .paper { fill: #f4f6fb; }
+      .plaza { fill: #cfd7e6; stroke: #0d1018; stroke-width: 2.8; }
+      .path { fill: #b7c2d6; stroke: #0d1018; stroke-width: 2.8; }
+      .boll-ok { fill: #0d1018; }
+      .boll-bad { fill: #c62828; stroke: #8e1b1b; stroke-width: 1.4; }
+      .ext { stroke: #12151e; stroke-width: 1.1; fill: none; }
+      .dim { stroke: #12151e; stroke-width: 1.3; fill: none; marker-start: url(#arr-plan); marker-end: url(#arr-plan); }
+      .call { stroke: #12151e; stroke-width: 1.5; fill: none; }
+      .call-bad { stroke: #c62828; stroke-width: 1.5; fill: none; marker-end: url(#arr-bad); }
+      .call-ok { stroke: #12151e; stroke-width: 1.5; fill: none; marker-end: url(#arr-plan); }
+      .lbl { fill: #12151e; font: 700 15px system-ui, -apple-system, Segoe UI, sans-serif; }
+      .lbl-bad { fill: #c62828; font: 700 15px system-ui, -apple-system, Segoe UI, sans-serif; }
+      .lbl-sub { fill: #3d4558; font: 600 12px system-ui, -apple-system, Segoe UI, sans-serif; }
+      .zone { fill: #2a3344; font: 700 14px system-ui, -apple-system, Segoe UI, sans-serif; }
+      .caption { fill: #12151e; font: 700 14px system-ui, -apple-system, Segoe UI, sans-serif; }
+      .badge { fill: #ffffff; stroke-width: 1.5; }
+      .sep { stroke: #c5ccd8; stroke-width: 1; }
+    </style>
+  </defs>
+
+  <rect class="paper" x="0" y="0" width="680" height="420" rx="12"/>
+
+  <!-- Plaza 4×4 and footpath 1.5 m -->
+  <rect class="plaza" x="120" y="40" width="200" height="200" rx="4"/>
+  <rect class="path" x="320" y="40" width="280" height="76" rx="4"/>
+
+  <!-- Overall dims: plaza 4.00 m (bottom) -->
+  <line class="ext" x1="120" y1="240" x2="120" y2="268"/>
+  <line class="ext" x1="320" y1="240" x2="320" y2="268"/>
+  <line class="dim" x1="120" y1="260" x2="320" y2="260"/>
+  <rect class="badge" x="178" y="246" width="84" height="26" rx="5" stroke="#12151e"/>
+  <text class="lbl" x="188" y="264">4.00 m</text>
+
+  <!-- Overall dim: footpath width 1.50 m (right) -->
+  <line class="ext" x1="600" y1="40" x2="628" y2="40"/>
+  <line class="ext" x1="600" y1="116" x2="628" y2="116"/>
+  <line class="dim" x1="618" y1="40" x2="618" y2="116"/>
+  <rect class="badge" x="580" y="64" width="72" height="26" rx="5" stroke="#12151e"/>
+  <text class="lbl" x="588" y="82">1.50 m</text>
+
+  <text class="zone" x="128" y="292">paved plaza</text>
+  <text class="zone" x="328" y="136">footpath</text>
+
+  <!-- Bollards at footpath entrance -->
+  <circle class="boll-ok" cx="314" cy="54" r="11"/>
+  <circle class="boll-ok" cx="314" cy="102" r="11"/>
+
+  <!-- Height callouts — leader to bollard centre, label = height of THAT bollard -->
+  <path class="call-ok" d="M 314 54 L 250 54 L 220 54"/>
+  <rect class="badge" x="118" y="34" width="102" height="40" rx="6" stroke="#12151e"/>
+  <text class="lbl" x="128" y="52">H = 900 mm</text>
+  <text class="lbl-sub" x="128" y="68">bollard height</text>
+
+  <path class="call-ok" d="M 314 102 L 250 102 L 220 102"/>
+  <rect class="badge" x="118" y="82" width="102" height="40" rx="6" stroke="#12151e"/>
+  <text class="lbl" x="128" y="100">H = 900 mm</text>
+  <text class="lbl-sub" x="128" y="116">bollard height</text>
+
+  <!-- Critical bollard at far plaza corner -->
+  <circle class="boll-bad" cx="138" cy="222" r="12"/>
+  <path class="call-bad" d="M 138 222 L 138 188 L 70 188"/>
+  <rect class="badge" x="24" y="160" width="102" height="40" rx="6" stroke="#c62828"/>
+  <text class="lbl-bad" x="34" y="178">H = 700 mm</text>
+  <text class="lbl-sub" x="34" y="194">bollard height</text>
+
+  <line class="sep" x1="24" y1="320" x2="656" y2="320"/>
+
+  <circle class="boll-ok" cx="48" cy="348" r="8"/>
+  <text class="caption" x="66" y="353">bollard at footpath entrance</text>
+
+  <circle class="boll-bad" cx="340" cy="348" r="8"/>
+  <text class="caption" x="358" y="353">bollard at plaza corner</text>
+
+  <text class="lbl-sub" x="48" y="386">Plan view — H is the vertical height of each bollard above paving</text>
+</svg>
