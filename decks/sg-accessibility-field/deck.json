@@ -11,7 +11,7 @@
   },
   "estimated_minutes": {
     "part1": 10,
-    "total": 20
+    "total": 22
   },
   "legal": {
     "note": "DRAFT for internal review. Privacy statement and imprint to be added before any expert round."
@@ -297,6 +297,52 @@
           }
         },
         {
+          "id": "C8",
+          "type": "multi_choice",
+          "prompt": "Clause 4.2.3.6 applies where bollards are erected \"at entrances to walkways or pathways\". A footpath starts at the edge of a paved plaza. Three bollards stand in a row along the plaza edge: P1 on the line where the footpath starts, P2 1.5 m before that line and P3 3.0 m before it. Which of them are \"at the entrance\" of the footpath?",
+          "hint": "You can select more than one. All three bollards are 900 mm high.",
+          "related": [
+            "C6"
+          ],
+          "figure": {
+            "image": "assets/f3-footpath-entrance.svg",
+            "alt": "Plan of a plaza and a footpath. Three bollards P1, P2 and P3 stand in a row along the plaza edge, at 0 m, 1.5 m and 3.0 m from the line where the footpath starts.",
+            "caption": "Plan, distances from the line where the footpath starts"
+          },
+          "options": [
+            {
+              "id": "p1",
+              "label": "P1",
+              "detail": "On the line where the footpath starts."
+            },
+            {
+              "id": "p2",
+              "label": "P2",
+              "detail": "1.5 m before that line."
+            },
+            {
+              "id": "p3",
+              "label": "P3",
+              "detail": "3.0 m before that line."
+            },
+            {
+              "id": "keine",
+              "label": "None of the three",
+              "detail": "No bollard is at the entrance."
+            },
+            {
+              "id": "depends",
+              "label": "Depends",
+              "detail": "Please explain."
+            }
+          ],
+          "follow_up": {
+            "type": "free_text",
+            "label": "Comment, reasoning or reference (optional)",
+            "voice": true
+          }
+        },
+        {
           "id": "C7",
           "type": "single_choice",
           "prompt": "Clause 4.2.3.6(c) gives a minimum height of 800 mm. A bollard stands on a paved area that slopes along the bollard, so the paving at its base is higher on one side than on the other. From which level is the height measured?",
@@ -337,7 +383,8 @@
             "Footpath 1.5 m wide"
           ],
           "related": [
-            "C6"
+            "C6",
+            "C8"
           ],
           "assumption": "The two bollards at the start of the footpath are 900 mm high and meet every other requirement of 4.2.3.6.",
           "changes": [
