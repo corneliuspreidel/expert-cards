@@ -33,6 +33,7 @@
       .caption { fill: #12151e; font: 700 14px system-ui, -apple-system, Segoe UI, sans-serif; }
       .badge { fill: #ffffff; stroke-width: 1.6; }
       .sep { stroke: #c5ccd8; stroke-width: 1; }
+      .call { stroke: #3d4558; stroke-width: 1.1; fill: none; }
     </style>
   </defs>
 
@@ -54,7 +55,7 @@
     V 172 H 420
     V 144 H 530"/>
 
-  <!-- Pitch through nosings — starts at upper edge of first tread (64,340), not at floor -->
+  <!-- Pitch through nosings — starts at upper edge of first tread -->
   <line class="pitch" x1="64" y1="340" x2="184" y2="256"/>
   <line class="pitch" x1="300" y1="228" x2="420" y2="144"/>
   <circle class="nosing" cx="64" cy="340" r="3"/>
@@ -69,35 +70,38 @@
   <line class="rail-bad" x1="64" y1="276" x2="184" y2="192"/>
   <line class="rail-ok" x1="300" y1="146" x2="420" y2="62"/>
 
-  <!-- DIM 700 at 2nd nosing (104,312) — exact pitch point; rail at 248 -->
+  <!--
+    DIM 700 at 2nd nosing (104,312) / rail (104,248).
+    Extension lines go LEFT into open space so the landing label stays free.
+  -->
   <circle class="pt-bad" cx="104" cy="312" r="4.5"/>
   <circle class="pt-bad" cx="104" cy="248" r="4.5"/>
-  <line class="ext-bad" x1="108" y1="312" x2="230" y2="312"/>
-  <line class="ext-bad" x1="108" y1="248" x2="230" y2="248"/>
-  <line class="dim-bad" x1="222" y1="312" x2="222" y2="248" marker-start="url(#arr-bad-rev)" marker-end="url(#arr-bad)"/>
-  <rect class="badge" x="234" y="262" width="136" height="38" rx="6" stroke="#c62828"/>
-  <text class="lbl-bad" x="244" y="280">700 mm</text>
-  <text class="lbl-sub" x="244" y="295">pitch line → handrail</text>
+  <line class="ext-bad" x1="100" y1="312" x2="28" y2="312"/>
+  <line class="ext-bad" x1="100" y1="248" x2="28" y2="248"/>
+  <line class="dim-bad" x1="36" y1="312" x2="36" y2="248" marker-start="url(#arr-bad-rev)" marker-end="url(#arr-bad)"/>
+  <rect class="badge" x="48" y="268" width="86" height="28" rx="6" stroke="#c62828"/>
+  <text class="lbl-bad" x="56" y="288">700 mm</text>
 
-  <!-- DIM 900 at 2nd nosing of flight 2 (340,200); rail at 118 -->
+  <!-- DIM 900 at flight 2 — kept to the right -->
   <circle class="pt-ok" cx="340" cy="200" r="4.5"/>
   <circle class="pt-ok" cx="340" cy="118" r="4.5"/>
   <line class="ext-ok" x1="344" y1="200" x2="466" y2="200"/>
   <line class="ext-ok" x1="344" y1="118" x2="466" y2="118"/>
   <line class="dim-ok" x1="458" y1="200" x2="458" y2="118" marker-start="url(#arr-ok-rev)" marker-end="url(#arr-ok)"/>
-  <rect class="badge" x="470" y="140" width="136" height="38" rx="6" stroke="#12151e"/>
-  <text class="lbl-ok" x="480" y="158">900 mm</text>
-  <text class="lbl-sub" x="480" y="173">pitch line → handrail</text>
+  <rect class="badge" x="470" y="148" width="86" height="28" rx="6" stroke="#12151e"/>
+  <text class="lbl-ok" x="478" y="168">900 mm</text>
 
-  <text class="note" x="210" y="274">landing</text>
+  <!-- Landing on the slab, mid-way — clear of the 700 mm badge on the left -->
+  <rect class="badge" x="248" y="228" width="68" height="24" rx="5" stroke="#3d4558"/>
+  <text class="note" x="260" y="245">landing</text>
 
   <line class="sep" x1="24" y1="390" x2="676" y2="390"/>
   <line class="pitch" x1="40" y1="412" x2="88" y2="412"/>
   <text class="note" x="98" y="417">pitch line (through nosings)</text>
   <circle class="pt-bad" cx="40" cy="440" r="3.5"/>
-  <text class="note" x="52" y="444">points on pitch line &amp; handrail</text>
-  <line class="rail-bad" x1="260" y1="440" x2="300" y2="440"/>
-  <text class="caption" x="310" y="444">Flight 1</text>
-  <line class="rail-ok" x1="400" y1="440" x2="440" y2="440"/>
-  <text class="caption" x="450" y="444">Flight 2</text>
+  <text class="note" x="52" y="444">height = pitch line → handrail (vertical)</text>
+  <line class="rail-bad" x1="340" y1="440" x2="380" y2="440"/>
+  <text class="caption" x="390" y="444">Flight 1</text>
+  <line class="rail-ok" x1="480" y1="440" x2="520" y2="440"/>
+  <text class="caption" x="530" y="444">Flight 2</text>
 </svg>
