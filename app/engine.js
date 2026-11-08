@@ -244,7 +244,7 @@ function go(pos, opts = {}) {
   editing = !!opts.editing;
   persist();
   render();
-  window.scrollTo(0, 0);
+  app.scrollTop = 0;
 }
 
 const next = () => { if (editing) go(stepIndex('review')); else go(state.pos + 1); };
@@ -276,7 +276,7 @@ function lookup(id) {
 
 /* ---------- screens ---------- */
 
-// Fixed chrome lives on document.body (not #app) so Firefox/macOS keeps bottom:0 on the viewport.
+// Chrome lives on document.body as a flex sibling of #app (nav in flow, FAB fixed).
 function clearChrome() {
   document.querySelectorAll('nav.bottomnav, .fab-feedback').forEach((el) => el.remove());
   navEl = null;

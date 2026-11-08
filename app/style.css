@@ -22,13 +22,17 @@
 html {
   -webkit-text-size-adjust: 100%;
   height: 100%;
+  height: 100dvh;
   overscroll-behavior: none;
 }
 body {
   margin: 0;
-  min-height: 100%;
-  min-height: 100vh; /* Firefox fallback before svh */
-  min-height: 100svh;
+  height: 100%;
+  height: 100dvh;
+  max-height: 100dvh;
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
   color: var(--ink); font: 16px/1.5 var(--font);
   font-weight: 400;
   overscroll-behavior: none;
@@ -42,7 +46,17 @@ body::before {
   position: fixed; top: 0; left: 0; right: 0; height: 2px; z-index: 40; pointer-events: none;
   background: color-mix(in srgb, var(--ink) 14%, transparent);
 }
-#app { min-height: 100svh; display: flex; flex-direction: column; }
+/* Scroll lives in #app; bottomnav is a flex sibling so it always docks to the window bottom
+   (Firefox often leaves position:fixed chrome floating when the layout viewport moves). */
+#app {
+  flex: 1 1 auto;
+  min-height: 0;
+  overflow: auto;
+  -webkit-overflow-scrolling: touch;
+  overscroll-behavior: contain;
+  display: flex;
+  flex-direction: column;
+}
 h1 { font-size: 1.5rem; line-height: 1.2; font-weight: 500; margin: 0 0 .6rem; letter-spacing: -.01em; }
 h2 { font-size: 1.05rem; font-weight: 500; margin: 1.4rem 0 .5rem; }
 p { margin: 0 0 .8rem; }
@@ -50,7 +64,7 @@ mark { background: var(--mark); color: inherit; padding: 0 .15em; border-radius:
 :focus-visible { outline: 3px solid var(--hl); outline-offset: 2px; }
 h1:focus { outline: none; }
 
-.screen { width: 100%; max-width: 640px; margin: 0 auto; padding: 1rem 16px 7rem; flex: 1; }
+.screen { width: 100%; max-width: 640px; margin: 0 auto; padding: 1rem 16px 2.5rem; flex: 1; }
 .eyebrow { color: var(--muted); font-size: .85rem; margin: 0 0 .3rem; }
 .lead { font-size: 1.1rem; color: var(--muted); }
 .hint { color: var(--muted); font-size: .92rem; }
@@ -157,10 +171,10 @@ h1:focus { outline: none; }
 .btn:disabled { opacity: .45; cursor: not-allowed; }
 .linkbtn { background: none; border: 0; color: var(--hl); text-decoration: underline; min-height: 48px; padding: 0 .3rem; }
 
-/* bottom nav: pinned to the visual viewport (mounted on document.body for Firefox) */
+/* bottom nav: document-flow sibling of #app (not position:fixed) → always window-bottom */
 .bottomnav {
-  position: fixed;
-  left: 0; right: 0; bottom: 0;
+  flex: 0 0 auto;
+  position: relative;
   width: 100%;
   box-sizing: border-box;
   z-index: 30;
@@ -170,10 +184,6 @@ h1:focus { outline: none; }
   box-shadow: 0 -8px 24px rgba(0, 0, 0, .12);
   padding: .7rem 16px calc(.7rem + env(safe-area-inset-bottom, 0px));
   display: flex; justify-content: center; gap: 1rem;
-  /* keep a stable containing block on Firefox/macOS */
-  transform: translateZ(0);
-  -webkit-backface-visibility: hidden;
-  backface-visibility: hidden;
 }
 .bottomnav .btn { flex: 1; max-width: 280px; }
 .bottomnav .btn:last-child { margin-left: 0; }
@@ -397,14 +407,12 @@ dialog.modal .btn { margin-top: 1rem; width: 100%; }
   .verdict-btn { min-height: 56px; }
 }
 
-/* phones: the three verdict buttons stay in view above the navigation while the case is read */
+/* phones: verdicts stick to the bottom of the #app scrollport (nav sits below #app) */
 @media (max-width: 600px) {
   .verdicts {
-    position: sticky; bottom: calc(76px + env(safe-area-inset-bottom, 0px)); z-index: 2;
+    position: sticky; bottom: 0; z-index: 2;
     grid-template-columns: repeat(3, 1fr); gap: .4rem;
     background: var(--bg); padding: .5rem 0; margin: .4rem 0;
-    /* sticky layer stays put; avoids fighting the plan while scrolling */
-    transform: translateZ(0);
   }
   .verdict-btn { justify-content: center; text-align: center; padding: .4rem .3rem; font-size: 1rem; min-height: 56px; }
   .verdict-btn .opt-key { display: none; }
