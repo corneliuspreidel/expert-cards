@@ -10,8 +10,8 @@
     "institution": "Munich University of Applied Sciences, Faculty of Civil Engineering"
   },
   "estimated_minutes": {
-    "part1": 10,
-    "total": 22
+    "part1": 11,
+    "total": 23
   },
   "legal": {
     "note": "DRAFT for internal review. Privacy statement and imprint to be added before any expert round."
@@ -161,6 +161,36 @@
               "id": "flight",
               "label": "The count of each flight, separately",
               "detail": "Each flight is judged on its own count."
+            },
+            {
+              "id": "depends",
+              "label": "Depends",
+              "detail": "Please explain."
+            }
+          ],
+          "follow_up": {
+            "type": "free_text",
+            "label": "Comment, reasoning or reference (optional)",
+            "voice": true
+          }
+        },
+        {
+          "id": "C9",
+          "type": "single_choice",
+          "prompt": "Suppose handrails are required only for stairs with more than a stated number of steps. Clause 4.7.1.1(b) says that staircases must be designed with stair handrails in accordance with clause 4.7.3. Does a stair with fewer steps than that number need a handrail at all?",
+          "related": [
+            "C1"
+          ],
+          "options": [
+            {
+              "id": "none",
+              "label": "No, such a stair needs no handrail",
+              "detail": "Neither the handrail nor its height is required."
+            },
+            {
+              "id": "handrail",
+              "label": "Yes, it needs a handrail, but its height is not checked",
+              "detail": "Clause 4.7.1.1(b) applies; the height requirement of 4.7.3.1(b) does not."
             },
             {
               "id": "depends",
