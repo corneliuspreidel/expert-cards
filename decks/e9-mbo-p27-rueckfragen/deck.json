@@ -1,0 +1,338 @@
+{
+ "schema": "expert-cards/deck@0.1",
+ "id": "e9-mbo-p27-rueckfragen",
+ "version": "0.1.0",
+ "language": "de",
+ "title": "Rückfragen zu § 27 MBO",
+ "subtitle": "Tragende Wände: fünf kurze Fälle und vier Rückfragen zur Durchsicht",
+ "owner": {
+  "name": "Cornelius Preidel",
+  "institution": "Hochschule München, Fakultät für Bauingenieurwesen"
+ },
+ "estimated_minutes": {
+  "part1": 5,
+  "total": 12
+ },
+ "legal": {
+  "privacy_url": "https://hm.edu/datenschutz/index.de.html",
+  "imprint_url": "https://hm.edu/impressum/index.de.html"
+ },
+ "consent_text": "Ihre Antworten werden nur für die Studie verwendet. Ob wir Sie in einer Veröffentlichung namentlich nennen dürfen, entscheiden Sie auf der letzten Karte.",
+ "identity_fields": [
+  {
+   "id": "name",
+   "label": "Name",
+   "type": "text",
+   "required": false
+  }
+ ],
+ "references": {
+  "mbo27": {
+   "title": "§ 27 MBO (Tragende Wände, Stützen)",
+   "text": "§ 27 Tragende Wände, Stützen\n(1) 1Tragende und aussteifende Wände und Stützen müssen im Brandfall ausreichend lang standsicher sein. 2Sie müssen\n1. in Gebäuden der Gebäudeklasse 5 feuerbeständig,\n2. in Gebäuden der Gebäudeklasse 4 hochfeuerhemmend,\n3. in Gebäuden der Gebäudeklassen 2 und 3 feuerhemmend\nsein. 3Satz 2 gilt\n1. für Geschosse im Dachraum nur, wenn darüber noch Aufenthaltsräume möglich sind; § 29 Abs. 4 bleibt unberührt,\n2. nicht für Balkone, ausgenommen offene Gänge, die als notwendige Flure dienen.\n(2) Im Kellergeschoss müssen tragende und aussteifende Wände und Stützen\n1. in Gebäuden der Gebäudeklassen 3 bis 5 feuerbeständig,\n2. in Gebäuden der Gebäudeklassen 1 und 2 feuerhemmend\nsein."
+  },
+  "mbo29": {
+   "title": "§ 29 MBO (Trennwände)",
+   "text": "§ 29 Trennwände\n(1) Trennwände nach Absatz 2 müssen als raumabschließende Bauteile von Räumen oder Nutzungseinheiten innerhalb von Geschossen ausreichend lang widerstandsfähig gegen die Brandausbreitung sein.\n(2) Trennwände sind erforderlich\n1. zwischen Nutzungseinheiten sowie zwischen Nutzungseinheiten und anders genutzten Räumen, ausgenommen notwendigen Fluren,\n2. zum Abschluss von Räumen mit Explosions- oder erhöhter Brandgefahr,\n3. zwischen Aufenthaltsräumen und anders genutzten Räumen im Kellergeschoss.\n(3) 1Trennwände nach Absatz 2 Nrn. 1 und 3 müssen die Feuerwiderstandsfähigkeit der tragenden und aussteifenden Bauteile des Geschosses haben, jedoch mindestens feuerhemmend sein. 2Trennwände nach Absatz 2 Nr. 2 müssen feuerbeständig sein.\n(4) Die Trennwände nach Absatz 2 sind bis zur Rohdecke, im Dachraum bis unter die Dachhaut zu führen; werden in Dachräumen Trennwände nur bis zur Rohdecke geführt, ist diese Decke als raumabschließendes Bauteil einschließlich der sie tragenden und aussteifenden Bauteile feuerhemmend herzustellen.\n(5) Öffnungen in Trennwänden nach Absatz 2 sind nur zulässig, wenn sie auf die für die Nutzung erforderliche Zahl und Größe beschränkt sind; sie müssen feuerhemmende, dicht- und selbstschließende Abschlüsse haben.\n(6) Die Absätze 1 bis 5 gelten nicht für Wohngebäude der Gebäudeklassen 1 und 2."
+  }
+ },
+ "intro_cards": [
+  {
+   "type": "info",
+   "title": "Worum es geht",
+   "body": "Vielen Dank für Ihre Durchsicht der Aussagen zu § 27 MBO. Ihre Anmerkungen sind eingearbeitet. Mit der überarbeiteten Fassung haben wir neue Prüfregeln erzeugt und getestet. Dabei sind ein paar Fälle und Fragen offen geblieben, die nur Sie aus der Praxis beantworten können. Es gibt keine erwartete richtige Antwort; „Hängt ab“ ist ausdrücklich erwünscht."
+  },
+  {
+   "type": "info",
+   "title": "Das Gebäude",
+   "body": "Doppelhaus mit zwei Wohnungen, Erdgeschoss und Obergeschoss, Wohngebäude der Gebäudeklasse 3, kein Kellergeschoss. Die tragenden Wände sind feuerhemmend, sofern im Fall nichts anderes steht. Jeder Fall ändert genau einen Punkt; alles andere bleibt so."
+  }
+ ],
+ "sections": [
+  {
+   "id": "faelle",
+   "title": "Fälle zu § 27",
+   "icon": "wall",
+   "part_titles": [
+    "Dachgeschoss und Balkon"
+   ],
+   "reference": "mbo27",
+   "question": "Erfüllen die tragenden Wände § 27 MBO?",
+   "cards": [
+    {
+     "id": "K1",
+     "type": "verdict",
+     "title": "Geschoss im Dachraum, darüber keine Aufenthaltsräume möglich",
+     "chips": [
+      "GK 3",
+      "Wohngebäude"
+     ],
+     "related": [],
+     "assumption": null,
+     "changes": [
+      "Das Obergeschoss ist ein ==Geschoss im Dachraum==.",
+      "Darüber sind ==keine Aufenthaltsräume möglich== (nur ein niedriger Spitzboden).",
+      "Die tragenden Wände des Obergeschosses haben ==keinen Feuerwiderstand==."
+     ],
+     "hint": "Bitte beurteilen Sie nur § 27 MBO (tragende Wände). Alles andere wie im Ausgangsgebäude."
+    },
+    {
+     "id": "K2",
+     "type": "verdict",
+     "title": "Balkon mit tragender Wandscheibe",
+     "chips": [
+      "GK 3",
+      "Wohngebäude"
+     ],
+     "related": [],
+     "assumption": null,
+     "changes": [
+      "Am Obergeschoss gibt es einen ==Balkon==.",
+      "Eine ==tragende Wandscheibe==, die nur an den Balkon grenzt, hat ==keinen Feuerwiderstand==.",
+      "Der Balkon dient nicht als Flur."
+     ],
+     "hint": "Bitte beurteilen Sie nur § 27 MBO (tragende Wände). Alles andere wie im Ausgangsgebäude."
+    },
+    {
+     "id": "K3",
+     "type": "verdict",
+     "title": "Geschoss im Dachraum, darüber Aufenthaltsräume möglich",
+     "chips": [
+      "GK 3",
+      "Wohngebäude"
+     ],
+     "related": [],
+     "assumption": null,
+     "changes": [
+      "Das Obergeschoss ist ein ==Geschoss im Dachraum==.",
+      "Darüber ==wären Aufenthaltsräume möglich== (ausreichend hoher Spitzboden); eingerichtet ist dort aber keiner.",
+      "Die tragenden Wände des Obergeschosses haben ==keinen Feuerwiderstand==."
+     ],
+     "hint": "Bitte beurteilen Sie nur § 27 MBO (tragende Wände). Alles andere wie im Ausgangsgebäude."
+    },
+    {
+     "id": "K4",
+     "type": "verdict",
+     "title": "Balkon als offener Gang",
+     "chips": [
+      "GK 3",
+      "Wohngebäude"
+     ],
+     "related": [],
+     "assumption": null,
+     "changes": [
+      "Wie beim Balkonfall: eine ==tragende Wandscheibe== ohne Feuerwiderstand grenzt nur an den Balkon.",
+      "Der Balkon ist aber ein ==offener Gang, der als notwendiger Flur dient== (Laubengang)."
+     ],
+     "hint": "Bitte beurteilen Sie nur § 27 MBO (tragende Wände). Alles andere wie im Ausgangsgebäude."
+    },
+    {
+     "id": "K5",
+     "type": "verdict",
+     "title": "Normales oberstes Geschoss",
+     "chips": [
+      "GK 3",
+      "Wohngebäude"
+     ],
+     "related": [],
+     "assumption": null,
+     "changes": [
+      "Das Obergeschoss ist ein ==normales Vollgeschoss==, kein Geschoss im Dachraum.",
+      "Darüber sind keine Aufenthaltsräume möglich.",
+      "Die tragenden Wände des Obergeschosses haben ==keinen Feuerwiderstand==."
+     ],
+     "hint": "Bitte beurteilen Sie nur § 27 MBO (tragende Wände). Alles andere wie im Ausgangsgebäude."
+    }
+   ]
+  },
+  {
+   "id": "rueckfragen",
+   "title": "Rückfragen zu Ihren Anmerkungen",
+   "icon": "note",
+   "part_titles": [
+    "Auslegung und Formulierungen"
+   ],
+   "reference": "mbo27",
+   "cards": [
+    {
+     "id": "R1",
+     "type": "single_choice",
+     "prompt": "§ 27 Abs. 1 Satz 3 Nr. 1 sagt zur Erleichterung für Dachgeschosse: „§ 29 Abs. 4 bleibt unberührt.“ Wie verstehen Sie das?",
+     "hint": "§ 29 Abs. 4: Werden Trennwände in Dachräumen nur bis zur Rohdecke geführt, ist diese Decke einschließlich der sie tragenden und aussteifenden Bauteile feuerhemmend herzustellen.",
+     "options": [
+      {
+       "id": "ausnahme",
+       "label": "Als Ausnahme von der Erleichterung",
+       "detail": "Wo § 29 Abs. 4 greift, gilt die Erleichterung insoweit nicht."
+      },
+      {
+       "id": "daneben",
+       "label": "§ 29 Abs. 4 gilt unabhängig daneben",
+       "detail": "Die Erleichterung bleibt; § 29 Abs. 4 stellt eigene Anforderungen."
+      },
+      {
+       "id": "abh",
+       "label": "Hängt ab",
+       "detail": "Bitte kurz erläutern."
+      }
+     ],
+     "follow_up": {
+      "type": "free_text",
+      "label": "Kurze Begründung oder Anmerkung (optional)",
+      "voice": true
+     }
+    },
+    {
+     "id": "R2",
+     "type": "single_choice",
+     "prompt": "Dürfen wir die Feuerwiderstandsfähigkeit so den europäischen Klassen zuordnen?",
+     "hint": "Tragend: feuerhemmend = R 30, hochfeuerhemmend = R 60, feuerbeständig = R 90. Raumabschließend: EI 30, EI 60, EI 90.",
+     "options": [
+      {
+       "id": "ja",
+       "label": "Ja, so zutreffend",
+       "detail": "Die Zuordnung kann so festgehalten werden."
+      },
+      {
+       "id": "teil",
+       "label": "Teilweise, mit Korrektur",
+       "detail": "Bitte die Korrektur in der Anmerkung nennen."
+      },
+      {
+       "id": "nein",
+       "label": "Nein",
+       "detail": "Bitte kurz begründen."
+      }
+     ],
+     "follow_up": {
+      "type": "free_text",
+      "label": "Kurze Begründung oder Anmerkung (optional)",
+      "voice": true
+     }
+    },
+    {
+     "id": "R3",
+     "type": "single_choice",
+     "prompt": "Wir haben die Erleichterung für Dachgeschosse nach Ihrer Anmerkung so zusammengefasst. Trifft das zu?",
+     "hint": "Für ein Geschoss im Dachraum gelten die Anforderungen an tragende Wände nicht, wenn darüber keine Aufenthaltsräume mehr möglich sind. Als Geschoss im Dachraum gelten nur Hohlräume, in denen Aufenthaltsräume möglich sind. Sind im Dachraum Trennwände nach § 29 nötig, die nicht bis zur Dachhaut geführt werden, müssen der obere Raumabschluss des obersten Geschosses und die ihn tragenden Teile feuerhemmend sein (§ 29 Abs. 4).",
+     "options": [
+      {
+       "id": "ok",
+       "label": "Zutreffend",
+       "detail": "Kann so übernommen werden."
+      },
+      {
+       "id": "umform",
+       "label": "Im Kern richtig, anders formulieren",
+       "detail": "Bitte Ihren Vorschlag in der Anmerkung."
+      },
+      {
+       "id": "falsch",
+       "label": "Nicht zutreffend",
+       "detail": "Bitte kurz begründen."
+      }
+     ],
+     "follow_up": {
+      "type": "free_text",
+      "label": "Kurze Begründung oder Anmerkung (optional)",
+      "voice": true
+     }
+    },
+    {
+     "id": "R4",
+     "type": "single_choice",
+     "prompt": "Ihre WENN-DANN-Fassung der Beschichtungsregel steht jetzt so in der Formalisierung. Trifft das zu?",
+     "hint": "WENN nachträglich auf Bauteilen aufgebrachte Beschichtungen bis 0,5 mm dick sind UND vollständig ohne Hohlräume auf einem nichtbrennbaren Untergrund aufgebracht sind, DANN bleiben sie bei brandschutztechnischen Anforderungen oder bei der Bewertung der Baustoffklasse unberücksichtigt.",
+     "options": [
+      {
+       "id": "ok",
+       "label": "Zutreffend",
+       "detail": "Kann so übernommen werden."
+      },
+      {
+       "id": "umform",
+       "label": "Im Kern richtig, anders formulieren",
+       "detail": "Bitte Ihren Vorschlag in der Anmerkung."
+      },
+      {
+       "id": "falsch",
+       "label": "Nicht zutreffend",
+       "detail": "Bitte kurz begründen."
+      }
+     ],
+     "follow_up": {
+      "type": "free_text",
+      "label": "Kurze Begründung oder Anmerkung (optional)",
+      "voice": true
+     }
+    },
+    {
+     "id": "R5",
+     "type": "single_choice",
+     "prompt": "Dürfen wir Ihre Durchsicht und diese Antworten in einer wissenschaftlichen Veröffentlichung verwenden?",
+     "hint": "Zum Beispiel in einem Konferenzbeitrag zur Prüfung von Bauvorschriften.",
+     "options": [
+      {
+       "id": "name",
+       "label": "Ja, mit Namen",
+       "detail": "Zum Beispiel in der Danksagung."
+      },
+      {
+       "id": "anonym",
+       "label": "Ja, ohne Namen",
+       "detail": "Als „ein Brandschutzsachverständiger“."
+      },
+      {
+       "id": "nein",
+       "label": "Bitte nicht verwenden",
+       "detail": "Nur intern."
+      }
+     ]
+    }
+   ]
+  }
+ ],
+ "verdict_options": [
+  {
+   "id": "ja",
+   "label": "Erfüllt"
+  },
+  {
+   "id": "nein",
+   "label": "Nicht erfüllt"
+  },
+  {
+   "id": "unklar",
+   "label": "Hängt ab",
+   "requires_reason": true
+  }
+ ],
+ "confidence_options": [
+  {
+   "id": "sicher",
+   "label": "sicher"
+  },
+  {
+   "id": "eher",
+   "label": "eher sicher"
+  },
+  {
+   "id": "unsicher",
+   "label": "unsicher"
+  }
+ ],
+ "closing": {
+  "title": "Zum Schluss",
+  "icon": "note",
+  "free_text_label": "Gibt es zu § 27 noch etwas, das eine automatische Prüfung unbedingt berücksichtigen sollte?"
+ },
+ "submission": {
+  "mode": "email",
+  "to": "cornelius.preidel@hm.edu",
+  "subject": "Rückfragen § 27 MBO – Antworten",
+  "backup_file": true
+ },
+ "settings": {
+  "lesson_size": 6
+ }
+}
