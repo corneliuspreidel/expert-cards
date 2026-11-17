@@ -19,18 +19,18 @@
    "hint": "§§ 27 und 29 der Musterbauordnung; Abweichungen Ihres Landes können Sie angeben."
   },
   {
-   "id": "sg-accessibility-field",
-   "title": "Applying the Code on Accessibility",
-   "language": "en",
-   "status": "draft",
-   "hint": "Local draft, Singapore case. Not for publication."
-  },
-  {
    "id": "e9-mbo-p27-rueckfragen",
    "title": "Rückfragen zu § 27 MBO",
    "language": "de",
    "status": "draft",
    "hint": "Rückfragen zur Durchsicht von § 27 MBO (Einzelperson, per Link)."
+  },
+  {
+   "id": "sg-accessibility-field",
+   "title": "Applying the Code on Accessibility",
+   "language": "en",
+   "status": "draft",
+   "hint": "Local draft, Singapore case. Not for publication."
   }
  ]
 }

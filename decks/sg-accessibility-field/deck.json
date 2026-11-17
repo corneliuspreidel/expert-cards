@@ -1,17 +1,17 @@
 {
   "schema": "expert-cards/deck@0.1",
   "id": "sg-accessibility-field",
-  "version": "0.1.0-draft1",
+  "version": "0.2.0-draft2",
   "language": "en",
   "title": "Applying the Code on Accessibility",
-  "subtitle": "Stair handrails (4.7.3.1) and bollards (4.2.3.6)",
+  "subtitle": "Stair handrails (4.7.3.1) and bollards (4.2.3.6): reading, measuring, model data and results",
   "owner": {
     "name": "Cornelius Preidel",
     "institution": "Munich University of Applied Sciences, Faculty of Civil Engineering"
   },
   "estimated_minutes": {
     "part1": 11,
-    "total": 23
+    "total": 40
   },
   "legal": {
     "note": "DRAFT for internal review. Privacy statement and imprint to be added before any expert round."
@@ -295,7 +295,8 @@
       "icon": "column",
       "reference": "code-bollards",
       "part_titles": [
-        "Where the height applies"
+        "Where the height applies",
+        "A case"
       ],
       "question": "Does the bollard in this case comply with clause 4.2.3.6(c)?",
       "cards": [
@@ -426,6 +427,660 @@
             "alt": "Plan of a plaza and a footpath. Two 900 mm bollards stand at the footpath start; a 700 mm bollard stands at the far plaza corner.",
             "caption": "Plan — H = vertical bollard height above paving; 4.00 m / 1.50 m are plan sizes"
           }
+        },
+        {
+          "id": "F3",
+          "type": "verdict",
+          "title": "A bollard set into the paving",
+          "chips": [
+            "Entrance to a footpath",
+            "Bollard object 1000 mm"
+          ],
+          "related": [
+            "C7"
+          ],
+          "assumption": "The bollard stands at the entrance to a footpath, so clause 4.2.3.6 applies. Every other requirement of clause 4.2.3.6 is met.",
+          "changes": [
+            "The bollard object is ==1000 mm== long. It is set ==300 mm== into the paving, so ==700 mm== stand above the paving.",
+            "In the building model the bollard carries the property \"Height = 1000 mm\"."
+          ]
+        }
+      ]
+    },
+    {
+      "id": "measuring",
+      "title": "Measuring the handrail height",
+      "icon": "compass",
+      "reference": "code-stairs",
+      "part_titles": [
+        "Reference line and point",
+        "Along the stair, tolerance"
+      ],
+      "cards": [
+        {
+          "id": "M1",
+          "type": "single_choice",
+          "prompt": "Clause 4.7.3.1(b) measures the handrail height \"from the pitch line\". Which line do you use as the pitch line?",
+          "options": [
+            {
+              "id": "nosings",
+              "label": "A line through the nosings of the flight",
+              "detail": "The front edges of the treads."
+            },
+            {
+              "id": "tread",
+              "label": "The tread surface directly below the handrail",
+              "detail": "The height is taken above the step at that point."
+            },
+            {
+              "id": "whole",
+              "label": "One line from the lowest to the highest nosing of the stair",
+              "detail": "Across all flights and landings."
+            },
+            {
+              "id": "depends",
+              "label": "Depends",
+              "detail": "Please explain."
+            }
+          ],
+          "follow_up": {
+            "type": "free_text",
+            "label": "Comment, reasoning or reference (optional)",
+            "voice": true
+          }
+        },
+        {
+          "id": "M2",
+          "type": "single_choice",
+          "prompt": "Clause 4.7.3.1(b) measures to \"the top of the handrails\". Which point of the handrail is that?",
+          "options": [
+            {
+              "id": "grip",
+              "label": "The top of the gripping surface",
+              "detail": "The highest point of the handrail profile."
+            },
+            {
+              "id": "axis",
+              "label": "The centre line of the handrail profile",
+              "detail": "The middle of the part that is gripped."
+            },
+            {
+              "id": "railing",
+              "label": "The top of the whole railing",
+              "detail": "Including a guard rail above the handrail, if there is one."
+            },
+            {
+              "id": "depends",
+              "label": "Depends",
+              "detail": "Please explain."
+            }
+          ],
+          "follow_up": {
+            "type": "free_text",
+            "label": "Comment, reasoning or reference (optional)",
+            "voice": true
+          },
+          "related": [
+            "M1"
+          ]
+        },
+        {
+          "id": "M3",
+          "type": "single_choice",
+          "prompt": "Along one flight, where is the handrail height checked?",
+          "options": [
+            {
+              "id": "every",
+              "label": "At every nosing",
+              "detail": "Every point must be within the range."
+            },
+            {
+              "id": "ends",
+              "label": "At the first and the last nosing",
+              "detail": "The two ends of the flight."
+            },
+            {
+              "id": "one",
+              "label": "At one representative point",
+              "detail": "For example in the middle of the flight."
+            },
+            {
+              "id": "depends",
+              "label": "Depends",
+              "detail": "Please explain."
+            }
+          ],
+          "follow_up": {
+            "type": "free_text",
+            "label": "Comment, reasoning or reference (optional)",
+            "voice": true
+          },
+          "related": [
+            "M1"
+          ]
+        },
+        {
+          "id": "M4",
+          "type": "single_choice",
+          "prompt": "Does the range of 800 mm to 1000 mm also apply where the handrail runs over a landing or extends beyond the top and bottom steps?",
+          "options": [
+            {
+              "id": "all",
+              "label": "Yes, over landings and extensions too",
+              "detail": "Measured from the floor of the landing or the level beyond the step."
+            },
+            {
+              "id": "landings",
+              "label": "Over landings, not over the extensions",
+              "detail": "The extensions follow their own requirement in (d)."
+            },
+            {
+              "id": "flights",
+              "label": "No, only along the flights",
+              "detail": "Landings and extensions are not measured for (b)."
+            },
+            {
+              "id": "depends",
+              "label": "Depends",
+              "detail": "Please explain."
+            }
+          ],
+          "follow_up": {
+            "type": "free_text",
+            "label": "Comment, reasoning or reference (optional)",
+            "voice": true
+          }
+        },
+        {
+          "id": "M5",
+          "type": "single_choice",
+          "prompt": "In an automated check, a handrail is measured at 1004 mm or at 796 mm. Up to which deviation from the limits would you still accept it?",
+          "options": [
+            {
+              "id": "none",
+              "label": "No deviation",
+              "detail": "800 mm and 1000 mm are hard limits."
+            },
+            {
+              "id": "five",
+              "label": "Up to 5 mm",
+              "detail": "Rounding and modelling inaccuracy."
+            },
+            {
+              "id": "ten",
+              "label": "Up to 10 mm",
+              "detail": "Construction tolerance."
+            },
+            {
+              "id": "more",
+              "label": "More than 10 mm",
+              "detail": "Please give the value in the note."
+            },
+            {
+              "id": "depends",
+              "label": "Depends",
+              "detail": "Please explain."
+            }
+          ],
+          "follow_up": {
+            "type": "free_text",
+            "label": "Comment, reasoning or reference (optional)",
+            "voice": true
+          },
+          "related": [
+            "C5"
+          ]
+        },
+        {
+          "id": "M6",
+          "type": "single_choice",
+          "prompt": "A stair has two flights. The handrail along one flight is within the range, the other is not. How should the check report this?",
+          "options": [
+            {
+              "id": "stair",
+              "label": "One result for the whole stair",
+              "detail": "Not compliant."
+            },
+            {
+              "id": "flight",
+              "label": "One result per flight",
+              "detail": "One compliant, one not compliant."
+            },
+            {
+              "id": "handrail",
+              "label": "One result per handrail",
+              "detail": "Whichever part of the stair it runs along."
+            },
+            {
+              "id": "depends",
+              "label": "Depends",
+              "detail": "Please explain."
+            }
+          ],
+          "follow_up": {
+            "type": "free_text",
+            "label": "Comment, reasoning or reference (optional)",
+            "voice": true
+          },
+          "related": [
+            "F1"
+          ]
+        },
+        {
+          "id": "M7",
+          "type": "single_choice",
+          "prompt": "A checking software cannot construct the pitch line. Instead it measures from the tread surface directly below the handrail. Would you accept its results for clause 4.7.3.1(b)?",
+          "options": [
+            {
+              "id": "yes",
+              "label": "Yes",
+              "detail": "The difference does not matter in practice."
+            },
+            {
+              "id": "tolerance",
+              "label": "Only with a stated correction or tolerance",
+              "detail": "Please say which in the note."
+            },
+            {
+              "id": "no",
+              "label": "No",
+              "detail": "The measurement must follow the clause."
+            },
+            {
+              "id": "depends",
+              "label": "Depends",
+              "detail": "Please explain."
+            }
+          ],
+          "follow_up": {
+            "type": "free_text",
+            "label": "Which correction or tolerance, or why not (optional)",
+            "voice": true
+          },
+          "related": [
+            "M1",
+            "M5"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "model-info",
+      "title": "When the model does not say",
+      "icon": "cards",
+      "reference": "code-bollards",
+      "part_titles": [
+        "Values and missing data",
+        "What a model should show"
+      ],
+      "cards": [
+        {
+          "id": "D1",
+          "type": "single_choice",
+          "prompt": "A building model states the height of an element as a property (for example 1000 mm), but its geometry shows a different height (for example 700 mm). Which value should a check use?",
+          "options": [
+            {
+              "id": "property",
+              "label": "The property",
+              "detail": "It is the designer's declaration."
+            },
+            {
+              "id": "geometry",
+              "label": "The geometry",
+              "detail": "It shows what is built."
+            },
+            {
+              "id": "lower",
+              "label": "The less favourable of the two",
+              "detail": "Whichever fails first."
+            },
+            {
+              "id": "ask",
+              "label": "Neither: report the contradiction",
+              "detail": "The submitter has to resolve it."
+            },
+            {
+              "id": "depends",
+              "label": "Depends",
+              "detail": "Please explain."
+            }
+          ],
+          "follow_up": {
+            "type": "free_text",
+            "label": "Comment, reasoning or reference (optional)",
+            "voice": true
+          }
+        },
+        {
+          "id": "D2",
+          "type": "single_choice",
+          "prompt": "A value that a check needs is missing from the model (for example the handrail height is neither given as a property nor measurable). What should the result be?",
+          "options": [
+            {
+              "id": "fail",
+              "label": "Not compliant",
+              "detail": "The submission is incomplete."
+            },
+            {
+              "id": "return",
+              "label": "Cannot be assessed",
+              "detail": "The submitter is asked for the missing information."
+            },
+            {
+              "id": "manual",
+              "label": "The officer checks it by hand",
+              "detail": "From drawings or other documents."
+            },
+            {
+              "id": "depends",
+              "label": "Depends",
+              "detail": "Please explain."
+            }
+          ],
+          "follow_up": {
+            "type": "free_text",
+            "label": "Comment, reasoning or reference (optional)",
+            "voice": true
+          }
+        },
+        {
+          "id": "D3",
+          "type": "single_choice",
+          "prompt": "Some requirements depend on the building type, which the model should state as a property. The property is missing. What should happen?",
+          "options": [
+            {
+              "id": "stop",
+              "label": "The dependent checks are not run",
+              "detail": "The submitter is asked to add the building type."
+            },
+            {
+              "id": "officer",
+              "label": "The officer sets the building type",
+              "detail": "From the application, then the checks run."
+            },
+            {
+              "id": "all",
+              "label": "All checks run",
+              "detail": "As if every requirement applied."
+            },
+            {
+              "id": "depends",
+              "label": "Depends",
+              "detail": "Please explain."
+            }
+          ],
+          "follow_up": {
+            "type": "free_text",
+            "label": "Comment, reasoning or reference (optional)",
+            "voice": true
+          }
+        },
+        {
+          "id": "D4",
+          "type": "single_choice",
+          "prompt": "How should a building model show that a stair lies within a residential unit?",
+          "options": [
+            {
+              "id": "space",
+              "label": "A space or zone for the unit that contains the stair",
+              "detail": "Read from the model geometry."
+            },
+            {
+              "id": "property",
+              "label": "A property on the stair",
+              "detail": "Set by the modeller."
+            },
+            {
+              "id": "documents",
+              "label": "Not from the model",
+              "detail": "The officer reads it from the drawings."
+            },
+            {
+              "id": "depends",
+              "label": "Depends",
+              "detail": "Please explain."
+            }
+          ],
+          "follow_up": {
+            "type": "free_text",
+            "label": "Comment, reasoning or reference (optional)",
+            "voice": true
+          },
+          "related": [
+            "C4"
+          ]
+        },
+        {
+          "id": "D5",
+          "type": "single_choice",
+          "prompt": "How should a building model show that a bollard stands at an entrance to a walkway or pathway?",
+          "options": [
+            {
+              "id": "path",
+              "label": "A modelled walkway or pathway the bollard stands at",
+              "detail": "Read from the model geometry."
+            },
+            {
+              "id": "property",
+              "label": "A property on the bollard",
+              "detail": "Set by the modeller."
+            },
+            {
+              "id": "documents",
+              "label": "Not from the model",
+              "detail": "The officer reads it from the drawings."
+            },
+            {
+              "id": "depends",
+              "label": "Depends",
+              "detail": "Please explain."
+            }
+          ],
+          "follow_up": {
+            "type": "free_text",
+            "label": "Comment, reasoning or reference (optional)",
+            "voice": true
+          },
+          "related": [
+            "C6",
+            "C8"
+          ]
+        },
+        {
+          "id": "D6",
+          "type": "multi_choice",
+          "prompt": "Besides the building model, which sources do you use to settle checks like these?",
+          "options": [
+            {
+              "id": "drawings",
+              "label": "2D drawings",
+              "detail": "Plans, sections, details."
+            },
+            {
+              "id": "forms",
+              "label": "Application forms",
+              "detail": "For example building type and use."
+            },
+            {
+              "id": "specs",
+              "label": "Specifications or product data",
+              "detail": "For example a handrail product."
+            },
+            {
+              "id": "site",
+              "label": "Site information",
+              "detail": "Photos, inspection."
+            },
+            {
+              "id": "keine",
+              "label": "Only the model",
+              "detail": "No other source."
+            }
+          ],
+          "follow_up": {
+            "type": "free_text",
+            "label": "Comment, reasoning or reference (optional)",
+            "voice": true
+          },
+          "hint": "You can select more than one."
+        }
+      ]
+    },
+    {
+      "id": "results",
+      "title": "Showing a result",
+      "icon": "chat",
+      "reference": "code-stairs",
+      "part_titles": [
+        "What a result must show"
+      ],
+      "cards": [
+        {
+          "id": "R1",
+          "type": "multi_choice",
+          "prompt": "A check reports a handrail as not compliant. What must you see to accept the result without opening the model yourself?",
+          "options": [
+            {
+              "id": "value",
+              "label": "The measured value and the limit",
+              "detail": "For example 1050 mm against 1000 mm."
+            },
+            {
+              "id": "where",
+              "label": "Where it was measured",
+              "detail": "In a view of the model."
+            },
+            {
+              "id": "line",
+              "label": "The reference used",
+              "detail": "For example the pitch line and the point on the handrail."
+            },
+            {
+              "id": "reading",
+              "label": "The clause and how the check read it",
+              "detail": "Including conditions such as a number of steps."
+            },
+            {
+              "id": "source",
+              "label": "Where the value came from",
+              "detail": "A property or the geometry."
+            },
+            {
+              "id": "keine",
+              "label": "None of these",
+              "detail": "I always check in the model myself."
+            }
+          ],
+          "follow_up": {
+            "type": "free_text",
+            "label": "Comment, reasoning or reference (optional)",
+            "voice": true
+          },
+          "hint": "You can select more than one."
+        },
+        {
+          "id": "R2",
+          "type": "single_choice",
+          "prompt": "A check cannot decide because a reading of the clause is open (for example whether the requirement applies to a stair of this size). How should it report this?",
+          "options": [
+            {
+              "id": "fail",
+              "label": "As not compliant",
+              "detail": "Until the designer shows otherwise."
+            },
+            {
+              "id": "open",
+              "label": "As a separate result \"open\"",
+              "detail": "Naming the open question and what each answer would give."
+            },
+            {
+              "id": "pass",
+              "label": "As compliant, with a note",
+              "detail": "The officer decides."
+            },
+            {
+              "id": "depends",
+              "label": "Depends",
+              "detail": "Please explain."
+            }
+          ],
+          "follow_up": {
+            "type": "free_text",
+            "label": "Comment, reasoning or reference (optional)",
+            "voice": true
+          }
+        },
+        {
+          "id": "R3",
+          "type": "single_choice",
+          "prompt": "A check uses an assumption that nobody has confirmed (for example a reference line chosen by the software). Should it show the result?",
+          "options": [
+            {
+              "id": "marked",
+              "label": "Yes, marked as resting on an assumption",
+              "detail": "The assumption is named."
+            },
+            {
+              "id": "confirmed",
+              "label": "Only once an officer has confirmed the assumption",
+              "detail": "Until then no result."
+            },
+            {
+              "id": "cannot",
+              "label": "No, it should report \"cannot be assessed\"",
+              "detail": "Until the assumption is settled."
+            },
+            {
+              "id": "depends",
+              "label": "Depends",
+              "detail": "Please explain."
+            }
+          ],
+          "follow_up": {
+            "type": "free_text",
+            "label": "Comment, reasoning or reference (optional)",
+            "voice": true
+          },
+          "related": [
+            "M7"
+          ]
+        },
+        {
+          "id": "R4",
+          "type": "single_choice",
+          "prompt": "Questions like the ones in this survey have to be settled once for automated checks. Who should settle them in your jurisdiction?",
+          "options": [
+            {
+              "id": "owner",
+              "label": "The authority that issues the code",
+              "detail": "As an official interpretation."
+            },
+            {
+              "id": "developers",
+              "label": "The team that develops the checking rules",
+              "detail": "Documented with the rules."
+            },
+            {
+              "id": "officer",
+              "label": "The processing officer, case by case",
+              "detail": "No general decision."
+            },
+            {
+              "id": "group",
+              "label": "A joint group of officers and rule developers",
+              "detail": "Reviewed from time to time."
+            },
+            {
+              "id": "depends",
+              "label": "Depends",
+              "detail": "Please explain."
+            }
+          ],
+          "follow_up": {
+            "type": "free_text",
+            "label": "Comment, reasoning or reference (optional)",
+            "voice": true
+          }
         }
       ]
     }
@@ -462,7 +1117,7 @@
   "closing": {
     "title": "Finally",
     "icon": "note",
-    "free_text_label": "Which decisions in applying these two clauses did we not ask about, but a checker should settle explicitly? Any other remarks?"
+    "free_text_label": "Which decisions in applying these two clauses, measuring them in a model or showing the result did we not ask about, but a checker should settle explicitly? Any other remarks?"
   },
   "submission": {
     "mode": "email",
