@@ -1,0 +1,290 @@
+{
+ "schema": "expert-cards/deck@0.1",
+ "id": "sg-accessibility-followup",
+ "version": "0.2.0-draft",
+ "language": "en",
+ "title": "Follow-up: handrails and bollards",
+ "subtitle": "Five questions on applying clauses 4.7.3.1 and 4.2.3.6 in an automated check",
+ "owner": {
+  "name": "Cornelius Preidel",
+  "institution": "Munich University of Applied Sciences, Faculty of Civil Engineering"
+ },
+ "estimated_minutes": {
+  "part1": 4,
+  "total": 7
+ },
+ "legal": {
+  "note": "DRAFT. Privacy statement and imprint to be added before wider use."
+ },
+ "consent_text": "Your answers are used only for this study and reported anonymised or aggregated. Whether we may name you is up to you.",
+ "identity_fields": [
+  {
+   "id": "name",
+   "label": "Name",
+   "type": "text",
+   "required": false
+  },
+  {
+   "id": "role",
+   "label": "Your role",
+   "type": "choice",
+   "options": [
+    "Processing officer / plan checker",
+    "Developer of automated checking rules",
+    "BIM modeller / IFC+SG specialist",
+    "Accessibility consultant",
+    "Other"
+   ]
+  }
+ ],
+ "references": {
+  "code-stairs": {
+   "title": "Stairs: clauses 4.7.1.1 and 4.7.3.1",
+   "text": "Code on Accessibility in the Built Environment 2025 (extract)\n\n4.7.1.1 Staircases must be designed with the following requirements:\n(a) step profile in accordance with clause 4.7.2;\n(b) stair handrails in accordance with clause 4.7.3;\n(c) warning TGSI in accordance with clause 4.7.4; and\n(d) where staircases connect one storey to another, tactile and Braille signs in accordance with clause 8.5 must be installed on adjacent walls or handrail extensions to indicate the floor level.\nNote 1: Clause 4.7.1.1 does not apply within residential units.\n\n4.7.3.1 Handrails for stairs must:\n(a) be in accordance with clause 9.3;\n(b) be positioned between 800 mm and 1000 mm measured from the pitch line vertically to the top of the handrails;\n(c) be continuous throughout the entire length of stairs and enclosed intermediate landings where they do not lead to another path of travel;\n(d) extend not less than 300 mm in the direction of the flight of stairs beyond the top and bottom steps; and\n(e) return to the wall, floor or post."
+  },
+  "code-bollards": {
+   "title": "Bollards: clauses 3.2.2 and 4.2.3.6",
+   "text": "Code on Accessibility in the Built Environment 2025 (extract)\n\n3.2 Passenger Alighting and Boarding Points, including Taxi Shelters\n3.2.2 Where bollards are used, it must be in accordance with clause 4.2.3.6.\n\n4.2.3.6 Where bollards are erected at entrances to walkways or pathways, they must:\n(a) have a minimum clear distance of 900 mm between the bollards;\n(b) not be linked with a chain or rope;\n(c) have a minimum height of 800 mm;\n(d) have a colour that contrasts with the background or be provided with a coloured or reflective band around the neck of the bollard to further aid visibility;\n(e) not have sharp or ornamental features protruding horizontally; and\n(f) be well lit and the light fitting must be positioned in such a manner that will not cause glare."
+  }
+ },
+ "intro_cards": [
+  {
+   "type": "info",
+   "title": "What this is about",
+   "body": "Automated checks of the Code on Accessibility have to settle details that the text does not spell out. These five questions came up when we generated checking rules for clauses 4.7.3.1 and 4.2.3.6 and tested them.\n\nPlease answer as you would apply the code. **There is no expected right answer.** \"Depends\" is a valuable answer: choose it whenever the answer depends on something not stated, and tell us on what."
+  }
+ ],
+ "sections": [
+  {
+   "id": "handrails",
+   "title": "Stair handrails (4.7.3.1)",
+   "icon": "plan",
+   "reference": "code-stairs",
+   "question": "Is this stair in accordance with clause 4.7.3.1(c)?",
+   "cards": [
+    {
+     "id": "H1",
+     "type": "single_choice",
+     "title": "What makes a railing a handrail",
+     "prompt": "A building model contains railings along a stair. For checking clause 4.7.3.1, what should identify a railing as a stair handrail?",
+     "options": [
+      {
+       "id": "predef",
+       "label": "Its IFC type: IfcRailing with PredefinedType HANDRAIL",
+       "detail": "Other railings are not checked as handrails."
+      },
+      {
+       "id": "any",
+       "label": "Any railing that belongs to the stair",
+       "detail": "Whatever its stated type."
+      },
+      {
+       "id": "property",
+       "label": "A stated property",
+       "detail": "Please name it in the note."
+      },
+      {
+       "id": "depends",
+       "label": "Depends",
+       "detail": "Please explain."
+      }
+     ],
+     "follow_up": {
+      "type": "free_text",
+      "label": "Comment, reasoning or reference (optional)",
+      "voice": true
+     }
+    },
+    {
+     "id": "H2",
+     "type": "verdict",
+     "title": "Handrail on one side only",
+     "chips": [
+      "Stair with more than 5 steps"
+     ],
+     "related": [],
+     "assumption": null,
+     "changes": [
+      "The stair has a handrail on ==one side only==.",
+      "That handrail is ==continuous== throughout the entire length of the stair and its landings.",
+      "There is no handrail on the other side."
+     ],
+     "hint": "Please judge clause 4.7.3.1(c) only. Everything else as it should be."
+    },
+    {
+     "id": "H3",
+     "type": "verdict",
+     "title": "Handrails on both sides, one interrupted",
+     "chips": [
+      "Stair with more than 5 steps"
+     ],
+     "related": [
+      "H2"
+     ],
+     "assumption": null,
+     "changes": [
+      "The stair has handrails on ==both sides==.",
+      "One handrail is continuous throughout the stair and its landings.",
+      "The other handrail is ==interrupted== by a gap of 200 mm halfway along the flight."
+     ],
+     "hint": "Please judge clause 4.7.3.1(c) only. Everything else as it should be."
+    }
+   ]
+  },
+  {
+   "id": "bollards",
+   "title": "Bollards (4.2.3.6)",
+   "icon": "plan",
+   "reference": "code-bollards",
+   "cards": [
+    {
+     "id": "B1",
+     "type": "single_choice",
+     "title": "Bollard on a ramp",
+     "prompt": "A bollard stands on a ramp, not on a level floor. From where should its height be measured for clause 4.2.3.6(c)?",
+     "options": [
+      {
+       "id": "under",
+       "label": "From the ramp surface directly under the bollard",
+       "detail": "At the centre of its base."
+      },
+      {
+       "id": "lowest",
+       "label": "From the lowest point of the ramp surface around the bollard",
+       "detail": "The less favourable side."
+      },
+      {
+       "id": "highest",
+       "label": "From the highest point of the ramp surface around the bollard",
+       "detail": "The more favourable side."
+      },
+      {
+       "id": "ffl",
+       "label": "From the finished floor level of the storey",
+       "detail": "Not from the ramp."
+      },
+      {
+       "id": "depends",
+       "label": "Depends",
+       "detail": "Please explain."
+      }
+     ],
+     "follow_up": {
+      "type": "free_text",
+      "label": "Comment, reasoning or reference (optional)",
+      "voice": true
+     }
+    },
+    {
+     "id": "B2",
+     "type": "single_choice",
+     "title": "Kerb ramp in a drop-off area",
+     "prompt": "Where an accessible drop-off area has no kerb ramp, the clear distance of 4.2.3.6(a) is checked for all its bollards. How should a check decide whether a drop-off area has a kerb ramp?",
+     "options": [
+      {
+       "id": "element",
+       "label": "A kerb-ramp element lies inside or touches the drop-off area",
+       "detail": "Found from the model geometry."
+      },
+      {
+       "id": "property",
+       "label": "A stated property of the drop-off area",
+       "detail": "Please name it in the note."
+      },
+      {
+       "id": "person",
+       "label": "A person decides from the drawings",
+       "detail": "Not decided automatically."
+      },
+      {
+       "id": "depends",
+       "label": "Depends",
+       "detail": "Please explain."
+      }
+     ],
+     "follow_up": {
+      "type": "free_text",
+      "label": "Comment, reasoning or reference (optional)",
+      "voice": true
+     }
+    },
+    {
+     "id": "B3",
+     "type": "single_choice",
+     "title": "Bollard in a drop-off area",
+     "prompt": "When does a bollard count as standing in an accessible drop-off area for clause 4.2.3.6(a)?",
+     "options": [
+      {
+       "id": "inside",
+       "label": "When it lies inside the drop-off area",
+       "detail": "Its footprint fully within the area."
+      },
+      {
+       "id": "touch",
+       "label": "When it touches or overlaps the drop-off area",
+       "detail": "Partly inside is enough."
+      },
+      {
+       "id": "near",
+       "label": "When it lies within a stated distance of the drop-off area",
+       "detail": "Please name the distance in the note."
+      },
+      {
+       "id": "depends",
+       "label": "Depends",
+       "detail": "Please explain."
+      }
+     ],
+     "follow_up": {
+      "type": "free_text",
+      "label": "Comment, reasoning or reference (optional)",
+      "voice": true
+     }
+    }
+   ]
+  }
+ ],
+ "verdict_options": [
+  {
+   "id": "compliant",
+   "label": "Compliant"
+  },
+  {
+   "id": "not_compliant",
+   "label": "Not compliant"
+  },
+  {
+   "id": "depends",
+   "label": "Depends",
+   "requires_reason": true
+  }
+ ],
+ "confidence_options": [
+  {
+   "id": "sure",
+   "label": "sure"
+  },
+  {
+   "id": "fairly",
+   "label": "fairly sure"
+  },
+  {
+   "id": "unsure",
+   "label": "unsure"
+  }
+ ],
+ "closing": {
+  "title": "Finally",
+  "icon": "note",
+  "free_text_label": "Is there anything else in applying these two clauses that an automated check should settle explicitly? Any other remarks?"
+ },
+ "submission": {
+  "mode": "email",
+  "to": "cornelius.preidel@hm.edu",
+  "subject": "Follow-up handrails and bollards - answers",
+  "backup_file": true
+ },
+ "settings": {
+  "lesson_size": 4
+ }
+}

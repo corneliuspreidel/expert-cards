@@ -31,6 +31,13 @@
    "language": "en",
    "status": "draft",
    "hint": "Local draft, Singapore case. Not for publication."
+  },
+  {
+   "id": "sg-accessibility-followup",
+   "title": "Follow-up: handrails and bollards",
+   "language": "en",
+   "status": "draft",
+   "hint": "Follow-up questions, Singapore case (handrails, bollards). Draft."
   }
  ]
 }
